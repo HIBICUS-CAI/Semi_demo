@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(semi_demo)
+project(Semi_demo)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -16,10 +16,10 @@ link_libraries(${SDL2_LINK} ${GLEW_LINK} ${SOIL_LINK})
 
 aux_source_directory(src/. DIRS_SRCS)
 
-add_executable(semi_demo ${DIRS_SRCS})
+add_executable(Semi_demo ${DIRS_SRCS})
 
 
 #if判断是否为Mac系统，如果是就执行在GOS项目中加入OpenGL的动态库文件，此处是因为GLEW需要OpenGL
 if (APPLE)
-    target_link_libraries(semi_demo "-framework OpenGL")
+    target_link_libraries(Semi_demo "-framework OpenGL")
 endif()
