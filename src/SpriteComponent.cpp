@@ -38,8 +38,8 @@ void SpriteComponent::Draw(Shader *shader)
         scaleMat = glm::scale(scaleMat, glm::vec3(static_cast<float>(mTexWidth),
                                                   static_cast<float>(mTexHeight), 1.0f));
 
-        glm::mat4 world = mOwner->getWorldTransform() * scaleMat;
         //问题你妈出在这里 glm矩阵相乘需要顺序反过来
+        glm::mat4 world = mOwner->getWorldTransform() * scaleMat;
 
         shader->SetMatrixUniform("uWorldTransform", world);
         mTexture->SetActive();
