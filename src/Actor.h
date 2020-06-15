@@ -37,6 +37,11 @@ public:
     //可重写
     virtual void ActorInput(const uint8_t *keyState);
 
+    virtual bool IsPlayer()
+    {
+        return false;
+    }
+
     void ComputeWorldTransform();
 
     State getState() const
@@ -71,6 +76,16 @@ public:
         mRecomputeWorldTransform = true;
     }
 
+    const glm::ivec2 &getMapPositon() const
+    {
+        return mMapPositon;
+    }
+
+    void setMapPositon(const int row, const int col)
+    {
+        Actor::mMapPositon = {row, col};
+    }
+
     const glm::mat4 &getWorldTransform() const
     {
         return mWorldTransform;
@@ -91,6 +106,9 @@ private:
 
     //transform相关
     glm::vec2 mPosition;
+
+    //地图标记 (1,0)代表第一行第二列
+    glm::ivec2 mMapPositon;
 
     glm::mat4 mWorldTransform;
     float mScale;

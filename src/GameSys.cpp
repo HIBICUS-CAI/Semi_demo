@@ -12,6 +12,7 @@
 #include "SpriteComponent.h"
 #include "Actor.h"
 #include "Player.h"
+#include "Maps.h"
 
 GameSys::GameSys() : mWindow(nullptr), mContext(nullptr), mIsRunning(true), mIsUpdatingActors(
         false)
@@ -187,6 +188,9 @@ void GameSys::LoadData()
 {
     //创建游戏actor
     mPlayer = new Player(this);
+
+    //创建地图
+    mMaps = new Maps(this, mPlayer);
 }
 
 void GameSys::UnloadData()

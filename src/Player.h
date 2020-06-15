@@ -5,12 +5,18 @@
 #ifndef SEMI_DEMO_PLAYER_H
 #define SEMI_DEMO_PLAYER_H
 
+#include <glm.hpp>
 #include "Actor.h"
 
 class Player : public Actor
 {
 public:
     Player(class GameSys *gameSys);
+
+    bool IsPlayer() override
+    {
+        return true;
+    }
 };
 
 

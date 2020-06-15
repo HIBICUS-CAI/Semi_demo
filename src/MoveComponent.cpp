@@ -19,26 +19,63 @@ void MoveComponent::Update(float deltatime)
 {
     float posX = (mOwner->getPosition()).x;
     float posY = (mOwner->getPosition()).y;
+    int posMapRow = (mOwner->getMapPositon()).x;
+    int posMapCol = (mOwner->getMapPositon()).y;
     if (!SpeedNearZero(mHorizontalSpeed))
     {
         posX += mHorizontalSpeed * deltatime;
-        if (posX < -512.f)
+
+        //此处需要根据地图大小修改数值
+        if (posX < -512.f && mOwner->IsPlayer())
         {
-            posX = 510.f;
-        } else if (posX > 512.f)
+            if (posMapRow - 1 >= 0)
+            {
+                posX = 510.f;
+                posMapRow -= 1;
+            } else
+            {
+                posX = -511.f;
+                SDL_Log("u've received left border.");
+            }
+        } else if (posX > 512.f && mOwner->IsPlayer())
         {
-            posX = -510.f;
+            if (posMapRow + 1 <= 2)
+            {
+                posX = -510.f;
+                posMapRow += 1;
+            } else
+            {
+                posX = 511.f;
+                SDL_Log("u've received right border.");
+            }
         }
     }
     if (!SpeedNearZero(mVerticalSpeed))
     {
         posY += mVerticalSpeed * deltatime;
-        if (posY < -384.f)
+        if (posY < -384.f && mOwner->IsPlayer())
         {
-            posY = 382.f;
-        } else if (posY > 384.f)
+            if (posMapCol - 1 >= 0)
+            {
+                posY = 382.f;
+                posMapCol -= 1;
+            } else
+            {
+                posY = -383.f;
+                SDL_Log("u've received bottom border.");
+            }
+
+        } else if (posY > 384.f && mOwner->IsPlayer())
         {
-            posY = -382.f;
+            if (posMapCol + 1 <= 2)
+            {
+                posY = -382.f;
+                posMapCol += 1;
+            } else
+            {
+                posY = 383.f;
+                SDL_Log("u've received top border.");
+            }
         }
     }
 
@@ -48,8 +85,10 @@ void MoveComponent::Update(float deltatime)
         mOwner->setPosition(pos);
     }
 
-    SDL_Log("player's position is ( %f , %f )", mOwner->getPosition().x,
-            mOwner->getPosition().y);
+    mOwner->setMapPositon(posMapRow, posMapCol);
+
+//    SDL_Log("player's position is ( %f , %f )", mOwner->getPosition().x,
+//            mOwner->getPosition().y);
 }
 
 bool MoveComponent::SpeedNearZero(float speed, float delta)

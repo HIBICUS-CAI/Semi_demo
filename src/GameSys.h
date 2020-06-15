@@ -55,6 +55,7 @@ private:
 
     float mDeltaTime;
 
+    class Maps *mMaps;
     class Player *mPlayer;
 
     //游戏中的actor
