@@ -10,6 +10,7 @@
 #include <vector>
 #include "Actor.h"
 #include "SingleMap.h"
+#include "Player.h"
 
 //地图3*3
 typedef std::array<std::string, 3> row_type;
@@ -22,13 +23,14 @@ public:
 
     void AddMap(class SingleMap *singleMap);
 
-    void MoveAllMaps();
-
-    void UpdateActor(float deltatime) override;
-
-    const array_type &getMMapTexs() const
+    const array_type &getMapTexs() const
     {
         return mMapTexs;
+    }
+
+    Player *getPlayer() const
+    {
+        return mPlayer;
     }
 
 private:

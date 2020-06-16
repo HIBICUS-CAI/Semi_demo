@@ -31,16 +31,3 @@ void Maps::AddMap(class SingleMap *singleMap)
 {
     mMaps.emplace_back(singleMap);
 }
-
-void Maps::MoveAllMaps()
-{
-    for (auto map : mMaps)
-    {
-        map->Move(mPlayer->getMapPositon());
-    }
-}
-
-void Maps::UpdateActor(float deltatime)
-{
-    MoveAllMaps();
-}

@@ -18,11 +18,24 @@ public:
 
     SingleMap(GameSys *gameSys, int row, int col);
 
-    void Move(glm::ivec2 mapPosition);
+    Maps *getMaps() const
+    {
+        return mMaps;
+    }
+
+    const glm::ivec2 &getPlayerLatePosition() const
+    {
+        return mPlayerLatePosition;
+    }
+
+    void setPlayerLatePosition(const glm::ivec2 &mPlayerLatePosition)
+    {
+        SingleMap::mPlayerLatePosition = mPlayerLatePosition;
+    }
 
 private:
     class Maps *mMaps;
-    glm::ivec2 mLatePosition;
+    glm::ivec2 mPlayerLatePosition;
 };
 
 
