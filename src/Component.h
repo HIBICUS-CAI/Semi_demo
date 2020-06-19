@@ -11,7 +11,7 @@ class Component
 {
 public:
     //updateOrder越小越早更新
-    Component(class Actor *owner, int updateOrder = 100);
+    Component(class Object *owner, int updateOrder = 100);
 
     virtual ~Component();
 
@@ -31,7 +31,7 @@ public:
     }
 
 protected:
-    class Actor *mOwner;
+    class Object *mOwner;
 
     int mUpdateOrder;
 };

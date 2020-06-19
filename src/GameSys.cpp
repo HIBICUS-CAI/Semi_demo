@@ -10,10 +10,11 @@
 #include "VertexArray.h"
 #include "Texture.h"
 #include "SpriteComponent.h"
-#include "Actor.h"
+#include "Object.h"
 #include "Player.h"
+#include "Maps.h"
 
-GameSys::GameSys() : mWindow(nullptr), mContext(nullptr), mIsRunning(true), mIsUpdatingActors(
+GameSys::GameSys() : mWindow(nullptr), mContext(nullptr), mIsRunning(true), mIsUpdatingObjects(
         false)
 {
 
@@ -104,12 +105,12 @@ void GameSys::ProcessInput()
         mIsRunning = false;
     }
 
-    mIsUpdatingActors = true;
-    for (auto actor : mActors)
+    mIsUpdatingObjects = true;
+    for (auto object : mObjects)
     {
-        actor->ProcessInput(keyState);
+        object->ProcessInput(keyState);
     }
-    mIsUpdatingActors = false;
+    mIsUpdatingObjects = false;
 }
 
 void GameSys::UpdateGame()
@@ -125,35 +126,35 @@ void GameSys::UpdateGame()
     mTicks = SDL_GetTicks();
 
     //更新、移动所有actor
-    mIsUpdatingActors = true;
-    for (auto actor : mActors)
+    mIsUpdatingObjects = true;
+    for (auto object : mObjects)
     {
-        actor->Update(mDeltaTime);
+        object->Update(mDeltaTime);
     }
-    mIsUpdatingActors = false;
+    mIsUpdatingObjects = false;
 
-    // Move any pending actors to mActors
-    for (auto pending : mPendingActors)
+    // Move any pending actors to mObjects
+    for (auto pending : mPendingObjects)
     {
         pending->ComputeWorldTransform();
-        mActors.emplace_back(pending);
+        mObjects.emplace_back(pending);
     }
-    mPendingActors.clear();
+    mPendingObjects.clear();
 
     // Add any dead actors to a temp vector
-    std::vector<Actor *> deadActors;
-    for (auto actor : mActors)
+    std::vector<Object *> deadObjects;
+    for (auto object : mObjects)
     {
-        if (actor->getState() == Actor::Dead)
+        if (object->getState() == Object::Dead)
         {
-            deadActors.emplace_back(actor);
+            deadObjects.emplace_back(object);
         }
     }
 
-    // Delete dead actors (which removes them from mActors)
-    for (auto actor : deadActors)
+    // Delete dead actors (which removes them from mObjects)
+    for (auto object : deadObjects)
     {
-        delete actor;
+        delete object;
     }
 }
 
@@ -187,13 +188,16 @@ void GameSys::LoadData()
 {
     //创建游戏actor
     mPlayer = new Player(this);
+
+    //创建地图
+    mMaps = new Maps(this, mPlayer);
 }
 
 void GameSys::UnloadData()
 {
-    while (!mActors.empty())
+    while (!mObjects.empty())
     {
-        delete mActors.back();
+        delete mObjects.back();
     }
 
     for (auto i:mTextures)
@@ -204,31 +208,31 @@ void GameSys::UnloadData()
     mTextures.clear();
 }
 
-void GameSys::AddActor(class Actor *actor)
+void GameSys::AddObject(struct Object *object)
 {
-    if (mIsUpdatingActors)
+    if (mIsUpdatingObjects)
     {
-        mPendingActors.emplace_back(actor);
+        mPendingObjects.emplace_back(object);
     } else
     {
-        mActors.emplace_back(actor);
+        mObjects.emplace_back(object);
     }
 }
 
-void GameSys::RemoveActor(class Actor *actor)
+void GameSys::RemoveObject(struct Object *object)
 {
-    auto iter = std::find(mPendingActors.begin(), mPendingActors.end(), actor);
-    if (iter != mPendingActors.end())
+    auto iter = std::find(mPendingObjects.begin(), mPendingObjects.end(), object);
+    if (iter != mPendingObjects.end())
     {
-        std::iter_swap(iter, mPendingActors.end() - 1);
-        mPendingActors.pop_back();
+        std::iter_swap(iter, mPendingObjects.end() - 1);
+        mPendingObjects.pop_back();
     }
 
-    iter = std::find(mActors.begin(), mActors.end(), actor);
-    if (iter != mActors.end())
+    iter = std::find(mObjects.begin(), mObjects.end(), object);
+    if (iter != mObjects.end())
     {
-        std::iter_swap(iter, mActors.end() - 1);
-        mActors.pop_back();
+        std::iter_swap(iter, mObjects.end() - 1);
+        mObjects.pop_back();
     }
 }
 

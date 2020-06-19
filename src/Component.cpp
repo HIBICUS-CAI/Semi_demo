@@ -3,9 +3,9 @@
 //
 
 #include "Component.h"
-#include "Actor.h"
+#include "Object.h"
 
-Component::Component(Actor *owner, int updateOrder) : mOwner(owner), mUpdateOrder(updateOrder)
+Component::Component(Object *owner, int updateOrder) : mOwner(owner), mUpdateOrder(updateOrder)
 {
     //添加至拥有者的组件列表
     mOwner->AddComponent(this);

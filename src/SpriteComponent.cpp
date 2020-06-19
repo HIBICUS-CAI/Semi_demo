@@ -7,13 +7,13 @@
 #include "SpriteComponent.h"
 #include "Texture.h"
 #include "Shader.h"
-#include "Actor.h"
+#include "Object.h"
 #include "GameSys.h"
 
-SpriteComponent::SpriteComponent(Actor *owner, int drawOrder) : Component(owner),
-                                                                mTexture(nullptr),
-                                                                mDrawOrder(drawOrder),
-                                                                mTexWidth(0), mTexHeight(0)
+SpriteComponent::SpriteComponent(Object *owner, int drawOrder) : Component(owner),
+                                                                 mTexture(nullptr),
+                                                                 mDrawOrder(drawOrder),
+                                                                 mTexWidth(0), mTexHeight(0)
 {
     mOwner->getGameSys()->AddSprite(this);
 }
@@ -38,8 +38,8 @@ void SpriteComponent::Draw(Shader *shader)
         scaleMat = glm::scale(scaleMat, glm::vec3(static_cast<float>(mTexWidth),
                                                   static_cast<float>(mTexHeight), 1.0f));
 
-        glm::mat4 world = mOwner->getWorldTransform() * scaleMat;
         //问题你妈出在这里 glm矩阵相乘需要顺序反过来
+        glm::mat4 world = mOwner->getWorldTransform() * scaleMat;
 
         shader->SetMatrixUniform("uWorldTransform", world);
         mTexture->SetActive();

@@ -7,10 +7,12 @@
 #include "SpriteComponent.h"
 #include "InputComponent.h"
 
-Player::Player(GameSys *gameSys) : Actor(gameSys)
+Player::Player(GameSys *gameSys) : Object(gameSys)
 {
 //    setScale(0.125f / 2.0f);
 //    setScale(20.f);
+    //设置初始地图块
+    setMapPositon(1, 0);
     SpriteComponent *sc = new SpriteComponent(this, 150);
     sc->SetTexture(
             gameSys->GetTexture("../Assets/man_1.png"));
