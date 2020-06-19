@@ -7,16 +7,16 @@
 
 #include <string>
 #include <glm.hpp>
-#include "Actor.h"
+#include "Object.h"
 #include "Maps.h"
 
-class SingleMap : public Actor
+class SingleMap : public Object
 {
 public:
     SingleMap(class GameSys *gameSys, class Maps *maps, std::string &mapPath, int row,
               int col);
 
-    SingleMap(GameSys *gameSys, int row, int col);
+//    SingleMap(GameSys *gameSys, int row, int col);
 
     Maps *getMaps() const
     {

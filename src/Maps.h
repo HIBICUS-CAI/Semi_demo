@@ -8,7 +8,7 @@
 #include <string>
 #include <array>
 #include <vector>
-#include "Actor.h"
+#include "Object.h"
 #include "SingleMap.h"
 #include "Player.h"
 
@@ -16,7 +16,7 @@
 typedef std::array<std::string, 3> row_type;
 typedef std::array<row_type, 3> array_type;
 
-class Maps : public Actor
+class Maps : public Object
 {
 public:
     Maps(class GameSys *gameSys, class Player *player);

@@ -5,7 +5,7 @@
 #include "Maps.h"
 #include "Player.h"
 
-Maps::Maps(GameSys *gameSys, Player *player) : Actor(gameSys), mPlayer(player)
+Maps::Maps(GameSys *gameSys, Player *player) : Object(gameSys), mPlayer(player)
 {
     //地图贴图路径
     mMapTexs[0][0] = "../Assets/1.png";

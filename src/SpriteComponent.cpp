@@ -7,13 +7,13 @@
 #include "SpriteComponent.h"
 #include "Texture.h"
 #include "Shader.h"
-#include "Actor.h"
+#include "Object.h"
 #include "GameSys.h"
 
-SpriteComponent::SpriteComponent(Actor *owner, int drawOrder) : Component(owner),
-                                                                mTexture(nullptr),
-                                                                mDrawOrder(drawOrder),
-                                                                mTexWidth(0), mTexHeight(0)
+SpriteComponent::SpriteComponent(Object *owner, int drawOrder) : Component(owner),
+                                                                 mTexture(nullptr),
+                                                                 mDrawOrder(drawOrder),
+                                                                 mTexWidth(0), mTexHeight(0)
 {
     mOwner->getGameSys()->AddSprite(this);
 }

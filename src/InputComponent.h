@@ -11,7 +11,7 @@
 class InputComponent : public MoveComponent
 {
 public:
-    InputComponent(class Actor *owner);
+    InputComponent(class Object *owner);
 
     void ProcessInput(const uint8_t *keyState) override;
 

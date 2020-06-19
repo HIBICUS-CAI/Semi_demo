@@ -7,7 +7,7 @@
 #include "SpriteComponent.h"
 #include "InputComponent.h"
 
-Player::Player(GameSys *gameSys) : Actor(gameSys)
+Player::Player(GameSys *gameSys) : Object(gameSys)
 {
 //    setScale(0.125f / 2.0f);
 //    setScale(20.f);

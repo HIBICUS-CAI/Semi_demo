@@ -2,37 +2,37 @@
 // Created by 蔡元涵 on 2020/6/2.
 //
 
-#include "Actor.h"
+#include "Object.h"
 #include "GameSys.h"
 #include "Component.h"
 #include <algorithm>
 #include <ext/matrix_transform.inl>
 
-Actor::Actor(GameSys *gameSys) : mState(Active), mPosition(0, 0), mScale(1.0f),
-                                 mGameSys(gameSys), mRecomputeWorldTransform(true)
+Object::Object(GameSys *gameSys) : mState(Active), mPosition(0, 0), mScale(1.0f),
+                                   mGameSys(gameSys), mRecomputeWorldTransform(true)
 {
-    mGameSys->AddActor(this);
+    mGameSys->AddObject(this);
 }
 
-Actor::~Actor()
+Object::~Object()
 {
-    mGameSys->RemoveActor(this);
+    mGameSys->RemoveObject(this);
 }
 
-void Actor::Update(float deltatime)
+void Object::Update(float deltatime)
 {
     if (mState == Active || mState == Pause)
     {
         ComputeWorldTransform();
 
         UpdateComponent(deltatime);
-        UpdateActor(deltatime);
+        UpdateObject(deltatime);
 
         ComputeWorldTransform();
     }
 }
 
-void Actor::UpdateComponent(float deltatime)
+void Object::UpdateComponent(float deltatime)
 {
     for (auto comp:mComponents)
     {
@@ -40,10 +40,10 @@ void Actor::UpdateComponent(float deltatime)
     }
 }
 
-void Actor::UpdateActor(float deltatime)
+void Object::UpdateObject(float deltatime)
 {}
 
-void Actor::ProcessInput(const uint8_t *keyState)
+void Object::ProcessInput(const uint8_t *keyState)
 {
     if (mState == Active)
     {
@@ -51,14 +51,14 @@ void Actor::ProcessInput(const uint8_t *keyState)
         {
             comp->ProcessInput(keyState);
         }
-        ActorInput(keyState);
+        ObjectInput(keyState);
     }
 }
 
-void Actor::ActorInput(const uint8_t *keyState)
+void Object::ObjectInput(const uint8_t *keyState)
 {}
 
-void Actor::ComputeWorldTransform()
+void Object::ComputeWorldTransform()
 {
     if (mRecomputeWorldTransform)
     {
@@ -74,7 +74,7 @@ void Actor::ComputeWorldTransform()
     }
 }
 
-void Actor::AddComponent(class Component *component)
+void Object::AddComponent(class Component *component)
 {
     //按顺序插入
     int myOrder = component->getUpdateOrder();
@@ -90,7 +90,7 @@ void Actor::AddComponent(class Component *component)
     mComponents.insert(iter, component);
 }
 
-void Actor::RemoveComponent(class Component *component)
+void Object::RemoveComponent(class Component *component)
 {
     auto iter = std::find(mComponents.begin(), mComponents.end(), component);
     if (iter != mComponents.end())

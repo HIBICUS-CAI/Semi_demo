@@ -11,7 +11,7 @@
 class ZoneSwitchMapComponent : public Component
 {
 public:
-    ZoneSwitchMapComponent(class Actor *owner, class Player *player,
+    ZoneSwitchMapComponent(class Object *owner, class Player *player,
                            class SingleMap *singleMap,
                            int updateOrder = 10);
 

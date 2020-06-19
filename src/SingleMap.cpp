@@ -7,7 +7,7 @@
 #include "ZoneSwitchMapComponent.h"
 
 SingleMap::SingleMap(class GameSys *gameSys, class Maps *maps, std::string &mapPath, int row,
-                     int col) : Actor(gameSys), mMaps(maps)
+                     int col) : Object(gameSys), mMaps(maps)
 {
     mMaps->AddMap(this);
 

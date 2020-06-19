@@ -4,13 +4,13 @@
 
 #include <cmath>
 #include "MoveComponent.h"
-#include "Actor.h"
+#include "Object.h"
 #include <SDL.h>
 
-MoveComponent::MoveComponent(class Actor *owner, int updateOrder) : Component(owner,
-                                                                              updateOrder),
-                                                                    mHorizontalSpeed(0.0f),
-                                                                    mVerticalSpeed(0.0f)
+MoveComponent::MoveComponent(class Object *owner, int updateOrder) : Component(owner,
+                                                                               updateOrder),
+                                                                     mHorizontalSpeed(0.0f),
+                                                                     mVerticalSpeed(0.0f)
 {
 
 }

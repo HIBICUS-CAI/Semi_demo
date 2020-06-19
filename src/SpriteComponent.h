@@ -12,7 +12,7 @@ class SpriteComponent : public Component
 {
 public:
     //draw order越小越先画
-    SpriteComponent(class Actor *owner, int drawOrder = 100);
+    SpriteComponent(class Object *owner, int drawOrder = 100);
 
     ~SpriteComponent();
 

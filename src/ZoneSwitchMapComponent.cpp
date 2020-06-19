@@ -6,7 +6,7 @@
 #include "Player.h"
 #include "SingleMap.h"
 
-ZoneSwitchMapComponent::ZoneSwitchMapComponent(class Actor *owner, class Player *player,
+ZoneSwitchMapComponent::ZoneSwitchMapComponent(class Object *owner, class Player *player,
                                                class SingleMap *singleMap,
                                                int updateOrder)
         : Component(owner, updateOrder), mPlayer(player), mSingleMap(singleMap)

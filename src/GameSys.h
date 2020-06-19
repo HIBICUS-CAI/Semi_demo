@@ -21,9 +21,9 @@ public:
 
     void Shutdown();
 
-    void AddActor(class Actor *actor);
+    void AddObject(class Object *object);
 
-    void RemoveActor(class Actor *actor);
+    void RemoveObject(class Object *object);
 
     class Texture *GetTexture(const std::string &fileName);
 
@@ -49,7 +49,7 @@ private:
     SDL_Window *mWindow;
     SDL_GLContext mContext;
     bool mIsRunning;
-    bool mIsUpdatingActors;
+    bool mIsUpdatingObjects;
     Uint32 mTicks;
 
 
@@ -59,9 +59,9 @@ private:
     class Player *mPlayer;
 
     //游戏中的actor
-    std::vector<class Actor *> mActors;
+    std::vector<class Object *> mObjects;
     //游戏中等待加入的actor
-    std::vector<class Actor *> mPendingActors;
+    std::vector<class Object *> mPendingObjects;
 
     //sprite着色器
     class Shader *mSpritesShader;

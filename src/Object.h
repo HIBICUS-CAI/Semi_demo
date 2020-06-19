@@ -2,8 +2,8 @@
 // Created by 蔡元涵 on 2020/6/2.
 //
 
-#ifndef SEMI_DEMO_ACTOR_H
-#define SEMI_DEMO_ACTOR_H
+#ifndef SEMI_DEMO_OBJECT_H
+#define SEMI_DEMO_OBJECT_H
 
 #include <vector>
 #include <cstdint>
@@ -11,7 +11,7 @@
 #include "Component.h"
 #include "GameSys.h"
 
-class Actor
+class Object
 {
 public:
     enum State
@@ -21,21 +21,21 @@ public:
         Dead        //死亡、销毁
     };
 
-    Actor(class GameSys *gameSys);
+    Object(class GameSys *gameSys);
 
-    virtual ~Actor();
+    virtual ~Object();
 
     void Update(float deltatime);
 
     void UpdateComponent(float deltatime);
 
     //可重写
-    virtual void UpdateActor(float deltatime);
+    virtual void UpdateObject(float deltatime);
 
     void ProcessInput(const uint8_t *keyState);
 
     //可重写
-    virtual void ActorInput(const uint8_t *keyState);
+    virtual void ObjectInput(const uint8_t *keyState);
 
     virtual bool IsPlayer()
     {
@@ -51,7 +51,7 @@ public:
 
     void setState(State mState)
     {
-        Actor::mState = mState;
+        Object::mState = mState;
     }
 
     const glm::vec2 &getPosition() const
@@ -61,7 +61,7 @@ public:
 
     void setPosition(const glm::vec2 &mPostion)
     {
-        Actor::mPosition = mPostion;
+        Object::mPosition = mPostion;
         mRecomputeWorldTransform = true;
     }
 
@@ -72,7 +72,7 @@ public:
 
     void setScale(float mScale)
     {
-        Actor::mScale = mScale;
+        Object::mScale = mScale;
         mRecomputeWorldTransform = true;
     }
 
@@ -83,7 +83,7 @@ public:
 
     void setMapPositon(const int row, const int col)
     {
-        Actor::mMapPositon = {row, col};
+        Object::mMapPositon = {row, col};
     }
 
     const glm::mat4 &getWorldTransform() const
@@ -120,4 +120,4 @@ private:
 };
 
 
-#endif //SEMI_DEMO_ACTOR_H
+#endif //SEMI_DEMO_OBJECT_H

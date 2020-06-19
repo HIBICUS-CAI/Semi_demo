@@ -3,10 +3,10 @@
 //
 
 #include "InputComponent.h"
-#include "Actor.h"
+#include "Object.h"
 
-InputComponent::InputComponent(class Actor *owner) : MoveComponent(owner), mForwardKey(0),
-                                                     mBackKey(0), mLeftKey(0), mRightKey(0)
+InputComponent::InputComponent(class Object *owner) : MoveComponent(owner), mForwardKey(0),
+                                                      mBackKey(0), mLeftKey(0), mRightKey(0)
 {
 
 }
