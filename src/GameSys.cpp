@@ -13,6 +13,7 @@
 #include "Object.h"
 #include "Player.h"
 #include "Maps.h"
+#include "House.h"
 
 GameSys::GameSys() : mWindow(nullptr), mContext(nullptr), mIsRunning(true), mIsUpdatingObjects(
         false)
@@ -191,6 +192,8 @@ void GameSys::LoadData()
 
     //创建地图
     mMaps = new Maps(this, mPlayer);
+
+    new House(this, mPlayer);
 }
 
 void GameSys::UnloadData()

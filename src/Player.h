@@ -17,6 +17,28 @@ public:
     {
         return true;
     }
+
+    class CollisionComponent *GetCC()
+    {
+        return mCC;
+    }
+
+    int getInputStatus() const
+    {
+        return mInputStatus;
+    }
+
+    void setInputStatus(int mInputStatus)
+    {
+        Player::mInputStatus = mInputStatus;
+    }
+
+    void RevertMove();
+
+private:
+    class CollisionComponent *mCC;
+    //↑1 →2 ↓3 ←4 ↗5 ↘6 ↙7 ↖8
+    int mInputStatus;
 };
 
 

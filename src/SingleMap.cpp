@@ -17,7 +17,7 @@ SingleMap::SingleMap(class GameSys *gameSys, class Maps *maps, std::string &mapP
     setPosition({x_pos * 1024.f, y_pos * 768.f});
     mPlayerLatePosition = {1, 0};
 
-    SpriteComponent *sc = new SpriteComponent(this, 130);
+    SpriteComponent *sc = new SpriteComponent(this, 100);
     sc->SetTexture(this->getGameSys()->GetTexture(mapPath));
 
     new ZoneSwitchMapComponent(this, this->getMaps()->getPlayer(), this,
