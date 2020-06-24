@@ -46,9 +46,11 @@ void InputComponent::ProcessInput(const uint8_t *keyState)
     if (keyState[mForwardKey] && keyState[mBackKey])
     {
         verSpeed = 0.f;
+        horSpeed = 0.f;
     }
     if (keyState[mLeftKey] && keyState[mRightKey])
     {
+        verSpeed = 0.f;
         horSpeed = 0.f;
     }
 

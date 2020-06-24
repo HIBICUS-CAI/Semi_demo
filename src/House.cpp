@@ -9,7 +9,8 @@
 #include "ZoneSwitchHouseComponent.h"
 
 House::House(GameSys *gameSys, Player *player) : Object(gameSys), mPlayer(player),
-                                                 mPlayerLatePosition({1, 0})
+                                                 mPlayerLatePosition({1, 0}),
+                                                 mIsPlayerInHouse(false)
 {
     setPosition({200.f, 100.f});
     setID(1);
@@ -18,7 +19,7 @@ House::House(GameSys *gameSys, Player *player) : Object(gameSys), mPlayer(player
     sc->SetTexture(gameSys->GetTexture("../Assets/house.png"));
 
     mCC = new CollisionComponent(this);
-    mCC->setRadius(150.f * 1.414f);
+    mCC->setRadius(180.f * 1.414f);     //在边角乱按的时候会卡出边界??
 
     new ZoneSwitchHouseComponent(this, player, this, 10);
 
@@ -59,15 +60,21 @@ void House::UpdateObject(float deltatime)
 {
     if (IsCollided(*mCC, *(getPlayer()->GetCC())))
     {
+        mIsPlayerInHouse = true;
         for (auto bd : mBorderDeciders)
         {
             bd->setState(Active);
         }
     } else
     {
-        for (auto bd : mBorderDeciders)
+        if (mIsPlayerInHouse)
         {
-            bd->setState(Pause);
+            for (auto bd : mBorderDeciders)
+            {
+                bd->setState(Pause);
+            }
+
+            mIsPlayerInHouse = false;
         }
     }
 }
