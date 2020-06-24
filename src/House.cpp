@@ -10,7 +10,7 @@
 
 House::House(GameSys *gameSys, Player *player) : Object(gameSys), mPlayer(player),
                                                  mPlayerLatePosition({1, 0}),
-                                                 mIsPlayerInHouse(false)
+                                                 mIsPlayerNearHouse(false)
 {
     setPosition({200.f, 100.f});
     setID(1);
@@ -60,21 +60,21 @@ void House::UpdateObject(float deltatime)
 {
     if (IsCollided(*mCC, *(getPlayer()->GetCC())))
     {
-        mIsPlayerInHouse = true;
+        mIsPlayerNearHouse = true;
         for (auto bd : mBorderDeciders)
         {
             bd->setState(Active);
         }
     } else
     {
-        if (mIsPlayerInHouse)
+        if (mIsPlayerNearHouse)
         {
             for (auto bd : mBorderDeciders)
             {
                 bd->setState(Pause);
             }
 
-            mIsPlayerInHouse = false;
+            mIsPlayerNearHouse = false;
         }
     }
 }

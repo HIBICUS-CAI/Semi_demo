@@ -44,7 +44,7 @@ public:
 private:
     int mID;
     class Player *mPlayer;
-    bool mIsPlayerInHouse;
+    bool mIsPlayerNearHouse;
 
     class CollisionComponent *mCC;
 
