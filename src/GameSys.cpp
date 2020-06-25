@@ -172,7 +172,10 @@ void GameSys::GenerateOutput()
     mSpriteVerts->SetActive();
     for (auto sprite : mSprites)
     {
-        sprite->Draw(mSpritesShader);
+        if (sprite->getIsVisible())
+        {
+            sprite->Draw(mSpritesShader);
+        }
     }
 
     SDL_GL_SwapWindow(mWindow);

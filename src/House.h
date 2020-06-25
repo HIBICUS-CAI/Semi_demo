@@ -8,6 +8,8 @@
 #include <vector>
 #include "Object.h"
 #include "Player.h"
+#include "InnerMap.h"
+#include "SpriteComponent.h"
 
 class House : public Object
 {
@@ -41,6 +43,11 @@ public:
         House::mPlayerLatePosition = mPlayerLatePosition;
     }
 
+    SpriteComponent *getSC() const
+    {
+        return mSC;
+    }
+
 private:
     int mID;
     class Player *mPlayer;
@@ -49,6 +56,10 @@ private:
     class CollisionComponent *mCC;
 
     std::vector<class BorderDecider *> mBorderDeciders;
+
+    class InnerMap *mInnerMap;
+
+    class SpriteComponent *mSC;
 
     glm::ivec2 mPlayerLatePosition;
 };

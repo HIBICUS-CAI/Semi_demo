@@ -4,7 +4,6 @@
 
 #include "House.h"
 #include "BorderDecider.h"
-#include "SpriteComponent.h"
 #include "CollisionComponent.h"
 #include "ZoneSwitchHouseComponent.h"
 
@@ -15,8 +14,8 @@ House::House(GameSys *gameSys, Player *player) : Object(gameSys), mPlayer(player
     setPosition({200.f, 100.f});
     setID(1);
 
-    SpriteComponent *sc = new SpriteComponent(this, 110);
-    sc->SetTexture(gameSys->GetTexture("../Assets/house.png"));
+    mSC = new SpriteComponent(this, 110);
+    mSC->SetTexture(gameSys->GetTexture("../Assets/house.png"));
 
     mCC = new CollisionComponent(this);
     mCC->setRadius(180.f * 1.414f);     //在边角乱按的时候会卡出边界??
@@ -54,6 +53,8 @@ House::House(GameSys *gameSys, Player *player) : Object(gameSys), mPlayer(player
     {
         bd->setState(Pause);
     }
+
+    mInnerMap = new InnerMap(gameSys, player, this);
 }
 
 void House::UpdateObject(float deltatime)
@@ -65,6 +66,7 @@ void House::UpdateObject(float deltatime)
         {
             bd->setState(Active);
         }
+        mInnerMap->setState(Active);
     } else
     {
         if (mIsPlayerNearHouse)
@@ -73,6 +75,7 @@ void House::UpdateObject(float deltatime)
             {
                 bd->setState(Pause);
             }
+            mInnerMap->setState(Pause);
 
             mIsPlayerNearHouse = false;
         }

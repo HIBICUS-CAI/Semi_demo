@@ -13,7 +13,8 @@
 SpriteComponent::SpriteComponent(Object *owner, int drawOrder) : Component(owner),
                                                                  mTexture(nullptr),
                                                                  mDrawOrder(drawOrder),
-                                                                 mTexWidth(0), mTexHeight(0)
+                                                                 mTexWidth(0), mTexHeight(0),
+                                                                 mIsVisible(true)
 {
     mOwner->getGameSys()->AddSprite(this);
 }

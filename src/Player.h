@@ -8,6 +8,8 @@
 #include <glm.hpp>
 #include "Object.h"
 
+const glm::ivec2 PLAYERINITPOS = glm::ivec2{1, 0};
+
 class Player : public Object
 {
 public:
@@ -37,6 +39,7 @@ public:
 
 private:
     class CollisionComponent *mCC;
+
     //↑1 →2 ↓3 ←4 ↗5 ↘6 ↙7 ↖8
     int mInputStatus;
 };
