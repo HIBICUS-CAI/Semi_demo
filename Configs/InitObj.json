@@ -2,7 +2,8 @@
   "encoding": "UTF-8",
 
   "Player": {
-    "Tex": "../Assets/man_1.png"
+    "Tex": "../Assets/man_1.png",
+    "MoveSpeed": 300
   },
 
   "Maps": {
