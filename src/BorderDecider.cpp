@@ -8,10 +8,10 @@
 
 BorderDecider::BorderDecider(class GameSys *gameSys, class Player *player) : Object(gameSys),
                                                                              mCC(nullptr),
-                                                                             mPlayer(player),
-                                                                             mPlayerLatePosition(
-                                                                                     {1, 0})
+                                                                             mPlayer(player)
 {
+    mPlayerLatePosition = gameSys->getInitPos();
+
     new ZoneSwitchHouseComponent(this, player, this, 10);
 
     mCC = new CollisionComponent(this);

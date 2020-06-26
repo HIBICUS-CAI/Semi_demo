@@ -13,10 +13,14 @@ Player::Player(GameSys *gameSys) : Object(gameSys), mCC(nullptr), mInputStatus(0
 //    setScale(0.125f / 2.0f);
 //    setScale(20.f);
     //设置初始地图块
-    setMapPositon(1, 0);
+    int initX = getGameSys()->GetInitObjRoot()["Maps"]["StartMapPos"][0].asInt();
+    int initY = getGameSys()->GetInitObjRoot()["Maps"]["StartMapPos"][1].asInt();
+    setMapPositon(initX, initY);
+    gameSys->setInitPos({initX, initY});
+
     SpriteComponent *sc = new SpriteComponent(this, 150);
     sc->SetTexture(
-            gameSys->GetTexture("../Assets/man_1.png"));
+            gameSys->GetTexture(gameSys->GetInitObjRoot()["Player"]["Tex"].asString()));
 
     InputComponent *ic = new InputComponent(this, this);
     ic->setForwardKey(SDL_SCANCODE_W);

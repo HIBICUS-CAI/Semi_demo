@@ -7,11 +7,16 @@
 #include "ZoneSwitchHouseComponent.h"
 
 InnerMap::InnerMap(class GameSys *gameSys, class Player *player, class House *house) : Object(
-        gameSys), mPlayer(player), mHouse(house), mPlayerLatePosition(PLAYERINITPOS)
+        gameSys), mPlayer(player), mHouse(house)
 {
-    setPosition(house->getPosition());
+    mPlayerLatePosition = gameSys->getInitPos();
+
+//    setPosition(house->getPosition());
+    setPosition({house->getThisHouse()["Position"][0].asFloat(),
+                 house->getThisHouse()["Position"][1].asFloat()});
+
     mSC = new SpriteComponent(this, 120);
-    mSC->SetTexture(gameSys->GetTexture("../Assets/nakade.png"));
+    mSC->SetTexture(gameSys->GetTexture(house->getThisHouse()["InTex"].asString()));
     mSC->setIsVisible(false);
 
     setState(Pause);

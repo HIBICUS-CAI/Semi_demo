@@ -6,6 +6,7 @@
 #include <glm.hpp>
 #include <algorithm>
 #include "GameSys.h"
+#include "Tools.h"
 #include "Shader.h"
 #include "VertexArray.h"
 #include "Texture.h"
@@ -190,6 +191,8 @@ void GameSys::Shutdown()
 
 void GameSys::LoadData()
 {
+    mInitObjRoot = GetJsonRoot("../Configs/InitObj.json");
+
     //创建游戏actor
     mPlayer = new Player(this);
 
@@ -320,4 +323,9 @@ void GameSys::RemoveSprite(SpriteComponent *sprite)
 {
     auto iter = std::find(mSprites.begin(), mSprites.end(), sprite);
     mSprites.erase(iter);
+}
+
+const Json::Value &GameSys::GetInitObjRoot() const
+{
+    return mInitObjRoot;
 }

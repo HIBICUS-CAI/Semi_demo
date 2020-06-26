@@ -8,6 +8,7 @@
 #include <vector>
 #include <cstdint>
 #include <glm.hpp>
+#include <json.h>
 #include "Component.h"
 #include "GameSys.h"
 

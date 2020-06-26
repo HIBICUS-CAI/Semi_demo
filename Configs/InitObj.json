@@ -1,0 +1,146 @@
+{
+  "encoding": "UTF-8",
+
+  "Player": {
+    "Tex": "../Assets/man_1.png"
+  },
+
+  "Maps": {
+    "StartMapPos": [
+      2,
+      0
+    ],
+    "SingleMap": [
+      {
+        "Pos": [
+          0,
+          0
+        ],
+        "Tex": "../Assets/1.png"
+      },
+      {
+        "Pos": [
+          1,
+          0
+        ],
+        "Tex": "../Assets/2.png"
+      },
+      {
+        "Pos": [
+          2,
+          0
+        ],
+        "Tex": "../Assets/3.png"
+      },
+      {
+        "Pos": [
+          0,
+          1
+        ],
+        "Tex": "../Assets/4.png"
+      },
+      {
+        "Pos": [
+          1,
+          1
+        ],
+        "Tex": "../Assets/5.png"
+      },
+      {
+        "Pos": [
+          2,
+          1
+        ],
+        "Tex": "../Assets/6.png"
+      },
+      {
+        "Pos": [
+          0,
+          2
+        ],
+        "Tex": "../Assets/7.png"
+      },
+      {
+        "Pos": [
+          1,
+          2
+        ],
+        "Tex": "../Assets/8.png"
+      },
+      {
+        "Pos": [
+          2,
+          2
+        ],
+        "Tex": "../Assets/9.png"
+      }
+    ]
+  },
+  "Houses": [
+    {
+      "ID": 0,
+      "MapPos": [
+        1,
+        0
+      ],
+      "Position": [
+        200,
+        100
+      ],
+      "OutTex": "../Assets/house.png",
+      "InTex": "../Assets/nakade.png"
+    },
+    {
+      "ID": 1,
+      "MapPos": [
+        1,
+        1
+      ],
+      "Position": [
+        154,
+        175
+      ],
+      "OutTex": "pathOut2",
+      "InTex": "pathIn2"
+    },
+    {
+      "ID": 2,
+      "MapPos": [
+        2,
+        0
+      ],
+      "Position": [
+        100,
+        145
+      ],
+      "OutTex": "pathOut3",
+      "InTex": "pathIn3"
+    },
+    {
+      "ID": 3,
+      "MapPos": [
+        2,
+        1
+      ],
+      "Position": [
+        135,
+        188
+      ],
+      "OutTex": "pathOut4",
+      "InTex": "pathIn4"
+    },
+    {
+      "ID": 4,
+      "MapPos": [
+        0,
+        0
+      ],
+      "Position": [
+        187,
+        125
+      ],
+      "OutTex": "pathOut5",
+      "InTex": "pathIn5"
+    }
+  ]
+}

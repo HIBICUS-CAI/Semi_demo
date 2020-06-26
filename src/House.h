@@ -48,6 +48,11 @@ public:
         return mSC;
     }
 
+    const Json::Value &getThisHouse() const
+    {
+        return ThisHouse;
+    }
+
 private:
     int mID;
     class Player *mPlayer;
@@ -62,6 +67,8 @@ private:
     class SpriteComponent *mSC;
 
     glm::ivec2 mPlayerLatePosition;
+
+    Json::Value ThisHouse;
 };
 
 

@@ -6,9 +6,11 @@
 #define SEMI_DEMO_GAMESYS_H
 
 #include <SDL.h>
+#include <json.h>
 #include <vector>
 #include <unordered_map>
 #include <string>
+#include <ext/vector_int2.hpp>
 
 class GameSys
 {
@@ -30,6 +32,18 @@ public:
     void AddSprite(class SpriteComponent *sprite);
 
     void RemoveSprite(class SpriteComponent *sprite);
+
+    const Json::Value &GetInitObjRoot() const;
+
+    const glm::ivec2 &getInitPos() const
+    {
+        return mInitPos;
+    }
+
+    void setInitPos(const glm::ivec2 &mInitPos)
+    {
+        GameSys::mInitPos = mInitPos;
+    }
 
 private:
     void ProcessInput();
@@ -57,6 +71,7 @@ private:
 
     class Maps *mMaps;
     class Player *mPlayer;
+    glm::ivec2 mInitPos;
 
     //游戏中的actor
     std::vector<class Object *> mObjects;
@@ -74,6 +89,10 @@ private:
 
     //精灵组件要画的图
     std::vector<class SpriteComponent *> mSprites;
+
+    //InitObj.json对象
+    Json::Value mInitObjRoot;
+
 };
 
 
