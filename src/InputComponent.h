@@ -11,7 +11,7 @@
 class InputComponent : public MoveComponent
 {
 public:
-    InputComponent(class Object *owner);
+    InputComponent(class Object *owner, class Player *player);
 
     void ProcessInput(const uint8_t *keyState) override;
 
@@ -83,6 +83,8 @@ public:
 private:
     float mHorMoveSpeed;
     float mVerMoveSpeed;
+
+    class Player *mPlayer;
 
     int mForwardKey;
     int mBackKey;

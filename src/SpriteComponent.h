@@ -35,8 +35,21 @@ public:
         return mTexWidth;
     }
 
+    bool getIsVisible() const
+    {
+        return mIsVisible;
+    }
+
+    void setIsVisible(bool mIsVisible)
+    {
+        SpriteComponent::mIsVisible = mIsVisible;
+    }
+
 protected:
     class Texture *mTexture;
+
+    //是否需要渲染贴图
+    bool mIsVisible;
 
     int mDrawOrder;
     int mTexHeight;

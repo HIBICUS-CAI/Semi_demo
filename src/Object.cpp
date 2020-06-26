@@ -21,7 +21,7 @@ Object::~Object()
 
 void Object::Update(float deltatime)
 {
-    if (mState == Active || mState == Pause)
+    if (mState == Active)
     {
         ComputeWorldTransform();
 

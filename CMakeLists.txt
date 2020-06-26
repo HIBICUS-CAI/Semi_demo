@@ -7,12 +7,14 @@ set(CMAKE_CXX_STANDARD 14)
 set(SDL2_H /usr/local/include/SDL2)
 set(GLEW_H /usr/local/include/GL)
 set(GLM_H /usr/local/include/glm)
-include_directories(${SDL2_H} ${GLEW_H} ${GLM_H})
+set(JSON_H /usr/local/include/json)
+include_directories(${SDL2_H} ${GLEW_H} ${GLM_H} ${JSON_H})
 
 #添加目标链接
 set(SDL2_LINK /usr/local/lib/libSDL2.dylib)
 set(GLEW_LINK /usr/local/lib/libGLEW.dylib)
-link_libraries(${SDL2_LINK} ${GLEW_LINK} ${SOIL_LINK})
+set(JSON_LINK /usr/local/lib/libjsoncpp.dylib)
+link_libraries(${SDL2_LINK} ${GLEW_LINK} ${JSON_LINK})
 
 aux_source_directory(src/. DIRS_SRCS)
 

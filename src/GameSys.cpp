@@ -6,6 +6,7 @@
 #include <glm.hpp>
 #include <algorithm>
 #include "GameSys.h"
+#include "Tools.h"
 #include "Shader.h"
 #include "VertexArray.h"
 #include "Texture.h"
@@ -13,6 +14,7 @@
 #include "Object.h"
 #include "Player.h"
 #include "Maps.h"
+#include "House.h"
 
 GameSys::GameSys() : mWindow(nullptr), mContext(nullptr), mIsRunning(true), mIsUpdatingObjects(
         false)
@@ -171,7 +173,10 @@ void GameSys::GenerateOutput()
     mSpriteVerts->SetActive();
     for (auto sprite : mSprites)
     {
-        sprite->Draw(mSpritesShader);
+        if (sprite->getIsVisible())
+        {
+            sprite->Draw(mSpritesShader);
+        }
     }
 
     SDL_GL_SwapWindow(mWindow);
@@ -186,11 +191,15 @@ void GameSys::Shutdown()
 
 void GameSys::LoadData()
 {
+    mInitObjRoot = GetJsonRoot("../Configs/InitObj.json");
+
     //创建游戏actor
     mPlayer = new Player(this);
 
     //创建地图
     mMaps = new Maps(this, mPlayer);
+
+    new House(this, mPlayer);
 }
 
 void GameSys::UnloadData()
@@ -314,4 +323,9 @@ void GameSys::RemoveSprite(SpriteComponent *sprite)
 {
     auto iter = std::find(mSprites.begin(), mSprites.end(), sprite);
     mSprites.erase(iter);
+}
+
+const Json::Value &GameSys::GetInitObjRoot() const
+{
+    return mInitObjRoot;
 }
