@@ -6,6 +6,7 @@
 #define SEMI_DEMO_COMPONENT_H
 
 #include <cstdint>
+#include <ext/vector_float2.hpp>
 
 class Component
 {
@@ -19,6 +20,9 @@ public:
     {}
 
     virtual void ProcessInput(const uint8_t *keyState)
+    {}
+
+    virtual void UIInput(const glm::vec2 MouseClickPos)
     {}
 
     //特殊场景下的调用方法

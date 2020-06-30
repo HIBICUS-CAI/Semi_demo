@@ -33,6 +33,8 @@ public:
 
     void RemoveSprite(class SpriteComponent *sprite);
 
+    void BeginGame();
+
     const Json::Value &GetInitObjRoot() const;
 
     const glm::ivec2 &getInitPos() const
@@ -43,6 +45,11 @@ public:
     void setInitPos(const glm::ivec2 &mInitPos)
     {
         GameSys::mInitPos = mInitPos;
+    }
+
+    const glm::ivec2 &getMousePos() const
+    {
+        return mMousePos;
     }
 
 private:
@@ -58,7 +65,9 @@ private:
 
     void LoadData();
 
-    void UnloadData();
+    void LoadStartUI();
+
+    void UnloadAllData();
 
     SDL_Window *mWindow;
     SDL_GLContext mContext;
@@ -69,6 +78,7 @@ private:
 
     float mDeltaTime;
 
+    class UIObject *mStartUI;
     class Maps *mMaps;
     class Player *mPlayer;
     glm::ivec2 mInitPos;
@@ -92,6 +102,8 @@ private:
 
     //InitObj.json对象
     Json::Value mInitObjRoot;
+
+    glm::ivec2 mMousePos;
 
 };
 

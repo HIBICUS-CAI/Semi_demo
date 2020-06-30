@@ -15,9 +15,11 @@
 #include "Player.h"
 #include "Maps.h"
 #include "House.h"
+#include "UIObject.h"
+#include "Button.h"
 
 GameSys::GameSys() : mWindow(nullptr), mContext(nullptr), mIsRunning(true), mIsUpdatingObjects(
-        false)
+        false), mMousePos(0, 0)
 {
 
 }
@@ -69,7 +71,8 @@ bool GameSys::InitGame()
     //创建纹理贴图并load actor
     CreateSpriteVerts();
 
-    LoadData();
+    //LoadData();
+    LoadStartUI();
 
     mTicks = SDL_GetTicks();
 
@@ -96,6 +99,17 @@ void GameSys::ProcessInput()
             case SDL_QUIT:
                 mIsRunning = false;
                 break;
+            case SDL_MOUSEBUTTONDOWN:
+                mMousePos = {event.button.x - 512, 384 - event.button.y};
+
+                mIsUpdatingObjects = true;
+                for (auto object : mObjects)
+                {
+                    mMousePos = {event.button.x - 512, 384 - event.button.y};
+                    object->UIInput({static_cast<float>(mMousePos.x),
+                                     static_cast<float>(mMousePos.y)});
+                }
+                mIsUpdatingObjects = false;
             default:
                 break;
         }
@@ -202,7 +216,20 @@ void GameSys::LoadData()
     new House(this, mPlayer);
 }
 
-void GameSys::UnloadData()
+void GameSys::LoadStartUI()
+{
+    mStartUI = new UIObject(this, "../Assets/StartBG.png");
+
+    mStartUI->CreateButton(this, mStartUI, "../Assets/button_red.png",
+                           0, "Game Start", {150.f, 50.f},
+                           1);
+
+    mStartUI->CreateButton(this, mStartUI, "../Assets/button_yellow.png",
+                           0, "Game Start", {150.f, -50.f},
+                           2);
+}
+
+void GameSys::UnloadAllData()
 {
     while (!mObjects.empty())
     {
@@ -328,4 +355,9 @@ void GameSys::RemoveSprite(SpriteComponent *sprite)
 const Json::Value &GameSys::GetInitObjRoot() const
 {
     return mInitObjRoot;
+}
+
+void GameSys::BeginGame()
+{
+    LoadData();
 }
