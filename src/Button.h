@@ -12,11 +12,16 @@ class Button : public Object
 {
 public:
     Button(class GameSys *gameSys, class UIObject *uiObject, std::string texPath,
-           int buttonType, std::string text, glm::vec2 buttonPos, int buttonFunc);
+           int buttonType, std::string text, glm::vec2 buttonPos, int buttonFunc, int size);
 
     SpriteComponent *getSC() const
     {
         return mSC;
+    }
+
+    SpriteComponent *getFontSC() const
+    {
+        return mFontSC;
     }
 
     int getButtonType() const
@@ -31,9 +36,15 @@ public:
 
 private:
     class SpriteComponent *mSC;
+
+    //文字贴图
+    class SpriteComponent *mFontSC;
+
     int mButtonType;
     int mButtonFunc;
     std::string mText;
+
+    class Font *mFont;
 };
 
 

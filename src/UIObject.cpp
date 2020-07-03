@@ -6,21 +6,26 @@
 #include "SpriteComponent.h"
 #include "UIInputComponent.h"
 #include "Button.h"
+#include "Font.h"
 
 UIObject::UIObject(class GameSys *gameSys, std::string texPath) : Object(gameSys),
-                                                                  mGameSys(gameSys)
+                                                                  mGameSys(gameSys),
+                                                                  mHasChildUIO(false)
 {
     mSC = new SpriteComponent(this, 10);
     mSC->SetTexture(gameSys->GetTexture(texPath));
+
+    mFont = gameSys->GetFont("../Assets/heiti.ttc");
 
     mUIIC = new UIInputComponent(this, this);
 }
 
 void
 UIObject::CreateButton(class GameSys *gameSys, class UIObject *uiObject, std::string texPath,
-                       int buttonType, std::string text, glm::vec2 buttonPos, int buttonFunc)
+                       int buttonType, std::string text, glm::vec2 buttonPos, int buttonFunc,
+                       int size)
 {
-    new Button(gameSys, uiObject, texPath, buttonType, text, buttonPos, buttonFunc);
+    new Button(gameSys, uiObject, texPath, buttonType, text, buttonPos, buttonFunc, size);
 }
 
 void UIObject::AddButton(class Button *button)
@@ -33,6 +38,7 @@ void UIObject::TurnOff()
     for (auto button : mButtons)
     {
         button->getSC()->setIsVisible(false);
+        button->getFontSC()->setIsVisible(false);
         button->setState(Pause);
     }
 
@@ -45,6 +51,7 @@ void UIObject::TurnOn()
     for (auto button : mButtons)
     {
         button->getSC()->setIsVisible(true);
+        button->getFontSC()->setIsVisible(true);
         button->setState(Active);
     }
 
@@ -68,10 +75,19 @@ void UIObject::ButtonEvent(class Button *button)
             break;
         case 2:
             SDL_Log("Help button has been pressed.");
-            mChildUIO = new UIObject(mGameSys, "../Assets/help_window.png");
-            mChildUIO->setParentUIO(this);
-            mChildUIO->CreateButton(mGameSys, mChildUIO, "../Assets/cross-1.png", 1, "",
-                                    {256.f, 192.f}, 3);
+            if (mHasChildUIO)
+            {
+                mChildUIO->TurnOn();
+            } else
+            {
+                mHasChildUIO = true;
+                //需要修改贴图,或者找出让SDL_TTF换行的方法,当前方案需要计算字符数量,很嗨麻烦
+                mChildUIO = new UIObject(mGameSys, "../Assets/help_window.png");
+                mChildUIO->setParentUIO(this);
+                mChildUIO->CreateButton(mGameSys, mChildUIO, "../Assets/cross-1.png",
+                                        1, " ", {256.f, 192.f},
+                                        3);
+            }
 
             TurnOff();
             break;

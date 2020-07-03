@@ -10,6 +10,7 @@
 #include "Shader.h"
 #include "VertexArray.h"
 #include "Texture.h"
+#include "Font.h"
 #include "SpriteComponent.h"
 #include "Object.h"
 #include "Player.h"
@@ -30,6 +31,12 @@ bool GameSys::InitGame()
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
     {
         SDL_Log("fail to init SDL: %s", SDL_GetError());
+        return false;
+    }
+
+    if (TTF_Init() != 0)
+    {
+        SDL_Log("Failed to initialize SDL_ttf");
         return false;
     }
 
@@ -200,6 +207,7 @@ void GameSys::Shutdown()
 {
     SDL_GL_DeleteContext(mContext);
     SDL_DestroyWindow(mWindow);
+    TTF_Quit();
     SDL_Quit();
 }
 
@@ -221,12 +229,12 @@ void GameSys::LoadStartUI()
     mStartUI = new UIObject(this, "../Assets/StartBG.png");
 
     mStartUI->CreateButton(this, mStartUI, "../Assets/button_red.png",
-                           0, "Game Start", {150.f, 50.f},
-                           1);
+                           0, "游戏开始", {150.f, 50.f},
+                           1, 18);
 
     mStartUI->CreateButton(this, mStartUI, "../Assets/button_yellow.png",
-                           0, "Game Start", {150.f, -50.f},
-                           2);
+                           0, "游戏帮助", {150.f, -50.f},
+                           2, 18);
 }
 
 void GameSys::UnloadAllData()
@@ -329,6 +337,29 @@ Texture *GameSys::GetTexture(const std::string &fileName)
     }
 
     return tex;
+}
+
+class Font *GameSys::GetFont(const std::string &fileName)
+{
+    auto iter = mFonts.find(fileName);
+    if (iter != mFonts.end())
+    {
+        return iter->second;
+    } else
+    {
+        Font *font = new Font(this);
+        if (font->Load(fileName))
+        {
+            mFonts.emplace(fileName, font);
+        } else
+        {
+            font->Unload();
+            delete font;
+            font = nullptr;
+        }
+
+        return font;
+    }
 }
 
 void GameSys::AddSprite(SpriteComponent *sprite)

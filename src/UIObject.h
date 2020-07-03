@@ -14,7 +14,8 @@ public:
     UIObject(class GameSys *gameSys, std::string texPath);
 
     void CreateButton(class GameSys *gameSys, class UIObject *uiObject, std::string texPath,
-                      int buttonType, std::string text, glm::vec2 buttonPos, int buttonFunc);
+                      int buttonType, std::string text, glm::vec2 buttonPos, int buttonFunc,
+                      int size = 16);
 
     void AddButton(class Button *button);
 
@@ -49,8 +50,15 @@ public:
         mParentUIO = mParentUio;
     }
 
+    Font *getFont() const
+    {
+        return mFont;
+    }
+
 private:
     std::vector<class Button *> mButtons;
+
+    class Font *mFont;
 
     class SpriteComponent *mSC;
 
@@ -58,7 +66,10 @@ private:
 
     class GameSys *mGameSys;
 
+    bool mHasChildUIO;
+
     class UIObject *mChildUIO;
+
     class UIObject *mParentUIO;
 };
 
