@@ -44,7 +44,7 @@ void Font::Unload()
 }
 
 class Texture *
-Font::RenderText(const std::string &text, int pointSize, const glm::vec3 &color)
+Font::RenderText(const std::string &text, int pointSize, int textWidth, const glm::vec3 &color)
 {
     Texture *texture = nullptr;
     SDL_Color sdlColor;
@@ -59,7 +59,7 @@ Font::RenderText(const std::string &text, int pointSize, const glm::vec3 &color)
         TTF_Font *font = iter->second;
 //        SDL_Surface *surface = TTF_RenderUTF8_Blended(font, text.c_str(), sdlColor);
         SDL_Surface *surface = TTF_RenderUTF8_Blended_Wrapped(font, text.c_str(), sdlColor,
-                                                              500);
+                                                              textWidth);
         if (surface != nullptr)
         {
             texture = new Texture();

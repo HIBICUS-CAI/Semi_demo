@@ -6,6 +6,7 @@
 #include "SpriteComponent.h"
 #include "UIInputComponent.h"
 #include "Button.h"
+#include "TextZone.h"
 #include "Font.h"
 
 UIObject::UIObject(class GameSys *gameSys, std::string texPath) : Object(gameSys),
@@ -28,9 +29,40 @@ UIObject::CreateButton(class GameSys *gameSys, class UIObject *uiObject, std::st
     new Button(gameSys, uiObject, texPath, buttonType, text, buttonPos, buttonFunc, size);
 }
 
+void
+UIObject::CreateTextZone(class GameSys *gameSys, class UIObject *uiObject, glm::vec2 positon,
+                         int textWidth, int id)
+{
+    new TextZone(gameSys, uiObject, positon, textWidth, id);
+}
+
 void UIObject::AddButton(class Button *button)
 {
     mButtons.emplace_back(button);
+}
+
+void UIObject::AddText(class TextZone *text)
+{
+    mTexts.emplace_back(text);
+}
+
+TextZone *UIObject::FindText(int id)
+{
+    TextZone *textZone = nullptr;
+    for (auto text : mTexts)
+    {
+        if (text->getID() == id)
+        {
+            textZone = text;
+            break;
+        }
+    }
+    if (textZone == nullptr)
+    {
+        SDL_Log("TextZone Not Found With ID: %d", id);
+    }
+
+    return textZone;
 }
 
 void UIObject::TurnOff()
@@ -40,6 +72,11 @@ void UIObject::TurnOff()
         button->getSC()->setIsVisible(false);
         button->getFontSC()->setIsVisible(false);
         button->setState(Pause);
+    }
+    for (auto text : mTexts)
+    {
+        text->getFontSC()->setIsVisible(false);
+        text->setState(Pause);
     }
 
     mSC->setIsVisible(false);
@@ -53,6 +90,11 @@ void UIObject::TurnOn()
         button->getSC()->setIsVisible(true);
         button->getFontSC()->setIsVisible(true);
         button->setState(Active);
+    }
+    for (auto text : mTexts)
+    {
+        text->getFontSC()->setIsVisible(true);
+        text->setState(Active);
     }
 
     mSC->setIsVisible(true);
@@ -87,6 +129,14 @@ void UIObject::ButtonEvent(class Button *button)
                 mChildUIO->CreateButton(mGameSys, mChildUIO, "../Assets/cross-1.png",
                                         1, " ", {256.f, 192.f},
                                         3);
+                mChildUIO->CreateTextZone(mGameSys, mChildUIO, mChildUIO->getPosition(),
+                                          300, 0);
+                TextZone *text = mChildUIO->FindText(0);
+                if (text != nullptr)
+                {
+                    text->setPosition({getPosition().x, getPosition().y + 100.f});
+                    text->setText("这里是帮助信息，今天天气好好啊。");
+                }
             }
 
             TurnOff();

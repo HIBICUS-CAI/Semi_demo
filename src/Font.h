@@ -25,6 +25,7 @@ public:
     // 使用string、font渲染texture
     class Texture *RenderText(const std::string &text,
                               int pointSize = 16,
+                              int textWidth = 500,
                               const glm::vec3 &color = {0.f, 0.f, 0.f});
 
 private:

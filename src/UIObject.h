@@ -17,7 +17,14 @@ public:
                       int buttonType, std::string text, glm::vec2 buttonPos, int buttonFunc,
                       int size = 16);
 
+    void CreateTextZone(class GameSys *gameSys, class UIObject *uiObject, glm::vec2 positon,
+                        int textWidth, int id);
+
     void AddButton(class Button *button);
+
+    void AddText(class TextZone *text);
+
+    TextZone *FindText(int id);
 
     void TurnOff();
 
@@ -57,6 +64,7 @@ public:
 
 private:
     std::vector<class Button *> mButtons;
+    std::vector<class TextZone *> mTexts;
 
     class Font *mFont;
 
