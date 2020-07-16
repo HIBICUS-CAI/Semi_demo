@@ -14,7 +14,8 @@ include_directories(${SDL2_H} ${GLEW_H} ${GLM_H} ${JSON_H})
 set(SDL2_LINK /usr/local/lib/libSDL2.dylib)
 set(GLEW_LINK /usr/local/lib/libGLEW.dylib)
 set(JSON_LINK /usr/local/lib/libjsoncpp.dylib)
-link_libraries(${SDL2_LINK} ${GLEW_LINK} ${JSON_LINK})
+set(SDL2TTF_LINK /usr/local/lib/libSDL2_ttf.dylib)
+link_libraries(${SDL2_LINK} ${GLEW_LINK} ${JSON_LINK} ${SDL2TTF_LINK})
 
 aux_source_directory(src/. DIRS_SRCS)
 

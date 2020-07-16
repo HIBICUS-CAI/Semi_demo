@@ -27,8 +27,8 @@ Player::Player(GameSys *gameSys) : Object(gameSys), mCC(nullptr), mInputStatus(0
     ic->setBackKey(SDL_SCANCODE_S);
     ic->setLeftKey(SDL_SCANCODE_A);
     ic->setRightKey(SDL_SCANCODE_D);
-    ic->setHorMoveSpeed(300.0f);
-    ic->setVerMoveSpeed(300.0f);
+    ic->setHorMoveSpeed(gameSys->GetInitObjRoot()["Player"]["MoveSpeed"].asFloat());
+    ic->setVerMoveSpeed(gameSys->GetInitObjRoot()["Player"]["MoveSpeed"].asFloat());
 
     mCC = new CollisionComponent(this);
     mCC->setRadius(10.f);

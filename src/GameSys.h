@@ -6,6 +6,7 @@
 #define SEMI_DEMO_GAMESYS_H
 
 #include <SDL.h>
+#include <SDL_ttf.h>
 #include <json.h>
 #include <vector>
 #include <unordered_map>
@@ -29,9 +30,13 @@ public:
 
     class Texture *GetTexture(const std::string &fileName);
 
+    class Font *GetFont(const std::string &fileName);
+
     void AddSprite(class SpriteComponent *sprite);
 
     void RemoveSprite(class SpriteComponent *sprite);
+
+    void BeginGame();
 
     const Json::Value &GetInitObjRoot() const;
 
@@ -43,6 +48,11 @@ public:
     void setInitPos(const glm::ivec2 &mInitPos)
     {
         GameSys::mInitPos = mInitPos;
+    }
+
+    const glm::ivec2 &getMousePos() const
+    {
+        return mMousePos;
     }
 
 private:
@@ -58,7 +68,9 @@ private:
 
     void LoadData();
 
-    void UnloadData();
+    void LoadStartUI();
+
+    void UnloadAllData();
 
     SDL_Window *mWindow;
     SDL_GLContext mContext;
@@ -69,8 +81,12 @@ private:
 
     float mDeltaTime;
 
+    class UIObject *mStartUI;
+
     class Maps *mMaps;
+
     class Player *mPlayer;
+
     glm::ivec2 mInitPos;
 
     //游戏中的actor
@@ -84,14 +100,17 @@ private:
     //VAO
     class VertexArray *mSpriteVerts;
 
-    //储存加载的贴图
+    //储存加载的贴图、字体
     std::unordered_map<std::string, class Texture *> mTextures;
+    std::unordered_map<std::string, class Font *> mFonts;
 
     //精灵组件要画的图
     std::vector<class SpriteComponent *> mSprites;
 
     //InitObj.json对象
     Json::Value mInitObjRoot;
+
+    glm::ivec2 mMousePos;
 
 };
 

@@ -35,6 +35,8 @@ public:
 
     void ProcessInput(const uint8_t *keyState);
 
+    void UIInput(const glm::vec2 mouseClickPos);
+
     //可重写
     virtual void ObjectInput(const uint8_t *keyState);
 

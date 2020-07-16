@@ -18,6 +18,8 @@ public:
 
     void Unload();
 
+    void CreateFromSurface(struct SDL_Surface *surface);
+
     void SetActive();
 
     int getHeight() const

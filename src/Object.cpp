@@ -55,6 +55,17 @@ void Object::ProcessInput(const uint8_t *keyState)
     }
 }
 
+void Object::UIInput(const glm::vec2 mouseClickPos)
+{
+    if (mState == Active)
+    {
+        for (auto comp : mComponents)
+        {
+            comp->UIInput(mouseClickPos);
+        }
+    }
+}
+
 void Object::ObjectInput(const uint8_t *keyState)
 {}
 

@@ -10,14 +10,17 @@
 #include "Shader.h"
 #include "VertexArray.h"
 #include "Texture.h"
+#include "Font.h"
 #include "SpriteComponent.h"
 #include "Object.h"
 #include "Player.h"
 #include "Maps.h"
 #include "House.h"
+#include "UIObject.h"
+#include "Button.h"
 
 GameSys::GameSys() : mWindow(nullptr), mContext(nullptr), mIsRunning(true), mIsUpdatingObjects(
-        false)
+        false), mMousePos(0, 0)
 {
 
 }
@@ -28,6 +31,12 @@ bool GameSys::InitGame()
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
     {
         SDL_Log("fail to init SDL: %s", SDL_GetError());
+        return false;
+    }
+
+    if (TTF_Init() != 0)
+    {
+        SDL_Log("Failed to initialize SDL_ttf");
         return false;
     }
 
@@ -69,7 +78,10 @@ bool GameSys::InitGame()
     //创建纹理贴图并load actor
     CreateSpriteVerts();
 
-    LoadData();
+    mInitObjRoot = GetJsonRoot("../Configs/InitObj.json");
+
+    //LoadData();
+    LoadStartUI();
 
     mTicks = SDL_GetTicks();
 
@@ -96,6 +108,17 @@ void GameSys::ProcessInput()
             case SDL_QUIT:
                 mIsRunning = false;
                 break;
+            case SDL_MOUSEBUTTONDOWN:
+                mMousePos = {event.button.x - 512, 384 - event.button.y};
+
+                mIsUpdatingObjects = true;
+                for (auto object : mObjects)
+                {
+                    mMousePos = {event.button.x - 512, 384 - event.button.y};
+                    object->UIInput({static_cast<float>(mMousePos.x),
+                                     static_cast<float>(mMousePos.y)});
+                }
+                mIsUpdatingObjects = false;
             default:
                 break;
         }
@@ -186,13 +209,12 @@ void GameSys::Shutdown()
 {
     SDL_GL_DeleteContext(mContext);
     SDL_DestroyWindow(mWindow);
+    TTF_Quit();
     SDL_Quit();
 }
 
 void GameSys::LoadData()
 {
-    mInitObjRoot = GetJsonRoot("../Configs/InitObj.json");
-
     //创建游戏actor
     mPlayer = new Player(this);
 
@@ -202,7 +224,25 @@ void GameSys::LoadData()
     new House(this, mPlayer);
 }
 
-void GameSys::UnloadData()
+void GameSys::LoadStartUI()
+{
+    Json::Value startUI = mInitObjRoot["UIObjects"]["StartUI"];
+    Json::Value buttonInfo;
+
+    mStartUI = new UIObject(this, startUI["UITexPath"].asString());
+
+    for (int i = 0; i < startUI["Button"].size(); ++i)
+    {
+        buttonInfo = startUI["Button"][i];
+        mStartUI->CreateButton(this, mStartUI, buttonInfo["TexPath"].asString(),
+                               buttonInfo["Type"].asInt(), buttonInfo["Text"].asString(),
+                               {buttonInfo["Position"][0].asFloat(),
+                                buttonInfo["Position"][1].asFloat()},
+                               buttonInfo["Function"].asInt(), buttonInfo["Size"].asInt());
+    }
+}
+
+void GameSys::UnloadAllData()
 {
     while (!mObjects.empty())
     {
@@ -304,6 +344,29 @@ Texture *GameSys::GetTexture(const std::string &fileName)
     return tex;
 }
 
+class Font *GameSys::GetFont(const std::string &fileName)
+{
+    auto iter = mFonts.find(fileName);
+    if (iter != mFonts.end())
+    {
+        return iter->second;
+    } else
+    {
+        Font *font = new Font(this);
+        if (font->Load(fileName))
+        {
+            mFonts.emplace(fileName, font);
+        } else
+        {
+            font->Unload();
+            delete font;
+            font = nullptr;
+        }
+
+        return font;
+    }
+}
+
 void GameSys::AddSprite(SpriteComponent *sprite)
 {
     int myDrawOrder = sprite->getDrawOrder();
@@ -328,4 +391,9 @@ void GameSys::RemoveSprite(SpriteComponent *sprite)
 const Json::Value &GameSys::GetInitObjRoot() const
 {
     return mInitObjRoot;
+}
+
+void GameSys::BeginGame()
+{
+    LoadData();
 }
