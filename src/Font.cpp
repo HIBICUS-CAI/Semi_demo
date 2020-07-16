@@ -14,12 +14,15 @@ Font::~Font()
 
 bool Font::Load(const std::string &fileName)
 {
-    std::vector<int> fontSizes = {
-            8, 9, 10, 11, 12, 14, 16, 18,
-            20, 22, 24, 26, 28, 30, 32,
-            34, 36, 38, 40, 42, 44, 46,
-            48, 52, 56, 60, 64, 68, 72
-    };
+    std::vector<int> fontSizes;
+
+    Json::Value FontSize = mGameSys->GetInitObjRoot()["UIConfig"]["FontSize"];
+    int length = FontSize.size();
+    for (int i = 0; i < length; ++i)
+    {
+        fontSizes.emplace_back(FontSize[i].asInt());
+    }
+    FontSize.clear();
 
     for (auto &size : fontSizes)
     {

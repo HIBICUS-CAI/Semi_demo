@@ -1,11 +1,9 @@
 {
   "encoding": "UTF-8",
-
   "Player": {
     "Tex": "../Assets/man_1.png",
     "MoveSpeed": 300
   },
-
   "Maps": {
     "StartMapPos": [
       2,
@@ -143,5 +141,104 @@
       "OutTex": "pathOut5",
       "InTex": "pathIn5"
     }
-  ]
+  ],
+  "UIConfig": {
+    "FontPath": "../Assets/heiti.ttc",
+    "MouseClickPos": [
+      900,
+      900
+    ],
+    "ButtonBorder": [
+      {
+        "ID": 0,
+        "Width": 100,
+        "Height": 50
+      },
+      {
+        "ID": 1,
+        "Width": 20,
+        "Height": 20
+      }
+    ],
+    "FontSize": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      30,
+      32,
+      34,
+      36,
+      38,
+      40,
+      42,
+      44,
+      46,
+      48,
+      52,
+      56,
+      60,
+      64,
+      68,
+      72
+    ]
+  },
+  "UIObjects": {
+    "StartUI": {
+      "UITexPath": "../Assets/StartBG.png",
+      "Button": [
+        {
+          "TexPath": "../Assets/button_red.png",
+          "Type": 0,
+          "Text": "游戏开始",
+          "Position": [
+            150,
+            50
+          ],
+          "Function": 1,
+          "Size": 18
+        },
+        {
+          "TexPath": "../Assets/button_yellow.png",
+          "Type": 0,
+          "Text": "游戏帮助",
+          "Position": [
+            150,
+            -50
+          ],
+          "Function": 2,
+          "Size": 18
+        }
+      ]
+    },
+    "HelpUI": {
+      "UITexPath": "../Assets/help_window.png",
+      "Button": [
+        {
+          "TexPath": "../Assets/cross-1.png",
+          "Type": 1,
+          "Text": " ",
+          "Position": [
+            256,
+            192
+          ],
+          "Function": 3
+        }
+      ],
+      "TextZone": {
+        "Width": 300,
+        "ID": 0,
+        "Text": "这里是帮助信息，今天天气好好啊。"
+      }
+    }
+  }
 }

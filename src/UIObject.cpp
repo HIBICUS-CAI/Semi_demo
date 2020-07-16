@@ -13,10 +13,11 @@ UIObject::UIObject(class GameSys *gameSys, std::string texPath) : Object(gameSys
                                                                   mGameSys(gameSys),
                                                                   mHasChildUIO(false)
 {
+    mUIOConfig = gameSys->GetInitObjRoot()["UIConfig"];
     mSC = new SpriteComponent(this, 10);
     mSC->SetTexture(gameSys->GetTexture(texPath));
 
-    mFont = gameSys->GetFont("../Assets/heiti.ttc");
+    mFont = gameSys->GetFont(mUIOConfig["FontPath"].asString());
 
     mUIIC = new UIInputComponent(this, this);
 }
@@ -123,19 +124,32 @@ void UIObject::ButtonEvent(class Button *button)
             } else
             {
                 mHasChildUIO = true;
+                Json::Value helpUI = mGameSys->GetInitObjRoot()["UIObjects"]["HelpUI"];
+                Json::Value buttonInfo;
+                Json::Value textInfo = helpUI["TextZone"];
+
                 //需要修改贴图,或者找出让SDL_TTF换行的方法,当前方案需要计算字符数量,很嗨麻烦
-                mChildUIO = new UIObject(mGameSys, "../Assets/help_window.png");
+                mChildUIO = new UIObject(mGameSys, helpUI["UITexPath"].asString());
                 mChildUIO->setParentUIO(this);
-                mChildUIO->CreateButton(mGameSys, mChildUIO, "../Assets/cross-1.png",
-                                        1, " ", {256.f, 192.f},
-                                        3);
+                for (int i = 0; i < helpUI["Button"].size(); ++i)
+                {
+                    buttonInfo = helpUI["Button"][i];
+                    mChildUIO->CreateButton(mGameSys, mChildUIO,
+                                            buttonInfo["TexPath"].asString(),
+                                            buttonInfo["Type"].asInt(),
+                                            buttonInfo["Text"].asString(),
+                                            {buttonInfo["Position"][0].asFloat(),
+                                             buttonInfo["Position"][1].asFloat()},
+                                            buttonInfo["Function"].asInt());
+                }
+
                 mChildUIO->CreateTextZone(mGameSys, mChildUIO, mChildUIO->getPosition(),
-                                          300, 0);
-                TextZone *text = mChildUIO->FindText(0);
+                                          textInfo["Width"].asInt(), textInfo["ID"].asInt());
+                TextZone *text = mChildUIO->FindText(textInfo["ID"].asInt());
                 if (text != nullptr)
                 {
                     text->setPosition({getPosition().x, getPosition().y + 100.f});
-                    text->setText("这里是帮助信息，今天天气好好啊。");
+                    text->setText(textInfo["Text"].asString());
                 }
             }
 

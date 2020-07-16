@@ -62,6 +62,11 @@ public:
         return mFont;
     }
 
+    const Json::Value &getUIOConfig() const
+    {
+        return mUIOConfig;
+    }
+
 private:
     std::vector<class Button *> mButtons;
     std::vector<class TextZone *> mTexts;
@@ -79,6 +84,8 @@ private:
     class UIObject *mChildUIO;
 
     class UIObject *mParentUIO;
+
+    Json::Value mUIOConfig;
 };
 
 

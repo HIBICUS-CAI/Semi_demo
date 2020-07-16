@@ -8,9 +8,11 @@
 
 UIInputComponent::UIInputComponent(class Object *owner, class UIObject *uiObject,
                                    int updateOrder) : Component(owner, updateOrder),
-                                                      mUIObject(uiObject),
-                                                      mMouseClickPos(900.f, 900.f)
-{}
+                                                      mUIObject(uiObject)
+{
+    mMouseClickPos = {mUIObject->getUIOConfig()["MouseClickPos"][0].asFloat(),
+                      mUIObject->getUIOConfig()["MouseClickPos"][1].asFloat()};
+}
 
 void UIInputComponent::UIInput(const glm::vec2 mouseClickPos)
 {
@@ -29,22 +31,32 @@ void UIInputComponent::Update(float deltatime)
              * 1: 关闭窗口的叉号
              */
             case 0:
-                if (mMouseClickPos.x != 900.f && mMouseClickPos.y != 900.f)
+                if (mMouseClickPos.x !=
+                    mUIObject->getUIOConfig()["MouseClickPos"][0].asFloat() &&
+                    mMouseClickPos.y !=
+                    mUIObject->getUIOConfig()["MouseClickPos"][1].asFloat())
                 {
                     glm::vec2 distance = button->getPosition() - mMouseClickPos;
-                    if (distance.x * distance.x <= 50.f * 50.f &&
-                        distance.y * distance.y <= 25.f * 25.f)
+                    float borderWid = mUIObject->getUIOConfig()["ButtonBorder"][0]["Width"].asFloat();
+                    float borderHei = mUIObject->getUIOConfig()["ButtonBorder"][0]["Height"].asFloat();
+                    if (distance.x * distance.x <= borderWid / 2.f * borderWid / 2.f &&
+                        distance.y * distance.y <= borderHei / 2.f * borderHei / 2.f)
                     {
                         mUIObject->ButtonEvent(button);
                     }
                 }
                 break;
             case 1:
-                if (mMouseClickPos.x != 900.f && mMouseClickPos.y != 900.f)
+                if (mMouseClickPos.x !=
+                    mUIObject->getUIOConfig()["MouseClickPos"][0].asFloat() &&
+                    mMouseClickPos.y !=
+                    mUIObject->getUIOConfig()["MouseClickPos"][1].asFloat())
                 {
                     glm::vec2 distance = button->getPosition() - mMouseClickPos;
-                    if (distance.x * distance.x <= 10.f * 10.f &&
-                        distance.y * distance.y <= 10.f * 10.f)
+                    float borderWid = mUIObject->getUIOConfig()["ButtonBorder"][1]["Width"].asFloat();
+                    float borderHei = mUIObject->getUIOConfig()["ButtonBorder"][1]["Height"].asFloat();
+                    if (distance.x * distance.x <= borderWid / 2.f * borderWid / 2.f &&
+                        distance.y * distance.y <= borderHei / 2.f * borderHei / 2.f)
                     {
                         mUIObject->ButtonEvent(button);
                     }
@@ -55,5 +67,6 @@ void UIInputComponent::Update(float deltatime)
         }
     }
 
-    mMouseClickPos = {900.f, 900.f};
+    mMouseClickPos = {mUIObject->getUIOConfig()["MouseClickPos"][0].asFloat(),
+                      mUIObject->getUIOConfig()["MouseClickPos"][1].asFloat()};
 }

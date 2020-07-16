@@ -78,6 +78,8 @@ bool GameSys::InitGame()
     //创建纹理贴图并load actor
     CreateSpriteVerts();
 
+    mInitObjRoot = GetJsonRoot("../Configs/InitObj.json");
+
     //LoadData();
     LoadStartUI();
 
@@ -213,8 +215,6 @@ void GameSys::Shutdown()
 
 void GameSys::LoadData()
 {
-    mInitObjRoot = GetJsonRoot("../Configs/InitObj.json");
-
     //创建游戏actor
     mPlayer = new Player(this);
 
@@ -226,15 +226,20 @@ void GameSys::LoadData()
 
 void GameSys::LoadStartUI()
 {
-    mStartUI = new UIObject(this, "../Assets/StartBG.png");
+    Json::Value startUI = mInitObjRoot["UIObjects"]["StartUI"];
+    Json::Value buttonInfo;
 
-    mStartUI->CreateButton(this, mStartUI, "../Assets/button_red.png",
-                           0, "游戏开始", {150.f, 50.f},
-                           1, 18);
+    mStartUI = new UIObject(this, startUI["UITexPath"].asString());
 
-    mStartUI->CreateButton(this, mStartUI, "../Assets/button_yellow.png",
-                           0, "游戏帮助", {150.f, -50.f},
-                           2, 18);
+    for (int i = 0; i < startUI["Button"].size(); ++i)
+    {
+        buttonInfo = startUI["Button"][i];
+        mStartUI->CreateButton(this, mStartUI, buttonInfo["TexPath"].asString(),
+                               buttonInfo["Type"].asInt(), buttonInfo["Text"].asString(),
+                               {buttonInfo["Position"][0].asFloat(),
+                                buttonInfo["Position"][1].asFloat()},
+                               buttonInfo["Function"].asInt(), buttonInfo["Size"].asInt());
+    }
 }
 
 void GameSys::UnloadAllData()
