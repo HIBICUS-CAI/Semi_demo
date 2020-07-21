@@ -2,25 +2,25 @@
 // Created by 蔡元涵 on 2020/6/22.
 //
 
-#include "ZoneSwitchHouseComponent.h"
+#include "ZoneSwitchObjComponent.h"
 #include "Player.h"
 #include "House.h"
 #include "BorderDecider.h"
 
-ZoneSwitchHouseComponent::ZoneSwitchHouseComponent(class Object *owner, class Player *player,
-                                                   class House *house, int updateOrder)
+ZoneSwitchObjComponent::ZoneSwitchObjComponent(class Object *owner, class Player *player,
+                                               class House *house, int updateOrder)
         : Component(owner, updateOrder), mPlayer(player), mHouse(house),
           mBorderDecider(nullptr)
 {}
 
-ZoneSwitchHouseComponent::ZoneSwitchHouseComponent(class Object *owner, class Player *player,
-                                                   class BorderDecider *borderDecider,
-                                                   int updateOrder)
+ZoneSwitchObjComponent::ZoneSwitchObjComponent(class Object *owner, class Player *player,
+                                               class BorderDecider *borderDecider,
+                                               int updateOrder)
         : Component(owner, updateOrder), mPlayer(player), mBorderDecider(borderDecider),
           mHouse(nullptr)
 {}
 
-void ZoneSwitchHouseComponent::Update(float deltatime)
+void ZoneSwitchObjComponent::Update(float deltatime)
 {
     if (mHouse != nullptr)
     {

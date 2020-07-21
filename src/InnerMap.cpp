@@ -4,7 +4,7 @@
 
 #include "InnerMap.h"
 #include "SpriteComponent.h"
-#include "ZoneSwitchHouseComponent.h"
+#include "ZoneSwitchObjComponent.h"
 
 InnerMap::InnerMap(class GameSys *gameSys, class Player *player, class House *house) : Object(
         gameSys), mPlayer(player), mHouse(house)

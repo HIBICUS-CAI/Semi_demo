@@ -5,7 +5,7 @@
 #include "House.h"
 #include "BorderDecider.h"
 #include "CollisionComponent.h"
-#include "ZoneSwitchHouseComponent.h"
+#include "ZoneSwitchObjComponent.h"
 
 House::House(GameSys *gameSys, Player *player) : Object(gameSys), mPlayer(player),
                                                  mIsPlayerNearHouse(false)
@@ -40,7 +40,7 @@ House::House(GameSys *gameSys, Player *player) : Object(gameSys), mPlayer(player
     mCC = new CollisionComponent(this);
     mCC->setRadius(180.f * 1.414f);     //在边角乱按的时候会卡出边界??
 
-    new ZoneSwitchHouseComponent(this, player, this, 10);
+    new ZoneSwitchObjComponent(this, player, this, 10);
 
     BorderDecider *bd;
     float x = getPosition().x - 150.f;

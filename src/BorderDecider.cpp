@@ -4,7 +4,7 @@
 
 #include "BorderDecider.h"
 #include "CollisionComponent.h"
-#include "ZoneSwitchHouseComponent.h"
+#include "ZoneSwitchObjComponent.h"
 
 BorderDecider::BorderDecider(class GameSys *gameSys, class Player *player) : Object(gameSys),
                                                                              mCC(nullptr),
@@ -12,7 +12,7 @@ BorderDecider::BorderDecider(class GameSys *gameSys, class Player *player) : Obj
 {
     mPlayerLatePosition = gameSys->getInitPos();
 
-    new ZoneSwitchHouseComponent(this, player, this, 10);
+    new ZoneSwitchObjComponent(this, player, this, 10);
 
     mCC = new CollisionComponent(this);
     mCC->setRadius(5.f);
