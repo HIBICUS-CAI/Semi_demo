@@ -18,6 +18,8 @@
 #include "House.h"
 #include "UIObject.h"
 #include "Button.h"
+#include "Item.h"
+#include "Document.h"
 
 GameSys::GameSys() : mWindow(nullptr), mContext(nullptr), mIsRunning(true), mIsUpdatingObjects(
         false), mMousePos(0, 0)
@@ -222,6 +224,20 @@ void GameSys::LoadData()
     mMaps = new Maps(this, mPlayer);
 
     new House(this, mPlayer);
+
+    Json::Value itemsInfo = mInitObjRoot["Items"];
+
+    for (int i = 0; i < itemsInfo.size(); ++i)
+    {
+        new Item(this, mPlayer, itemsInfo[i]);
+    }
+
+    Json::Value docsInfo = mInitObjRoot["Docs"];
+
+    for (int i = 0; i < docsInfo.size(); ++i)
+    {
+        new Document(this, mPlayer, docsInfo[i]);
+    }
 }
 
 void GameSys::LoadStartUI()
@@ -396,4 +412,14 @@ const Json::Value &GameSys::GetInitObjRoot() const
 void GameSys::BeginGame()
 {
     LoadData();
+}
+
+void GameSys::AddItemToSys(class Item *item)
+{
+    mItems.emplace_back(item);
+}
+
+void GameSys::AddDocToSys(class Document *document)
+{
+    mDocuments.emplace_back(document);
 }

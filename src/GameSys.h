@@ -55,6 +55,10 @@ public:
         return mMousePos;
     }
 
+    void AddItemToSys(class Item *item);
+
+    void AddDocToSys(class Document *document);
+
 private:
     void ProcessInput();
 
@@ -111,6 +115,9 @@ private:
     Json::Value mInitObjRoot;
 
     glm::ivec2 mMousePos;
+
+    std::vector<class Item *> mItems;
+    std::vector<class Document *> mDocuments;
 
 };
 

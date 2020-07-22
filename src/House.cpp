@@ -10,6 +10,7 @@
 House::House(GameSys *gameSys, Player *player) : Object(gameSys), mPlayer(player),
                                                  mIsPlayerNearHouse(false)
 {
+    //TODO 此处需要修改
     setID(0);
 
     int initX = gameSys->getInitPos().x;
@@ -34,7 +35,7 @@ House::House(GameSys *gameSys, Player *player) : Object(gameSys), mPlayer(player
 //    float thisY = ThisHouse["Position"][1].asFloat();
     setPosition({thisX, thisY});
 
-    mSC = new SpriteComponent(this, 110);
+    mSC = new SpriteComponent(this, 120);
     mSC->SetTexture(gameSys->GetTexture(ThisHouse["OutTex"].asString()));
 
     mCC = new CollisionComponent(this);

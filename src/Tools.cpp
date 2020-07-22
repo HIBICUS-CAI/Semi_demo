@@ -23,3 +23,14 @@ Json::Value GetJsonRoot(std::string fileName)
         return error;
     }
 }
+
+glm::vec2 CountPosition(glm::ivec2 initPos, glm::ivec2 mapPos, glm::vec2 position)
+{
+    float posX = static_cast<float>(mapPos.x - initPos.x);
+    float posY = static_cast<float>(mapPos.y - initPos.y);
+
+    posX = posX * 1024.f + position.x;
+    posY = posY * 768.f + position.y;
+
+    return {posX, posY};
+}

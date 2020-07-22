@@ -19,6 +19,14 @@ public:
                            class BorderDecider *borderDecider,
                            int updateOrder = 10);
 
+    ZoneSwitchObjComponent(class Object *owner, class Player *player,
+                           class Item *item,
+                           int updateOrder = 10);
+
+    ZoneSwitchObjComponent(class Object *owner, class Player *player,
+                           class Document *document,
+                           int updateOrder = 10);
+
     void Update(float deltatime) override;
 
 private:
@@ -27,6 +35,10 @@ private:
     class House *mHouse;
 
     class BorderDecider *mBorderDecider;
+
+    class Item *mItem;
+
+    class Document *mDocument;
 };
 
 

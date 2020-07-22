@@ -7,6 +7,7 @@
 
 #include <glm.hpp>
 #include "Object.h"
+#include "Inventory.h"
 
 const glm::ivec2 PLAYERINITPOS = glm::ivec2{1, 0};
 
@@ -37,7 +38,18 @@ public:
 
     void RevertMove();
 
+    void AddItemToInventory(class Item *item);
+
+    void AddDocToInventory(class Document *document);
+
+    Inventory *getInventory() const
+    {
+        return mInventory;
+    }
+
 private:
+    class Inventory *mInventory;
+
     class CollisionComponent *mCC;
 
     //↑1 →2 ↓3 ←4 ↗5 ↘6 ↙7 ↖8

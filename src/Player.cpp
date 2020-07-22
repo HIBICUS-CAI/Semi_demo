@@ -4,6 +4,9 @@
 
 #include "Player.h"
 #include "GameSys.h"
+#include "Item.h"
+#include "Document.h"
+#include "Inventory.h"
 #include "SpriteComponent.h"
 #include "InputComponent.h"
 #include "CollisionComponent.h"
@@ -27,11 +30,15 @@ Player::Player(GameSys *gameSys) : Object(gameSys), mCC(nullptr), mInputStatus(0
     ic->setBackKey(SDL_SCANCODE_S);
     ic->setLeftKey(SDL_SCANCODE_A);
     ic->setRightKey(SDL_SCANCODE_D);
+    ic->setDebugKey(SDL_SCANCODE_F);
+    ic->setCancelDebugKey(SDL_SCANCODE_R);
     ic->setHorMoveSpeed(gameSys->GetInitObjRoot()["Player"]["MoveSpeed"].asFloat());
     ic->setVerMoveSpeed(gameSys->GetInitObjRoot()["Player"]["MoveSpeed"].asFloat());
 
     mCC = new CollisionComponent(this);
     mCC->setRadius(10.f);
+
+    mInventory = new Inventory();
 }
 
 void Player::RevertMove()
@@ -65,4 +72,16 @@ void Player::RevertMove()
         default:
             break;
     }
+}
+
+void Player::AddItemToInventory(class Item *item)
+{
+    SDL_Log("add a item to inventory witch id is: %d", item->UseItem());
+    mInventory->AddItem(item);
+}
+
+void Player::AddDocToInventory(class Document *document)
+{
+    SDL_Log("add a doc to inventory witch id is: %d", document->ReadDoc().ID);
+    mInventory->AddDocument(document);
 }

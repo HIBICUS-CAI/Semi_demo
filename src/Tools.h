@@ -6,8 +6,11 @@
 #define SEMI_DEMO_TOOLS_H
 
 #include <json.h>
+#include <glm.hpp>
 
 Json::Value GetJsonRoot(std::string fileName);
+
+glm::vec2 CountPosition(glm::ivec2 initPos, glm::ivec2 mapPos, glm::vec2 position);
 
 
 #endif //SEMI_DEMO_TOOLS_H

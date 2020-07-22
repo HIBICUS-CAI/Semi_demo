@@ -142,6 +142,88 @@
       "InTex": "pathIn5"
     }
   ],
+  "Items": [
+    {
+      "ID": 0,
+      "MapPos": [
+        2,
+        0
+      ],
+      "Position": [
+        -400,
+        -200
+      ],
+      "ShinnyTex": "../Assets/whiteShinny.png",
+      "ItemTex": "../Assets/watch.png"
+    },
+    {
+      "ID": 1,
+      "MapPos": [
+        1,
+        0
+      ],
+      "Position": [
+        -400,
+        300
+      ],
+      "ShinnyTex": "../Assets/whiteShinny.png",
+      "ItemTex": "../Assets/key.png"
+    },
+    {
+      "ID": 2,
+      "MapPos": [
+        1,
+        0
+      ],
+      "Position": [
+        200,
+        100
+      ],
+      "ShinnyTex": "../Assets/whiteShinny.png",
+      "ItemTex": "../Assets/key.png"
+    }
+  ],
+  "Docs": [
+    {
+      "ID": 0,
+      "MapPos": [
+        2,
+        1
+      ],
+      "Position": [
+        -400,
+        -200
+      ],
+      "ShinnyTex": "../Assets/blueShinny.png",
+      "DocTex": "../Assets/watch.png"
+    },
+    {
+      "ID": 1,
+      "MapPos": [
+        1,
+        1
+      ],
+      "Position": [
+        -400,
+        300
+      ],
+      "ShinnyTex": "../Assets/blueShinny.png",
+      "DocTex": "../Assets/watch.png"
+    },
+    {
+      "ID": 2,
+      "MapPos": [
+        1,
+        1
+      ],
+      "Position": [
+        200,
+        100
+      ],
+      "ShinnyTex": "../Assets/blueShinny.png",
+      "DocTex": "../Assets/watch.png"
+    }
+  ],
   "UIConfig": {
     "FontPath": "../Assets/heiti.ttc",
     "MouseClickPos": [

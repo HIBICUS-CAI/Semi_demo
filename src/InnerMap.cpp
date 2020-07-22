@@ -15,7 +15,7 @@ InnerMap::InnerMap(class GameSys *gameSys, class Player *player, class House *ho
     setPosition({house->getThisHouse()["Position"][0].asFloat(),
                  house->getThisHouse()["Position"][1].asFloat()});
 
-    mSC = new SpriteComponent(this, 120);
+    mSC = new SpriteComponent(this, 110);
     mSC->SetTexture(gameSys->GetTexture(house->getThisHouse()["InTex"].asString()));
     mSC->setIsVisible(false);
 

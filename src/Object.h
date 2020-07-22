@@ -11,6 +11,7 @@
 #include <json.h>
 #include "Component.h"
 #include "GameSys.h"
+#include "Tools.h"
 
 class Object
 {
