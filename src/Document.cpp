@@ -11,8 +11,7 @@
 Document::Document(class GameSys *gameSys, class Player *player, Json::Value docInfo) : Object(
         gameSys), mPlayer(player), mShinnyDeltaTime(2.f)
 {
-    mID = docInfo["ID"].asInt();
-    mDoc.ID = mID;
+    mDoc.ID = docInfo["ID"].asInt();
 
     glm::ivec2 initPos = gameSys->getInitPos();
     mPlayerLatePosition = initPos;

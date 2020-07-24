@@ -38,9 +38,6 @@ public:
     }
 
 private:
-    // 文档唯一ID
-    int mID;
-
     // 文档闪烁时间
     float mShinnyDeltaTime;
     float mSTD_backup;
