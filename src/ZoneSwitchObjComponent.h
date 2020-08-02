@@ -27,6 +27,10 @@ public:
                            class Document *document,
                            int updateOrder = 10);
 
+    ZoneSwitchObjComponent(class Object *owner, class Player *player,
+                           class Gear *gear,
+                           int updateOrder = 10);
+
     void Update(float deltatime) override;
 
 private:
@@ -39,6 +43,8 @@ private:
     class Item *mItem;
 
     class Document *mDocument;
+
+    class Gear *mGear;
 };
 
 

@@ -20,6 +20,8 @@
 #include "Button.h"
 #include "Item.h"
 #include "Document.h"
+#include "Gear.h"
+#include "ItemSys.h"
 
 GameSys::GameSys() : mWindow(nullptr), mContext(nullptr), mIsRunning(true), mIsUpdatingObjects(
         false), mMousePos(0, 0)
@@ -238,6 +240,15 @@ void GameSys::LoadData()
     {
         new Document(this, mPlayer, docsInfo[i]);
     }
+
+    Json::Value gearsInfo = mInitObjRoot["Gears"];
+
+    for (int i = 0; i < gearsInfo.size(); ++i)
+    {
+        new Gear(this, mPlayer, gearsInfo[i]);
+    }
+
+    mItemSys = new ItemSys(this);
 }
 
 void GameSys::LoadStartUI()
@@ -422,4 +433,14 @@ void GameSys::AddItemToSys(class Item *item)
 void GameSys::AddDocToSys(class Document *document)
 {
     mDocuments.emplace_back(document);
+}
+
+void GameSys::AddGearToSys(class Gear *gear)
+{
+    mGears.emplace_back(gear);
+}
+
+void GameSys::UseItemInUI(int itemID)
+{
+    mItemSys->ItemEvent(itemID);
 }

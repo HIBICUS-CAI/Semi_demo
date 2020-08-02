@@ -27,27 +27,30 @@ void InputComponent::ProcessInput(const uint8_t *keyState)
         std::vector<class Item *> items = mPlayer->getInventory()->getItems();
         std::vector<class Document *> documents = mPlayer->getInventory()->getDocuments();
 
-        SDL_Log("in this player's inventory, there are some items and docs those id: ");
+//        SDL_Log("in this player's inventory, there are some items and docs those id: ");
 
         if (!items.empty())
         {
             for (auto item : items)
             {
                 SDL_Log("item's ID: %d  ", item->UseItem());
+
+                //TODO 将以下方法添加至UIO中
+                //mOwner->getGameSys()->UseItemInUI(item->UseItem());
             }
         } else
         {
-            SDL_Log("none item here stupid");
+//            SDL_Log("none item here stupid");
         }
         if (!documents.empty())
         {
             for (auto document : documents)
             {
-                SDL_Log("doc's ID: %d  ", document->ReadDoc().ID);
+//                SDL_Log("doc's ID: %d  ", document->ReadDoc().ID);
             }
         } else
         {
-            SDL_Log("none doc here stupid");
+//            SDL_Log("none doc here stupid");
         }
     }
 

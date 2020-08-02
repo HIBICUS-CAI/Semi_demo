@@ -224,6 +224,36 @@
       "DocTex": "../Assets/watch.png"
     }
   ],
+  "Gears": [
+    {
+      "ID": 0,
+      "MapPos": [
+        2,
+        2
+      ],
+      "Position": [
+        -200,
+        -200
+      ],
+      "Tex": "../Assets/gear_door.png",
+      "Width": 100,
+      "Height": 100
+    },
+    {
+      "ID": 1,
+      "MapPos": [
+        1,
+        2
+      ],
+      "Position": [
+        200,
+        -200
+      ],
+      "Tex": "../Assets/gear_door.png",
+      "Width": 100,
+      "Height": 100
+    }
+  ],
   "UIConfig": {
     "FontPath": "../Assets/heiti.ttc",
     "MouseClickPos": [
