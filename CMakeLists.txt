@@ -13,10 +13,10 @@ set(JSON_H ${CMAKE_CURRENT_SOURCE_DIR}/lib/head/json)
 include_directories(${SDL2_H} ${GLEW_H} ${GLM_H} ${JSON_H})
 
 #添加目标链接
-set(SDL2_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/dylib/libSDL2.dylib)
-set(GLEW_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/dylib/libGLEW.dylib)
-set(JSON_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/dylib/libjsoncpp.dylib)
-set(SDL2TTF_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/dylib/libSDL2_ttf.dylib)
+set(SDL2_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_osx/libSDL2.dylib)
+set(GLEW_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_osx/libGLEW.dylib)
+set(JSON_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_osx/libjsoncpp.dylib)
+set(SDL2TTF_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_osx/libSDL2_ttf.dylib)
 link_libraries(${SDL2_LINK} ${GLEW_LINK} ${JSON_LINK} ${SDL2TTF_LINK})
 
 aux_source_directory(src/. DIRS_SRCS)
