@@ -18,6 +18,10 @@
 #include "House.h"
 #include "UIObject.h"
 #include "Button.h"
+#include "Item.h"
+#include "Document.h"
+#include "Gear.h"
+#include "ItemSys.h"
 
 GameSys::GameSys() : mWindow(nullptr), mContext(nullptr), mIsRunning(true), mIsUpdatingObjects(
         false), mMousePos(0, 0)
@@ -222,6 +226,41 @@ void GameSys::LoadData()
     mMaps = new Maps(this, mPlayer);
 
     new House(this, mPlayer);
+
+    Json::Value itemsInfo = mInitObjRoot["Items"];
+
+    for (int i = 0; i < itemsInfo.size(); ++i)
+    {
+        new Item(this, mPlayer, itemsInfo[i]);
+    }
+
+    Json::Value docsInfo = mInitObjRoot["Docs"];
+
+    for (int i = 0; i < docsInfo.size(); ++i)
+    {
+        new Document(this, mPlayer, docsInfo[i]);
+    }
+
+    Json::Value gearsInfo = mInitObjRoot["Gears"];
+
+    for (int i = 0; i < gearsInfo.size(); ++i)
+    {
+        new Gear(this, mPlayer, gearsInfo[i]);
+    }
+
+    mItemSys = new ItemSys(this);
+
+    mMainUI = new UIObject(this, mInitObjRoot["UIObjects"]["MainUI"]["UITexPath"].asString());
+    Json::Value buttonInfo;
+    for (int i = 0; i < mInitObjRoot["UIObjects"]["MainUI"]["Button"].size(); ++i)
+    {
+        buttonInfo = mInitObjRoot["UIObjects"]["MainUI"]["Button"][i];
+        mMainUI->CreateButton(this, mMainUI, buttonInfo["TexPath"].asString(),
+                              buttonInfo["Type"].asInt(), buttonInfo["Text"].asString(),
+                              {buttonInfo["Position"][0].asFloat(),
+                               buttonInfo["Position"][1].asFloat()},
+                              buttonInfo["Function"].asInt(), buttonInfo["Size"].asInt());
+    }
 }
 
 void GameSys::LoadStartUI()
@@ -396,4 +435,34 @@ const Json::Value &GameSys::GetInitObjRoot() const
 void GameSys::BeginGame()
 {
     LoadData();
+}
+
+void GameSys::AddItemToSys(class Item *item)
+{
+    mItems.emplace_back(item);
+}
+
+void GameSys::AddDocToSys(class Document *document)
+{
+    mDocuments.emplace_back(document);
+}
+
+void GameSys::AddGearToSys(class Gear *gear)
+{
+    mGears.emplace_back(gear);
+}
+
+void GameSys::UseItemInUI(int itemID)
+{
+    mItemSys->ItemEvent(itemID);
+}
+
+const std::vector<class Item *> &GameSys::getItemsInInventory()
+{
+    return mPlayer->getInventory()->getItems();
+}
+
+const std::vector<class Document *> &GameSys::getDocsInInventory()
+{
+    return mPlayer->getInventory()->getDocuments();
 }

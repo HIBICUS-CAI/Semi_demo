@@ -142,8 +142,120 @@
       "InTex": "pathIn5"
     }
   ],
+  "Items": [
+    {
+      "ID": 0,
+      "MapPos": [
+        2,
+        0
+      ],
+      "Position": [
+        -400,
+        -200
+      ],
+      "ShinnyTex": "../Assets/whiteShinny.png",
+      "ItemTex": "../Assets/watch.png"
+    },
+    {
+      "ID": 1,
+      "MapPos": [
+        1,
+        0
+      ],
+      "Position": [
+        -400,
+        300
+      ],
+      "ShinnyTex": "../Assets/whiteShinny.png",
+      "ItemTex": "../Assets/key.png"
+    },
+    {
+      "ID": 2,
+      "MapPos": [
+        1,
+        0
+      ],
+      "Position": [
+        200,
+        100
+      ],
+      "ShinnyTex": "../Assets/whiteShinny.png",
+      "ItemTex": "../Assets/key.png"
+    }
+  ],
+  "Docs": [
+    {
+      "ID": 0,
+      "MapPos": [
+        2,
+        1
+      ],
+      "Position": [
+        -400,
+        -200
+      ],
+      "ShinnyTex": "../Assets/blueShinny.png",
+      "DocTex": "../Assets/doc_tex.png"
+    },
+    {
+      "ID": 1,
+      "MapPos": [
+        1,
+        1
+      ],
+      "Position": [
+        -400,
+        300
+      ],
+      "ShinnyTex": "../Assets/blueShinny.png",
+      "DocTex": "../Assets/doc_tex.png"
+    },
+    {
+      "ID": 2,
+      "MapPos": [
+        1,
+        1
+      ],
+      "Position": [
+        200,
+        100
+      ],
+      "ShinnyTex": "../Assets/blueShinny.png",
+      "DocTex": "../Assets/doc_tex.png"
+    }
+  ],
+  "Gears": [
+    {
+      "ID": 0,
+      "MapPos": [
+        2,
+        2
+      ],
+      "Position": [
+        -200,
+        -200
+      ],
+      "Tex": "../Assets/gear_door.png",
+      "Width": 100,
+      "Height": 100
+    },
+    {
+      "ID": 1,
+      "MapPos": [
+        1,
+        2
+      ],
+      "Position": [
+        200,
+        -200
+      ],
+      "Tex": "../Assets/gear_door.png",
+      "Width": 100,
+      "Height": 100
+    }
+  ],
   "UIConfig": {
-    "FontPath": "../Assets/heiti.ttc",
+    "FontPath": "../Assets/black.ttc",
     "MouseClickPos": [
       900,
       900
@@ -158,6 +270,11 @@
         "ID": 1,
         "Width": 20,
         "Height": 20
+      },
+      {
+        "ID": 2,
+        "Width": 80,
+        "Height": 80
       }
     ],
     "FontSize": [
@@ -239,6 +356,310 @@
         "ID": 0,
         "Text": "这里是帮助信息，今天天气好好啊。"
       }
+    },
+    "MainUI": {
+      "UITexPath": "../Assets/nothing.png",
+      "Button": [
+        {
+          "TexPath": "../Assets/button_red.png",
+          "Type": 1,
+          "Text": "物品栏",
+          "Position": [
+            -450,
+            -350
+          ],
+          "Function": 4,
+          "Size": 18
+        }
+      ]
+    },
+    "InventoryUI": {
+      "UITexPath": "../Assets/inventoryUIO.png",
+      "Button": [
+        {
+          "TexPath": "../Assets/cross-1.png",
+          "Type": 1,
+          "Text": " ",
+          "Position": [
+            360,
+            210
+          ],
+          "Function": 3
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            -360,
+            150
+          ],
+          "Function": 5
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            -260,
+            150
+          ],
+          "Function": 5
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            -160,
+            150
+          ],
+          "Function": 5
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            -60,
+            150
+          ],
+          "Function": 5
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            -360,
+            50
+          ],
+          "Function": 5
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            -260,
+            50
+          ],
+          "Function": 5
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            -160,
+            50
+          ],
+          "Function": 5
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            -60,
+            50
+          ],
+          "Function": 5
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            -360,
+            -50
+          ],
+          "Function": 5
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            -260,
+            -50
+          ],
+          "Function": 5
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            -160,
+            -50
+          ],
+          "Function": 5
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            -60,
+            -50
+          ],
+          "Function": 5
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            -360,
+            -150
+          ],
+          "Function": 5
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            -260,
+            -150
+          ],
+          "Function": 5
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            -160,
+            -150
+          ],
+          "Function": 5
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            -60,
+            -150
+          ],
+          "Function": 5
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            60,
+            150
+          ],
+          "Function": 6
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            160,
+            150
+          ],
+          "Function": 6
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            260,
+            150
+          ],
+          "Function": 6
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            360,
+            150
+          ],
+          "Function": 6
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            60,
+            50
+          ],
+          "Function": 6
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            160,
+            50
+          ],
+          "Function": 6
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            260,
+            50
+          ],
+          "Function": 6
+        },
+        {
+          "TexPath": "../Assets/item_contain.png",
+          "Type": 2,
+          "Text": " ",
+          "Position": [
+            360,
+            50
+          ],
+          "Function": 6
+        }
+      ]
+    },
+    "ReadDocUI": {
+      "UITexPath": "../Assets/help_window.png",
+      "Button": [
+        {
+          "TexPath": "../Assets/cross-1.png",
+          "Type": 1,
+          "Text": " ",
+          "Position": [
+            256,
+            192
+          ],
+          "Function": 3
+        }
+      ],
+      "TextZone": [
+        {
+          "Width": 300,
+          "ID": 1,
+          "Position": [
+            0,
+            180
+          ]
+        },
+        {
+          "Width": 300,
+          "ID": 2,
+          "Position": [
+            0,
+            140
+          ]
+        }
+      ]
     }
   }
 }

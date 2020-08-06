@@ -55,6 +55,23 @@ public:
         return mMousePos;
     }
 
+    const std::vector<class Gear *> &getGears() const
+    {
+        return mGears;
+    }
+
+    void AddItemToSys(class Item *item);
+
+    void AddDocToSys(class Document *document);
+
+    void AddGearToSys(class Gear *gear);
+
+    void UseItemInUI(int itemID);
+
+    const std::vector<class Item *> &getItemsInInventory();
+
+    const std::vector<class Document *> &getDocsInInventory();
+
 private:
     void ProcessInput();
 
@@ -82,6 +99,8 @@ private:
     float mDeltaTime;
 
     class UIObject *mStartUI;
+
+    class UIObject *mMainUI;
 
     class Maps *mMaps;
 
@@ -111,6 +130,13 @@ private:
     Json::Value mInitObjRoot;
 
     glm::ivec2 mMousePos;
+
+
+    class ItemSys *mItemSys;
+
+    std::vector<class Item *> mItems;
+    std::vector<class Document *> mDocuments;
+    std::vector<class Gear *> mGears;
 
 };
 

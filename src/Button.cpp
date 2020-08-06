@@ -12,11 +12,11 @@ Button::Button(class GameSys *gameSys, class UIObject *uiObject, std::string tex
         : Object(gameSys), mText(text), mButtonType(buttonType), mButtonFunc(buttonFunc)
 {
     setPosition(buttonPos);
-    mSC = new SpriteComponent(this, 20);
+    mSC = new SpriteComponent(this, 1020);
     mSC->SetTexture(gameSys->GetTexture(texPath));
 
     mFont = uiObject->getFont();
-    mFontSC = new SpriteComponent(this, 30);
+    mFontSC = new SpriteComponent(this, 1030);
     mFontSC->SetTexture(mFont->RenderText(text, size));
 
     uiObject->AddButton(this);

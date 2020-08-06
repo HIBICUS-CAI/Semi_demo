@@ -27,8 +27,9 @@ void UIInputComponent::Update(float deltatime)
         switch (button->getButtonType())
         {
             /**
-             * 0: 开始界面的两个
+             * 0: 开始界面的两个以及物品栏
              * 1: 关闭窗口的叉号
+             * 2: item按键
              */
             case 0:
                 if (mMouseClickPos.x !=
@@ -55,6 +56,22 @@ void UIInputComponent::Update(float deltatime)
                     glm::vec2 distance = button->getPosition() - mMouseClickPos;
                     float borderWid = mUIObject->getUIOConfig()["ButtonBorder"][1]["Width"].asFloat();
                     float borderHei = mUIObject->getUIOConfig()["ButtonBorder"][1]["Height"].asFloat();
+                    if (distance.x * distance.x <= borderWid / 2.f * borderWid / 2.f &&
+                        distance.y * distance.y <= borderHei / 2.f * borderHei / 2.f)
+                    {
+                        mUIObject->ButtonEvent(button);
+                    }
+                }
+                break;
+            case 2:
+                if (mMouseClickPos.x !=
+                    mUIObject->getUIOConfig()["MouseClickPos"][0].asFloat() &&
+                    mMouseClickPos.y !=
+                    mUIObject->getUIOConfig()["MouseClickPos"][1].asFloat())
+                {
+                    glm::vec2 distance = button->getPosition() - mMouseClickPos;
+                    float borderWid = mUIObject->getUIOConfig()["ButtonBorder"][2]["Width"].asFloat();
+                    float borderHei = mUIObject->getUIOConfig()["ButtonBorder"][2]["Height"].asFloat();
                     if (distance.x * distance.x <= borderWid / 2.f * borderWid / 2.f &&
                         distance.y * distance.y <= borderHei / 2.f * borderHei / 2.f)
                     {

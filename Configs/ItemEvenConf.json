@@ -1,0 +1,25 @@
+{
+  "encoding": "UTF-8",
+  "ItemIDVec": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "GearIDVec": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "ItemEvent": [
+    {
+      "ItemID": 0,
+      "GearID": 0
+    },
+    {
+      "ItemID": 1,
+      "GearID": 1
+    }
+  ]
+}

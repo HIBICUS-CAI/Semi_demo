@@ -80,6 +80,26 @@ public:
         InputComponent::mRightKey = mRightKey;
     }
 
+    int getDebugKey() const
+    {
+        return mDebugKey;
+    }
+
+    void setDebugKey(int mDebugKey)
+    {
+        InputComponent::mDebugKey = mDebugKey;
+    }
+
+    int getCancelDebugKey() const
+    {
+        return mCancelDebugKey;
+    }
+
+    void setCancelDebugKey(int mCancelDebugKey)
+    {
+        InputComponent::mCancelDebugKey = mCancelDebugKey;
+    }
+
 private:
     float mHorMoveSpeed;
     float mVerMoveSpeed;
@@ -90,6 +110,11 @@ private:
     int mBackKey;
     int mLeftKey;
     int mRightKey;
+
+    // 用于游戏调试输出信息
+    int mDebugKey;
+    int mCancelDebugKey;
+    bool mIsPrinting;
 };
 
 

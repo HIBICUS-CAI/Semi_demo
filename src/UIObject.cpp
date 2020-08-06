@@ -8,13 +8,16 @@
 #include "Button.h"
 #include "TextZone.h"
 #include "Font.h"
+#include "Item.h"
+#include "Document.h"
 
 UIObject::UIObject(class GameSys *gameSys, std::string texPath) : Object(gameSys),
                                                                   mGameSys(gameSys),
-                                                                  mHasChildUIO(false)
+                                                                  mHasChildUIO(false),
+                                                                  mIsInventory(false)
 {
     mUIOConfig = gameSys->GetInitObjRoot()["UIConfig"];
-    mSC = new SpriteComponent(this, 10);
+    mSC = new SpriteComponent(this, 1000);
     mSC->SetTexture(gameSys->GetTexture(texPath));
 
     mFont = gameSys->GetFont(mUIOConfig["FontPath"].asString());
@@ -108,6 +111,9 @@ void UIObject::ButtonEvent(class Button *button)
      * 1: 开始进行游戏
      * 2: 显示操作介绍界面
      * 3: 关闭窗口
+     * 4: 开启物品栏
+     * 5: 使用道具
+     * 6: 阅读文档
      */
     switch (button->getButtonFunc())
     {
@@ -158,8 +164,177 @@ void UIObject::ButtonEvent(class Button *button)
         case 3:
             SDL_Log("Close button has been pressed.");
 
+            if (mIsInventory)
+            {
+                for (auto item : mGameSys->getItemsInInventory())
+                {
+                    item->SetIsVisibleInventory(false);
+                }
+                for (auto doc : mGameSys->getDocsInInventory())
+                {
+                    doc->SetIsVisibleInventory(false);
+                }
+            }
+            if (getParentUIO()->isInventory())
+            {
+                for (auto item : mGameSys->getItemsInInventory())
+                {
+                    item->SetIsVisibleInventory(true);
+                }
+                for (auto doc : mGameSys->getDocsInInventory())
+                {
+                    doc->SetIsVisibleInventory(true);
+                }
+            }
+
             TurnOff();
             getParentUIO()->TurnOn();
+            break;
+        case 4:
+            SDL_Log("Inventory button has been pressed.");
+
+            if (mHasChildUIO)
+            {
+                for (auto item : mGameSys->getItemsInInventory())
+                {
+                    item->SetIsVisibleInventory(true);
+                }
+                for (auto doc : mGameSys->getDocsInInventory())
+                {
+                    doc->SetIsVisibleInventory(true);
+                }
+
+                mChildUIO->TurnOn();
+            } else
+            {
+                mHasChildUIO = true;
+
+                for (auto item : mGameSys->getItemsInInventory())
+                {
+                    item->SetIsVisibleInventory(true);
+                }
+                for (auto doc : mGameSys->getDocsInInventory())
+                {
+                    doc->SetIsVisibleInventory(true);
+                }
+
+                Json::Value inventoryUI = mGameSys->GetInitObjRoot()["UIObjects"]["InventoryUI"];
+                mChildUIO = new UIObject(mGameSys, inventoryUI["UITexPath"].asString());
+                mChildUIO->setIsInventory(true);
+                mChildUIO->setParentUIO(this);
+                for (int i = 0; i < inventoryUI["Button"].size(); ++i)
+                {
+                    mChildUIO->CreateButton(mGameSys, mChildUIO,
+                                            inventoryUI["Button"][i]["TexPath"].asString(),
+                                            inventoryUI["Button"][i]["Type"].asInt(),
+                                            inventoryUI["Button"][i]["Text"].asString(),
+                                            {inventoryUI["Button"][i]["Position"][0].asFloat(),
+                                             inventoryUI["Button"][i]["Position"][1].asFloat()},
+                                            inventoryUI["Button"][i]["Function"].asInt());
+                }
+            }
+
+            TurnOff();
+            break;
+        case 5:
+        {
+            glm::vec2 clickPos = mUIIC->getMouseClickPos();
+            int index = GetClickItemIndex(clickPos);
+
+            SDL_Log("use item witch index is: %d", index);
+            if (index + 1 > mGameSys->getItemsInInventory().size())
+            {
+                SDL_Log("You don't have item here");
+            } else
+            {
+                mGameSys->UseItemInUI(mGameSys->getItemsInInventory()[index]->UseItem());
+            }
+        }
+
+            break;
+        case 6:
+        {
+            glm::vec2 clickPos = mUIIC->getMouseClickPos();
+            int index = GetClickDocIndex(clickPos);
+            Json::Value docUI = mGameSys->GetInitObjRoot()["UIObjects"]["ReadDocUI"];
+
+            SDL_Log("read doc witch index is: %d", index);
+            if (index + 1 > mGameSys->getDocsInInventory().size())
+            {
+                SDL_Log("You don't have doc here");
+            } else
+            {
+                if (mHasChildUIO)
+                {
+                    mChildUIO->TurnOn();
+
+                    TextZone *title = mChildUIO->FindText(docUI["TextZone"][0]["ID"].asInt());
+                    if (title != nullptr)
+                    {
+                        // 设置标题
+                        title->setText(mGameSys->getDocsInInventory()[index]->ReadDoc().title);
+                    }
+                    TextZone *text = mChildUIO->FindText(docUI["TextZone"][1]["ID"].asInt());
+                    if (text != nullptr)
+                    {
+                        // 设置正文
+                        text->setText(
+                                mGameSys->getDocsInInventory()[index]->ReadDoc().mainText);
+                    }
+                } else
+                {
+                    mHasChildUIO = true;
+
+                    mChildUIO = new UIObject(mGameSys, docUI["UITexPath"].asString());
+                    mChildUIO->setParentUIO(this);
+                    for (int i = 0; i < docUI["Button"].size(); ++i)
+                    {
+                        mChildUIO->CreateButton(mGameSys, mChildUIO,
+                                                docUI["Button"][i]["TexPath"].asString(),
+                                                docUI["Button"][i]["Type"].asInt(),
+                                                docUI["Button"][i]["Text"].asString(),
+                                                {docUI["Button"][i]["Position"][0].asFloat(),
+                                                 docUI["Button"][i]["Position"][1].asFloat()},
+                                                docUI["Button"][i]["Function"].asInt());
+                    }
+                    for (int i = 0; i < docUI["TextZone"].size(); ++i)
+                    {
+                        mChildUIO->CreateTextZone(mGameSys, mChildUIO,
+                                                  {docUI["TextZone"][i]["Position"][0].asFloat(),
+                                                   docUI["TextZone"][i]["Position"][1].asFloat()},
+                                                  docUI["TextZone"][i]["Width"].asInt(),
+                                                  docUI["TextZone"][i]["ID"].asInt());
+                    }
+
+                    TextZone *title = mChildUIO->FindText(docUI["TextZone"][0]["ID"].asInt());
+                    if (title != nullptr)
+                    {
+                        SDL_Log("1");
+                        // 设置标题
+                        title->setText(mGameSys->getDocsInInventory()[index]->ReadDoc().title);
+                    }
+                    TextZone *text = mChildUIO->FindText(docUI["TextZone"][1]["ID"].asInt());
+                    if (text != nullptr)
+                    {
+                        SDL_Log("2");
+                        // 设置正文
+                        text->setText(
+                                mGameSys->getDocsInInventory()[index]->ReadDoc().mainText);
+                    }
+                }
+
+                TurnOff();
+                for (auto item : mGameSys->getItemsInInventory())
+                {
+                    item->SetIsVisibleInventory(false);
+                }
+                for (auto doc : mGameSys->getDocsInInventory())
+                {
+                    doc->SetIsVisibleInventory(false);
+                }
+            }
+        }
+
             break;
         default:
             break;

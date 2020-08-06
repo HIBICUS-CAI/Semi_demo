@@ -5,11 +5,12 @@
 #include "House.h"
 #include "BorderDecider.h"
 #include "CollisionComponent.h"
-#include "ZoneSwitchHouseComponent.h"
+#include "ZoneSwitchObjComponent.h"
 
 House::House(GameSys *gameSys, Player *player) : Object(gameSys), mPlayer(player),
                                                  mIsPlayerNearHouse(false)
 {
+    //TODO 此处需要修改
     setID(0);
 
     int initX = gameSys->getInitPos().x;
@@ -34,13 +35,13 @@ House::House(GameSys *gameSys, Player *player) : Object(gameSys), mPlayer(player
 //    float thisY = ThisHouse["Position"][1].asFloat();
     setPosition({thisX, thisY});
 
-    mSC = new SpriteComponent(this, 110);
+    mSC = new SpriteComponent(this, 120);
     mSC->SetTexture(gameSys->GetTexture(ThisHouse["OutTex"].asString()));
 
     mCC = new CollisionComponent(this);
     mCC->setRadius(180.f * 1.414f);     //在边角乱按的时候会卡出边界??
 
-    new ZoneSwitchHouseComponent(this, player, this, 10);
+    new ZoneSwitchObjComponent(this, player, this, 10);
 
     BorderDecider *bd;
     float x = getPosition().x - 150.f;

@@ -13,7 +13,7 @@ TextZone::TextZone(class GameSys *gameSys, class UIObject *uiObject, glm::vec2 p
 {
     setPosition(positon);
     mFont = uiObject->getFont();
-    mFontSC = new SpriteComponent(this, 30);
+    mFontSC = new SpriteComponent(this, 1030);
 
     uiObject->AddText(this);
 }
