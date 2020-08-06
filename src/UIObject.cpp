@@ -309,14 +309,12 @@ void UIObject::ButtonEvent(class Button *button)
                     TextZone *title = mChildUIO->FindText(docUI["TextZone"][0]["ID"].asInt());
                     if (title != nullptr)
                     {
-                        SDL_Log("1");
                         // 设置标题
                         title->setText(mGameSys->getDocsInInventory()[index]->ReadDoc().title);
                     }
                     TextZone *text = mChildUIO->FindText(docUI["TextZone"][1]["ID"].asInt());
                     if (text != nullptr)
                     {
-                        SDL_Log("2");
                         // 设置正文
                         text->setText(
                                 mGameSys->getDocsInInventory()[index]->ReadDoc().mainText);
