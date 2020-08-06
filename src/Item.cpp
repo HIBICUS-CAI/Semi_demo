@@ -23,7 +23,7 @@ Item::Item(class GameSys *gameSys, class Player *player, Json::Value itemInfo) :
     mShinySC = new SpriteComponent(this, 115);
     mShinySC->SetTexture(gameSys->GetTexture(itemInfo["ShinnyTex"].asString()));
     mShinySC->setIsVisible(false);
-    mTexSC = new SpriteComponent(this, 35);
+    mTexSC = new SpriteComponent(this, 1035);
     mTexSC->SetTexture(gameSys->GetTexture(itemInfo["ItemTex"].asString()));
     mTexSC->setIsVisible(false);
 

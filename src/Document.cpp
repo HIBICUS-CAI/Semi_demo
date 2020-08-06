@@ -13,6 +13,17 @@ Document::Document(class GameSys *gameSys, class Player *player, Json::Value doc
 {
     mDoc.ID = docInfo["ID"].asInt();
 
+    Json::Value docConfInfo = GetJsonRoot("../Configs/DocumentConf.json");
+    for (int i = 0; i < docConfInfo["DocInner"].size(); ++i)
+    {
+        if (docConfInfo["DocInner"][i]["ID"] == mDoc.ID)
+        {
+            mDoc.title = docConfInfo["DocInner"][i]["Title"].asString();
+            mDoc.mainText = docConfInfo["DocInner"][i]["Text"].asString();
+            break;
+        }
+    }
+
     glm::ivec2 initPos = gameSys->getInitPos();
     mPlayerLatePosition = initPos;
     glm::ivec2 mapPos = {docInfo["MapPos"][0].asInt(), docInfo["MapPos"][1].asInt()};
@@ -23,7 +34,7 @@ Document::Document(class GameSys *gameSys, class Player *player, Json::Value doc
     mShinySC = new SpriteComponent(this, 115);
     mShinySC->SetTexture(gameSys->GetTexture(docInfo["ShinnyTex"].asString()));
     mShinySC->setIsVisible(false);
-    mTexSC = new SpriteComponent(this, 35);
+    mTexSC = new SpriteComponent(this, 1035);
     mTexSC->SetTexture(gameSys->GetTexture(docInfo["DocTex"].asString()));
     mTexSC->setIsVisible(false);
 

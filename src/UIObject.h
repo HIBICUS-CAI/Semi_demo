@@ -67,9 +67,21 @@ public:
         return mUIOConfig;
     }
 
+    void setIsInventory(bool mIsInventory)
+    {
+        UIObject::mIsInventory = mIsInventory;
+    }
+
+    bool isInventory() const
+    {
+        return mIsInventory;
+    }
+
 private:
     std::vector<class Button *> mButtons;
     std::vector<class TextZone *> mTexts;
+
+    bool mIsInventory;
 
     class Font *mFont;
 

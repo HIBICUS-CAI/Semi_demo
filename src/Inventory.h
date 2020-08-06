@@ -19,7 +19,7 @@ public:
         return mItems;
     }
 
-    const std::vector<struct Document *> &getDocuments() const
+    const std::vector<class Document *> &getDocuments() const
     {
         return mDocuments;
     }

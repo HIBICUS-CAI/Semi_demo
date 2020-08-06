@@ -249,6 +249,18 @@ void GameSys::LoadData()
     }
 
     mItemSys = new ItemSys(this);
+
+    mMainUI = new UIObject(this, mInitObjRoot["UIObjects"]["MainUI"]["UITexPath"].asString());
+    Json::Value buttonInfo;
+    for (int i = 0; i < mInitObjRoot["UIObjects"]["MainUI"]["Button"].size(); ++i)
+    {
+        buttonInfo = mInitObjRoot["UIObjects"]["MainUI"]["Button"][i];
+        mMainUI->CreateButton(this, mMainUI, buttonInfo["TexPath"].asString(),
+                              buttonInfo["Type"].asInt(), buttonInfo["Text"].asString(),
+                              {buttonInfo["Position"][0].asFloat(),
+                               buttonInfo["Position"][1].asFloat()},
+                              buttonInfo["Function"].asInt(), buttonInfo["Size"].asInt());
+    }
 }
 
 void GameSys::LoadStartUI()
@@ -443,4 +455,14 @@ void GameSys::AddGearToSys(class Gear *gear)
 void GameSys::UseItemInUI(int itemID)
 {
     mItemSys->ItemEvent(itemID);
+}
+
+const std::vector<class Item *> &GameSys::getItemsInInventory()
+{
+    return mPlayer->getInventory()->getItems();
+}
+
+const std::vector<class Document *> &GameSys::getDocsInInventory()
+{
+    return mPlayer->getInventory()->getDocuments();
 }

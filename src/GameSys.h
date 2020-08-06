@@ -68,6 +68,10 @@ public:
 
     void UseItemInUI(int itemID);
 
+    const std::vector<class Item *> &getItemsInInventory();
+
+    const std::vector<class Document *> &getDocsInInventory();
+
 private:
     void ProcessInput();
 
@@ -95,6 +99,8 @@ private:
     float mDeltaTime;
 
     class UIObject *mStartUI;
+
+    class UIObject *mMainUI;
 
     class Maps *mMaps;
 
