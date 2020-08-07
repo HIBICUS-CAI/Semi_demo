@@ -14,7 +14,7 @@ include_directories(${SDL2_H} ${GLEW_H} ${GLM_H} ${JSON_H})
 
 #添加目标链接
 if(APPLE)
-    message("Current platform is OSX")
+    message("Current platform is : OSX")
 
     set(SDL2_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_osx/libSDL2.dylib)
     set(GLEW_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_osx/libGLEW.dylib)
@@ -22,7 +22,7 @@ if(APPLE)
     set(SDL2TTF_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_osx/libSDL2_ttf.dylib)
     link_libraries(${SDL2_LINK} ${GLEW_LINK} ${JSON_LINK} ${SDL2TTF_LINK})
 elseif(WIN32)
-    message(status "current platform is Windows")
+    message("Current platform is : Windows")
 
     set(SDL2_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_win/SDL2.lib)
     set(GLEW_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_win/glew32.lib)
