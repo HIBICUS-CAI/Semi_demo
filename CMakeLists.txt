@@ -13,11 +13,24 @@ set(JSON_H ${CMAKE_CURRENT_SOURCE_DIR}/lib/head/json)
 include_directories(${SDL2_H} ${GLEW_H} ${GLM_H} ${JSON_H})
 
 #添加目标链接
-set(SDL2_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_osx/libSDL2.dylib)
-set(GLEW_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_osx/libGLEW.dylib)
-set(JSON_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_osx/libjsoncpp.dylib)
-set(SDL2TTF_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_osx/libSDL2_ttf.dylib)
-link_libraries(${SDL2_LINK} ${GLEW_LINK} ${JSON_LINK} ${SDL2TTF_LINK})
+if(APPLE)
+    message("Current platform is OSX")
+
+    set(SDL2_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_osx/libSDL2.dylib)
+    set(GLEW_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_osx/libGLEW.dylib)
+    set(JSON_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_osx/libjsoncpp.dylib)
+    set(SDL2TTF_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_osx/libSDL2_ttf.dylib)
+    link_libraries(${SDL2_LINK} ${GLEW_LINK} ${JSON_LINK} ${SDL2TTF_LINK})
+elseif(WIN32)
+    message(status "current platform is Windows")
+
+    set(SDL2_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_win/SDL2.lib)
+    set(GLEW_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_win/glew32.lib)
+    set(JSON_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_win/libjsoncpp.a)
+    set(SDL2TTF_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_win/SDL2_ttf.lib)
+    set(GL_LINK ${CMAKE_CURRENT_SOURCE_DIR}/lib/lib_win/OpenGL32.Lib)
+    link_libraries(${SDL2_LINK} ${GLEW_LINK} ${JSON_LINK} ${SDL2TTF_LINK} ${GL_LINK})
+endif()
 
 aux_source_directory(src/. DIRS_SRCS)
 
