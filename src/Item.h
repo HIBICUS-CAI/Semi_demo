@@ -7,6 +7,13 @@
 
 #include "Object.h"
 
+struct ItemInner
+{
+    int ID;
+    std::string name;
+    std::string description;
+};
+
 class Item : public Object
 {
 public:
@@ -18,7 +25,7 @@ public:
 
     void SetIsVisibleInventory(bool isVisible);
 
-    int UseItem();
+    ItemInner UseItem();
 
     const glm::ivec2 &getPlayerLatePosition() const
     {
@@ -31,8 +38,8 @@ public:
     }
 
 private:
-    // 道具唯一ID
-    int mID;
+    // 道具容器
+    ItemInner mItem;
 
     // 道具闪烁时间
     float mShinnyDeltaTime;

@@ -14,7 +14,12 @@
 UIObject::UIObject(class GameSys *gameSys, std::string texPath) : Object(gameSys),
                                                                   mGameSys(gameSys),
                                                                   mHasChildUIO(false),
-                                                                  mIsInventory(false)
+                                                                  mIsInventory(false),
+                                                                  mIndex(-1),
+                                                                  mHasDocUIO(false),
+                                                                  mHasItemUIO(false),
+                                                                  mItemUIO(nullptr),
+                                                                  mDocUIO(nullptr)
 {
     mUIOConfig = gameSys->GetInitObjRoot()["UIConfig"];
     mSC = new SpriteComponent(this, 1000);
@@ -112,8 +117,9 @@ void UIObject::ButtonEvent(class Button *button)
      * 2: 显示操作介绍界面
      * 3: 关闭窗口
      * 4: 开启物品栏
-     * 5: 使用道具
+     * 5: 展示道具
      * 6: 阅读文档
+     * 7: 使用道具
      */
     switch (button->getButtonFunc())
     {
@@ -247,7 +253,74 @@ void UIObject::ButtonEvent(class Button *button)
                 SDL_Log("You don't have item here");
             } else
             {
-                mGameSys->UseItemInUI(mGameSys->getItemsInInventory()[index]->UseItem());
+//                mGameSys->UseItemInUI(mGameSys->getItemsInInventory()[index]->UseItem().ID);
+                Json::Value itemUI = mGameSys->GetInitObjRoot()["UIObjects"]["UseItemUI"];
+
+                if (mHasItemUIO)
+                {
+                    mItemUIO->TurnOn();
+                    mItemUIO->setIndex(index);
+
+                    TextZone *name = mItemUIO->FindText(itemUI["TextZone"][0]["ID"].asInt());
+                    if (name != nullptr)
+                    {
+                        name->setText(mGameSys->getItemsInInventory()[index]->UseItem().name);
+                    }
+                    TextZone *description = mItemUIO->FindText(
+                            itemUI["TextZone"][1]["ID"].asInt());
+                    if (description != nullptr)
+                    {
+                        description->setText(
+                                mGameSys->getItemsInInventory()[index]->UseItem().description);
+                    }
+                } else
+                {
+                    mHasItemUIO = true;
+                    mItemUIO = new UIObject(mGameSys, itemUI["UITexPath"].asString());
+                    mItemUIO->setParentUIO(this);
+                    mItemUIO->setIndex(index);
+                    for (int i = 0; i < itemUI["Button"].size(); ++i)
+                    {
+                        mItemUIO->CreateButton(mGameSys, mItemUIO,
+                                               itemUI["Button"][i]["TexPath"].asString(),
+                                               itemUI["Button"][i]["Type"].asInt(),
+                                               itemUI["Button"][i]["Text"].asString(),
+                                               {itemUI["Button"][i]["Position"][0].asFloat(),
+                                                itemUI["Button"][i]["Position"][1].asFloat()},
+                                               itemUI["Button"][i]["Function"].asInt());
+                    }
+                    for (int i = 0; i < itemUI["TextZone"].size(); ++i)
+                    {
+                        mItemUIO->CreateTextZone(mGameSys, mItemUIO,
+                                                 {itemUI["TextZone"][i]["Position"][0].asFloat(),
+                                                  itemUI["TextZone"][i]["Position"][1].asFloat()},
+                                                 itemUI["TextZone"][i]["Width"].asInt(),
+                                                 itemUI["TextZone"][i]["ID"].asInt());
+                    }
+
+                    TextZone *name = mItemUIO->FindText(itemUI["TextZone"][0]["ID"].asInt());
+                    if (name != nullptr)
+                    {
+                        name->setText(mGameSys->getItemsInInventory()[index]->UseItem().name);
+                    }
+                    TextZone *description = mItemUIO->FindText(
+                            itemUI["TextZone"][1]["ID"].asInt());
+                    if (description != nullptr)
+                    {
+                        description->setText(
+                                mGameSys->getItemsInInventory()[index]->UseItem().description);
+                    }
+                }
+
+                TurnOff();
+                for (auto item : mGameSys->getItemsInInventory())
+                {
+                    item->SetIsVisibleInventory(false);
+                }
+                for (auto doc : mGameSys->getDocsInInventory())
+                {
+                    doc->SetIsVisibleInventory(false);
+                }
             }
         }
 
@@ -264,17 +337,17 @@ void UIObject::ButtonEvent(class Button *button)
                 SDL_Log("You don't have doc here");
             } else
             {
-                if (mHasChildUIO)
+                if (mHasDocUIO)
                 {
-                    mChildUIO->TurnOn();
+                    mDocUIO->TurnOn();
 
-                    TextZone *title = mChildUIO->FindText(docUI["TextZone"][0]["ID"].asInt());
+                    TextZone *title = mDocUIO->FindText(docUI["TextZone"][0]["ID"].asInt());
                     if (title != nullptr)
                     {
                         // 设置标题
                         title->setText(mGameSys->getDocsInInventory()[index]->ReadDoc().title);
                     }
-                    TextZone *text = mChildUIO->FindText(docUI["TextZone"][1]["ID"].asInt());
+                    TextZone *text = mDocUIO->FindText(docUI["TextZone"][1]["ID"].asInt());
                     if (text != nullptr)
                     {
                         // 设置正文
@@ -283,36 +356,36 @@ void UIObject::ButtonEvent(class Button *button)
                     }
                 } else
                 {
-                    mHasChildUIO = true;
+                    mHasDocUIO = true;
 
-                    mChildUIO = new UIObject(mGameSys, docUI["UITexPath"].asString());
-                    mChildUIO->setParentUIO(this);
+                    mDocUIO = new UIObject(mGameSys, docUI["UITexPath"].asString());
+                    mDocUIO->setParentUIO(this);
                     for (int i = 0; i < docUI["Button"].size(); ++i)
                     {
-                        mChildUIO->CreateButton(mGameSys, mChildUIO,
-                                                docUI["Button"][i]["TexPath"].asString(),
-                                                docUI["Button"][i]["Type"].asInt(),
-                                                docUI["Button"][i]["Text"].asString(),
-                                                {docUI["Button"][i]["Position"][0].asFloat(),
-                                                 docUI["Button"][i]["Position"][1].asFloat()},
-                                                docUI["Button"][i]["Function"].asInt());
+                        mDocUIO->CreateButton(mGameSys, mDocUIO,
+                                              docUI["Button"][i]["TexPath"].asString(),
+                                              docUI["Button"][i]["Type"].asInt(),
+                                              docUI["Button"][i]["Text"].asString(),
+                                              {docUI["Button"][i]["Position"][0].asFloat(),
+                                               docUI["Button"][i]["Position"][1].asFloat()},
+                                              docUI["Button"][i]["Function"].asInt());
                     }
                     for (int i = 0; i < docUI["TextZone"].size(); ++i)
                     {
-                        mChildUIO->CreateTextZone(mGameSys, mChildUIO,
-                                                  {docUI["TextZone"][i]["Position"][0].asFloat(),
-                                                   docUI["TextZone"][i]["Position"][1].asFloat()},
-                                                  docUI["TextZone"][i]["Width"].asInt(),
-                                                  docUI["TextZone"][i]["ID"].asInt());
+                        mDocUIO->CreateTextZone(mGameSys, mDocUIO,
+                                                {docUI["TextZone"][i]["Position"][0].asFloat(),
+                                                 docUI["TextZone"][i]["Position"][1].asFloat()},
+                                                docUI["TextZone"][i]["Width"].asInt(),
+                                                docUI["TextZone"][i]["ID"].asInt());
                     }
 
-                    TextZone *title = mChildUIO->FindText(docUI["TextZone"][0]["ID"].asInt());
+                    TextZone *title = mDocUIO->FindText(docUI["TextZone"][0]["ID"].asInt());
                     if (title != nullptr)
                     {
                         // 设置标题
                         title->setText(mGameSys->getDocsInInventory()[index]->ReadDoc().title);
                     }
-                    TextZone *text = mChildUIO->FindText(docUI["TextZone"][1]["ID"].asInt());
+                    TextZone *text = mDocUIO->FindText(docUI["TextZone"][1]["ID"].asInt());
                     if (text != nullptr)
                     {
                         // 设置正文
@@ -331,6 +404,12 @@ void UIObject::ButtonEvent(class Button *button)
                     doc->SetIsVisibleInventory(false);
                 }
             }
+        }
+
+            break;
+        case 7:
+        {
+            mGameSys->UseItemInUI(mGameSys->getItemsInInventory()[mIndex]->UseItem().ID);
         }
 
             break;

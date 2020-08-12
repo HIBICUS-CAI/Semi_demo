@@ -362,7 +362,7 @@
       "Button": [
         {
           "TexPath": "../Assets/button_red.png",
-          "Type": 1,
+          "Type": 0,
           "Text": "物品栏",
           "Position": [
             -450,
@@ -625,6 +625,49 @@
             50
           ],
           "Function": 6
+        }
+      ]
+    },
+    "UseItemUI": {
+      "UITexPath": "../Assets/help_window.png",
+      "Button": [
+        {
+          "TexPath": "../Assets/cross-1.png",
+          "Type": 1,
+          "Text": " ",
+          "Position": [
+            256,
+            192
+          ],
+          "Function": 3
+        },
+        {
+          "TexPath": "../Assets/button_red.png",
+          "Type": 0,
+          "Text": "使用此道具",
+          "Position": [
+            0,
+            -100
+          ],
+          "Function": 7
+        }
+      ],
+      "TextZone": [
+        {
+          "Width": 300,
+          "ID": 1,
+          "Position": [
+            0,
+            180
+          ]
+        },
+        {
+          "Width": 300,
+          "ID": 2,
+          "Position": [
+            0,
+            140
+          ]
         }
       ]
     },

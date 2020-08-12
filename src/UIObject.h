@@ -77,11 +77,24 @@ public:
         return mIsInventory;
     }
 
+    int getIndex() const
+    {
+        return mIndex;
+    }
+
+    void setIndex(int mIndex)
+    {
+        UIObject::mIndex = mIndex;
+    }
+
 private:
     std::vector<class Button *> mButtons;
     std::vector<class TextZone *> mTexts;
 
     bool mIsInventory;
+
+    // 用于记录需要记录的数值
+    int mIndex;
 
     class Font *mFont;
 
@@ -94,6 +107,14 @@ private:
     bool mHasChildUIO;
 
     class UIObject *mChildUIO;
+
+    bool mHasItemUIO;
+
+    class UIObject *mItemUIO;
+
+    bool mHasDocUIO;
+
+    class UIObject *mDocUIO;
 
     class UIObject *mParentUIO;
 

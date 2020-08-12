@@ -33,7 +33,7 @@ void InputComponent::ProcessInput(const uint8_t *keyState)
         {
             for (auto item : items)
             {
-                SDL_Log("item's ID: %d  ", item->UseItem());
+                SDL_Log("item's ID: %d  ", item->UseItem().ID);
 
                 //TODO 将以下方法添加至UIO中
                 //mOwner->getGameSys()->UseItemInUI(item->UseItem());

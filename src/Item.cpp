@@ -11,7 +11,18 @@
 Item::Item(class GameSys *gameSys, class Player *player, Json::Value itemInfo) : Object(
         gameSys), mPlayer(player), mShinnyDeltaTime(2.f)
 {
-    mID = itemInfo["ID"].asInt();
+    mItem.ID = itemInfo["ID"].asInt();
+
+    Json::Value itemConfInfo = GetJsonRoot("../Configs/ItemConf.json");
+    for (int i = 0; i < itemConfInfo["ItemInner"].size(); ++i)
+    {
+        if (itemConfInfo["ItemInner"][i]["ID"] == mItem.ID)
+        {
+            mItem.name = itemConfInfo["ItemInner"][i]["Name"].asString();
+            mItem.description = itemConfInfo["ItemInner"][i]["Description"].asString();
+            break;
+        }
+    }
 
     glm::ivec2 initPos = gameSys->getInitPos();
     mPlayerLatePosition = initPos;
@@ -78,7 +89,7 @@ void Item::SetIsVisibleInventory(bool isVisible)
     mTexSC->setIsVisible(isVisible);
 }
 
-int Item::UseItem()
+ItemInner Item::UseItem()
 {
-    return mID;
+    return mItem;
 }

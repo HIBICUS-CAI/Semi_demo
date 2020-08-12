@@ -27,7 +27,7 @@ void UIInputComponent::Update(float deltatime)
         switch (button->getButtonType())
         {
             /**
-             * 0: 开始界面的两个以及物品栏
+             * 0: 开始界面的两个以及物品栏以及使用道具
              * 1: 关闭窗口的叉号
              * 2: item按键
              */
