@@ -43,7 +43,7 @@ void UIInputComponent::Update(float deltatime)
                     if (distance.x * distance.x <= borderWid / 2.f * borderWid / 2.f &&
                         distance.y * distance.y <= borderHei / 2.f * borderHei / 2.f)
                     {
-                        mUIObject->ButtonEvent(button);
+                        mUIObject->getBEC()->PressButton(button->getButtonFunc());
                     }
                 }
                 break;
@@ -59,7 +59,7 @@ void UIInputComponent::Update(float deltatime)
                     if (distance.x * distance.x <= borderWid / 2.f * borderWid / 2.f &&
                         distance.y * distance.y <= borderHei / 2.f * borderHei / 2.f)
                     {
-                        mUIObject->ButtonEvent(button);
+                        mUIObject->getBEC()->PressButton(button->getButtonFunc());
                     }
                 }
                 break;
@@ -75,7 +75,7 @@ void UIInputComponent::Update(float deltatime)
                     if (distance.x * distance.x <= borderWid / 2.f * borderWid / 2.f &&
                         distance.y * distance.y <= borderHei / 2.f * borderHei / 2.f)
                     {
-                        mUIObject->ButtonEvent(button);
+                        mUIObject->getBEC()->PressButton(button->getButtonFunc());
                     }
                 }
                 break;
