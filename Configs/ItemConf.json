@@ -1,0 +1,25 @@
+{
+  "encoding": "UTF-8",
+  "ItemIDVec": [
+    0,
+    1,
+    2
+  ],
+  "ItemInner": [
+    {
+      "ID": 0,
+      "Name": "老旧的手表",
+      "Description": "时针倒转，续命必备"
+    },
+    {
+      "ID": 1,
+      "Name": "老旧的钥匙",
+      "Description": "看上去一折就会断"
+    },
+    {
+      "ID": 2,
+      "Name": "崭新的钥匙",
+      "Description": "这种钥匙没有匹配的锁孔吧"
+    }
+  ]
+}

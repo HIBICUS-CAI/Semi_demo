@@ -76,7 +76,7 @@ void Player::RevertMove()
 
 void Player::AddItemToInventory(class Item *item)
 {
-    SDL_Log("add a item to inventory witch id is: %d", item->UseItem());
+    SDL_Log("add a item to inventory witch id is: %d", item->UseItem().ID);
     mInventory->AddItem(item);
 }
 

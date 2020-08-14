@@ -7,6 +7,8 @@
 
 #include "Object.h"
 #include "SpriteComponent.h"
+#include "UIInputComponent.h"
+#include "ButtonEventComponent.h"
 
 class UIObject : public Object
 {
@@ -29,8 +31,6 @@ public:
     void TurnOff();
 
     void TurnOn();
-
-    void ButtonEvent(class Button *button);
 
     const std::vector<struct Button *> &getButtons() const
     {
@@ -77,11 +77,89 @@ public:
         return mIsInventory;
     }
 
+    int getIndex() const
+    {
+        return mIndex;
+    }
+
+    void setIndex(int mIndex)
+    {
+        UIObject::mIndex = mIndex;
+    }
+
+    bool hasChildUIO() const
+    {
+        return mHasChildUIO;
+    }
+
+    bool hasItemUIO() const
+    {
+        return mHasItemUIO;
+    }
+
+    UIObject *getItemUIO() const
+    {
+        return mItemUIO;
+    }
+
+    bool hasDocUIO() const
+    {
+        return mHasDocUIO;
+    }
+
+    UIObject *getDocUIO() const
+    {
+        return mDocUIO;
+    }
+
+    void setHasChildUIO(bool mHasChildUio)
+    {
+        mHasChildUIO = mHasChildUio;
+    }
+
+    void setHasItemUIO(bool mHasItemUio)
+    {
+        mHasItemUIO = mHasItemUio;
+    }
+
+    void setHasDocUIO(bool mHasDocUio)
+    {
+        mHasDocUIO = mHasDocUio;
+    }
+
+    void setChildUIO(UIObject *mChildUio)
+    {
+        mChildUIO = mChildUio;
+    }
+
+    void setItemUIO(UIObject *mItemUio)
+    {
+        mItemUIO = mItemUio;
+    }
+
+    void setDocUIO(UIObject *mDocUio)
+    {
+        mDocUIO = mDocUio;
+    }
+
+    UIInputComponent *getUIIC() const
+    {
+        return mUIIC;
+    }
+
+    ButtonEventComponent *getBEC() const
+    {
+        return mBEC;
+    }
+
 private:
     std::vector<class Button *> mButtons;
     std::vector<class TextZone *> mTexts;
 
     bool mIsInventory;
+
+    // 用于记录需要记录的数值
+    int mIndex;
 
     class Font *mFont;
 
@@ -89,11 +167,21 @@ private:
 
     class UIInputComponent *mUIIC;
 
+    class ButtonEventComponent *mBEC;
+
     class GameSys *mGameSys;
 
     bool mHasChildUIO;
 
     class UIObject *mChildUIO;
+
+    bool mHasItemUIO;
+
+    class UIObject *mItemUIO;
+
+    bool mHasDocUIO;
+
+    class UIObject *mDocUIO;
 
     class UIObject *mParentUIO;
 

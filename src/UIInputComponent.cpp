@@ -27,7 +27,7 @@ void UIInputComponent::Update(float deltatime)
         switch (button->getButtonType())
         {
             /**
-             * 0: 开始界面的两个以及物品栏
+             * 0: 开始界面的两个以及物品栏以及使用道具
              * 1: 关闭窗口的叉号
              * 2: item按键
              */
@@ -43,7 +43,7 @@ void UIInputComponent::Update(float deltatime)
                     if (distance.x * distance.x <= borderWid / 2.f * borderWid / 2.f &&
                         distance.y * distance.y <= borderHei / 2.f * borderHei / 2.f)
                     {
-                        mUIObject->ButtonEvent(button);
+                        mUIObject->getBEC()->PressButton(button->getButtonFunc());
                     }
                 }
                 break;
@@ -59,7 +59,7 @@ void UIInputComponent::Update(float deltatime)
                     if (distance.x * distance.x <= borderWid / 2.f * borderWid / 2.f &&
                         distance.y * distance.y <= borderHei / 2.f * borderHei / 2.f)
                     {
-                        mUIObject->ButtonEvent(button);
+                        mUIObject->getBEC()->PressButton(button->getButtonFunc());
                     }
                 }
                 break;
@@ -75,7 +75,7 @@ void UIInputComponent::Update(float deltatime)
                     if (distance.x * distance.x <= borderWid / 2.f * borderWid / 2.f &&
                         distance.y * distance.y <= borderHei / 2.f * borderHei / 2.f)
                     {
-                        mUIObject->ButtonEvent(button);
+                        mUIObject->getBEC()->PressButton(button->getButtonFunc());
                     }
                 }
                 break;

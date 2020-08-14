@@ -71,7 +71,7 @@ void Inventory::AddItem(class Item *item)
 
 int Inventory::UseItem(class Item *item)
 {
-    return item->UseItem();
+    return item->UseItem().ID;
 }
 
 void Inventory::AddDocument(class Document *document)
