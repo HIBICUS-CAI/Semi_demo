@@ -394,7 +394,5 @@ void ButtonEventComponent::ClickBtn_UseItem()
 // 8: 点击对话框按钮
 void ButtonEventComponent::ClickBtn_NextTalk()
 {
-    SDL_Log("talktalk");
-    mOwner->getGameSys()->getNPCharas()[0]->getNPCSys()->SetTalk(
-            mOwner->getGameSys()->getNPCharas()[0]->getNPCSys()->getTalkId());
+    mOwner->getGameSys()->getNPCSys()->SetTalk(mOwner->getGameSys()->getNPCSys()->getTalkId());
 }

@@ -79,6 +79,13 @@ public:
 
     const std::vector<class Document *> &getDocsInInventory();
 
+    class NPCSys getNPCsysDONOTUSETHIS();
+
+    NPCSys *getNPCSys() const
+    {
+        return mNPCSys;
+    }
+
 private:
     void ProcessInput();
 

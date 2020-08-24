@@ -477,3 +477,8 @@ const std::vector<class Document *> &GameSys::getDocsInInventory()
 {
     return mPlayer->getInventory()->getDocuments();
 }
+
+class NPCSys GameSys::getNPCsysDONOTUSETHIS()
+{
+    return *mNPCSys;
+}

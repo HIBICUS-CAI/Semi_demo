@@ -64,10 +64,10 @@ void InputComponent::ProcessInput(const uint8_t *keyState)
 
     if (keyState[mTalkKey])
     {
-        if (!mOwner->getGameSys()->getNPCharas()[0]->getNPCSys()->isTalking())
+        if (!mOwner->getGameSys()->getNPCSys()->isTalking())
         {
             SDL_Log("rdy to talk");
-            mOwner->getGameSys()->getNPCharas()[0]->getNPCSys()->setIsTalking(true);
+            mOwner->getGameSys()->getNPCSys()->setIsTalking(true);
             for (int i = 0; i < mOwner->getGameSys()->getNPCharas().size(); ++i)
             {
                 if (mOwner->getGameSys()->getNPCharas()[i]->isPlayerTrigged())
