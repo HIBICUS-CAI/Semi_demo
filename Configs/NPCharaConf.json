@@ -1,0 +1,161 @@
+{
+  "encoding": "UTF-8",
+  "NPCItems": [
+    {
+      "ID": 7,
+      "MapPos": [
+        -1,
+        -1
+      ],
+      "Position": [
+        1000,
+        1000
+      ],
+      "ShinnyTex": "../Assets/nothing.png",
+      "ItemTex": "../Assets/watch.png"
+    },
+    {
+      "ID": 8,
+      "MapPos": [
+        -1,
+        -1
+      ],
+      "Position": [
+        1000,
+        1000
+      ],
+      "ShinnyTex": "../Assets/nothing.png",
+      "ItemTex": "../Assets/watch.png"
+    },
+    {
+      "ID": 9,
+      "MapPos": [
+        -1,
+        -1
+      ],
+      "Position": [
+        1000,
+        1000
+      ],
+      "ShinnyTex": "../Assets/nothing.png",
+      "ItemTex": "../Assets/watch.png"
+    }
+  ],
+  "NPCDocs": [
+    {
+      "ID": 7,
+      "MapPos": [
+        -1,
+        -1
+      ],
+      "Position": [
+        1000,
+        1000
+      ],
+      "ShinnyTex": "../Assets/nothing.png",
+      "DocTex": "../Assets/doc_tex.png"
+    },
+    {
+      "ID": 8,
+      "MapPos": [
+        -1,
+        -1
+      ],
+      "Position": [
+        1000,
+        1000
+      ],
+      "ShinnyTex": "../Assets/nothing.png",
+      "DocTex": "../Assets/doc_tex.png"
+    },
+    {
+      "ID": 9,
+      "MapPos": [
+        -1,
+        -1
+      ],
+      "Position": [
+        1000,
+        1000
+      ],
+      "ShinnyTex": "../Assets/nothing.png",
+      "DocTex": "../Assets/doc_tex.png"
+    }
+  ],
+  "NPCConfig": [
+    {
+      "NPC_ID": 0,
+      "Status": [
+        {
+          "Depends": {
+            "Priority": 0,
+            "Items": [
+              0
+            ],
+            "Docs": [
+              0
+            ]
+          },
+          "TalkTextID": 0,
+          "EventType": 0,
+          "EventID": 0
+        },
+        {
+          "Depends": {
+            "Priority": 1,
+            "Items": [
+              0,
+              1
+            ],
+            "Docs": [
+              0,
+              2
+            ]
+          },
+          "TalkTextID": 1,
+          "EventType": 1,
+          "EventID": 0
+        }
+      ]
+    },
+    {
+      "NPC_ID": 1,
+      "Status": [
+        {
+          "Depends": {
+            "Priority": 0,
+            "Items": [
+              0
+            ],
+            "Docs": [
+              0
+            ]
+          },
+          "TalkTextID": 2,
+          "EventType": 0,
+          "EventID": 0
+        }
+      ]
+    }
+  ],
+  "ItemEvent": [
+    {
+      "EventID": 0,
+      "ItemID": 7
+    },
+    {
+      "EventID": 1,
+      "ItemID": 8
+    }
+  ],
+  "DocEvent": [
+    {
+      "EventID": 0,
+      "DocID": 7
+    },
+    {
+      "EventID": 1,
+      "DocID": 8
+    }
+  ]
+}

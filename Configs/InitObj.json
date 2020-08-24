@@ -254,6 +254,40 @@
       "Height": 100
     }
   ],
+  "NPCharas": [
+    {
+      "ID": 0,
+      "Name": "路人甲",
+      "MapPos": [
+        2,
+        0
+      ],
+      "Position": [
+        200,
+        200
+      ],
+      "Tex": "../Assets/NPC_test.png",
+      "Width": 100,
+      "Height": 100,
+      "BorderCCRadius": 15
+    },
+    {
+      "ID": 1,
+      "Name": "路人乙",
+      "MapPos": [
+        1,
+        0
+      ],
+      "Position": [
+        200,
+        -200
+      ],
+      "Tex": "../Assets/NPC_test.png",
+      "Width": 100,
+      "Height": 100,
+      "BorderCCRadius": 15
+    }
+  ],
   "UIConfig": {
     "FontPath": "../Assets/black.ttc",
     "MouseClickPos": [
@@ -700,6 +734,39 @@
           "Position": [
             0,
             140
+          ]
+        }
+      ]
+    },
+    "DialogUI": {
+      "UITexPath": "../Assets/DialogUI.png",
+      "Button": [
+        {
+          "TexPath": "../Assets/button_click.png",
+          "Type": 1,
+          "Text": " ",
+          "Position": [
+            80,
+            -15
+          ],
+          "Function": 8
+        }
+      ],
+      "TextZone": [
+        {
+          "Width": 50,
+          "ID": 0,
+          "Position": [
+            -70,
+            30
+          ]
+        },
+        {
+          "Width": 200,
+          "ID": 1,
+          "Position": [
+            0,
+            0
           ]
         }
       ]

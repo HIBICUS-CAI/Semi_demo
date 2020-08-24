@@ -30,6 +30,8 @@ public:
         BorderDecider::mPlayerLatePosition = mPlayerLatePosition;
     }
 
+    void SetCCRadius(int radius);
+
 private:
     class CollisionComponent *mCC;
 

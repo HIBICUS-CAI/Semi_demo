@@ -7,6 +7,8 @@
 #include "TextZone.h"
 #include "Item.h"
 #include "Document.h"
+#include "NPCSys.h"
+#include "NPChara.h"
 
 ButtonEventComponent::ButtonEventComponent(class Object *owner, class UIObject *uiObject,
                                            int updateOrder) : Component(owner, updateOrder),
@@ -28,6 +30,7 @@ void ButtonEventComponent::ButtonEvent(int func_id)
      * 5: 展示道具
      * 6: 阅读文档
      * 7: 使用道具
+     * 8: 点击对话框按钮
      */
     switch (func_id)
     {
@@ -51,6 +54,9 @@ void ButtonEventComponent::ButtonEvent(int func_id)
             break;
         case 7:
             ClickBtn_UseItem();
+            break;
+        case 8:
+            ClickBtn_NextTalk();
             break;
         default:
             break;
@@ -383,4 +389,12 @@ void ButtonEventComponent::ClickBtn_UseItem()
 {
     mOwner->getGameSys()->UseItemInUI(
             mOwner->getGameSys()->getItemsInInventory()[mOwnerUIO->getIndex()]->UseItem().ID);
+}
+
+// 8: 点击对话框按钮
+void ButtonEventComponent::ClickBtn_NextTalk()
+{
+    SDL_Log("talktalk");
+    mOwner->getGameSys()->getNPCharas()[0]->getNPCSys()->SetTalk(
+            mOwner->getGameSys()->getNPCharas()[0]->getNPCSys()->getTalkId());
 }

@@ -3,7 +3,10 @@
   "ItemIDVec": [
     0,
     1,
-    2
+    2,
+    7,
+    8,
+    9
   ],
   "ItemInner": [
     {
@@ -20,6 +23,21 @@
       "ID": 2,
       "Name": "崭新的钥匙",
       "Description": "这种钥匙没有匹配的锁孔吧"
+    },
+    {
+      "ID": 7,
+      "Name": "7号飞机",
+      "Description": "7号飞机"
+    },
+    {
+      "ID": 8,
+      "Name": "8号飞机",
+      "Description": "8号飞机"
+    },
+    {
+      "ID": 9,
+      "Name": "9号飞机",
+      "Description": "9号飞机"
     }
   ]
 }

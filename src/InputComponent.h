@@ -80,6 +80,16 @@ public:
         InputComponent::mRightKey = mRightKey;
     }
 
+    int getTalkKey() const
+    {
+        return mTalkKey;
+    }
+
+    void setTalkKey(int mTalkKey)
+    {
+        InputComponent::mTalkKey = mTalkKey;
+    }
+
     int getDebugKey() const
     {
         return mDebugKey;
@@ -110,6 +120,8 @@ private:
     int mBackKey;
     int mLeftKey;
     int mRightKey;
+
+    int mTalkKey;
 
     // 用于游戏调试输出信息
     int mDebugKey;

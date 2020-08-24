@@ -22,6 +22,8 @@
 #include "Document.h"
 #include "Gear.h"
 #include "ItemSys.h"
+#include "NPCSys.h"
+#include "NPChara.h"
 
 GameSys::GameSys() : mWindow(nullptr), mContext(nullptr), mIsRunning(true), mIsUpdatingObjects(
         false), mMousePos(0, 0)
@@ -226,6 +228,10 @@ void GameSys::LoadData()
     mMaps = new Maps(this, mPlayer);
 
     new House(this, mPlayer);
+
+    Json::Value NPCInitInfo = mInitObjRoot["NPCharas"];
+
+    mNPCSys = new NPCSys(mPlayer, NPCInitInfo);
 
     Json::Value itemsInfo = mInitObjRoot["Items"];
 
@@ -450,6 +456,11 @@ void GameSys::AddDocToSys(class Document *document)
 void GameSys::AddGearToSys(class Gear *gear)
 {
     mGears.emplace_back(gear);
+}
+
+void GameSys::AddNPCToSys(class NPChara *npChara)
+{
+    mNPCharas.emplace_back(npChara);
 }
 
 void GameSys::UseItemInUI(int itemID)

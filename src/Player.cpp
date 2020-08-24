@@ -26,6 +26,7 @@ Player::Player(GameSys *gameSys) : Object(gameSys), mCC(nullptr), mInputStatus(0
             gameSys->GetTexture(gameSys->GetInitObjRoot()["Player"]["Tex"].asString()));
 
     InputComponent *ic = new InputComponent(this, this);
+    ic->setTalkKey(SDL_SCANCODE_C);
     ic->setForwardKey(SDL_SCANCODE_W);
     ic->setBackKey(SDL_SCANCODE_S);
     ic->setLeftKey(SDL_SCANCODE_A);

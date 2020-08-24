@@ -25,3 +25,8 @@ void BorderDecider::UpdateObject(float deltatime)
         mPlayer->RevertMove();
     }
 }
+
+void BorderDecider::SetCCRadius(int radius)
+{
+    mCC->setRadius(radius);
+}

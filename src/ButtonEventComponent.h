@@ -38,6 +38,9 @@ private:
     // 7: 使用道具
     void ClickBtn_UseItem();
 
+    // 8: 点击对话框按钮
+    void ClickBtn_NextTalk();
+
     class UIObject *mOwnerUIO;
 };
 

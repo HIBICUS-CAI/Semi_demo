@@ -7,9 +7,12 @@
 #include "Player.h"
 #include "Item.h"
 #include "Document.h"
+#include "NPCSys.h"
+#include "NPChara.h"
 
 InputComponent::InputComponent(class Object *owner, class Player *player) : MoveComponent(
-        owner), mForwardKey(0), mBackKey(0), mLeftKey(0), mRightKey(0), mPlayer(player)
+        owner), mForwardKey(0), mBackKey(0), mLeftKey(0), mRightKey(0), mTalkKey(0),
+                                                                            mPlayer(player)
 {
     // 调试用部分开始
     mIsPrinting = false;
@@ -34,9 +37,6 @@ void InputComponent::ProcessInput(const uint8_t *keyState)
             for (auto item : items)
             {
                 SDL_Log("item's ID: %d  ", item->UseItem().ID);
-
-                //TODO 将以下方法添加至UIO中
-                //mOwner->getGameSys()->UseItemInUI(item->UseItem());
             }
         } else
         {
@@ -61,6 +61,23 @@ void InputComponent::ProcessInput(const uint8_t *keyState)
     }
 
     // 调试用部分结束
+
+    if (keyState[mTalkKey])
+    {
+        if (!mOwner->getGameSys()->getNPCharas()[0]->getNPCSys()->isTalking())
+        {
+            SDL_Log("rdy to talk");
+            mOwner->getGameSys()->getNPCharas()[0]->getNPCSys()->setIsTalking(true);
+            for (int i = 0; i < mOwner->getGameSys()->getNPCharas().size(); ++i)
+            {
+                if (mOwner->getGameSys()->getNPCharas()[i]->isPlayerTrigged())
+                {
+                    mOwner->getGameSys()->getNPCharas()[i]->TalkWithPlayer();
+                    break;
+                }
+            }
+        }
+    }
 
     float horSpeed = 0.0f;
     if (keyState[mRightKey])
