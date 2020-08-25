@@ -13,7 +13,8 @@
 
 NPCSys::NPCSys(class Player *player, Json::Value npcInitInfo) : mPlayer(player),
                                                                 mIsTalking(false),
-                                                                mTalkIndex(-1)
+                                                                mTalkIndex(-1),
+                                                                mLatestID(-1)
 {
     NPChara *npc;
     for (int i = 0; i < npcInitInfo.size(); ++i)
@@ -66,6 +67,8 @@ NPCSys::NPCSys(class Player *player, Json::Value npcInitInfo) : mPlayer(player),
     mUIO->TurnOff();
 
     mTalkInfo = GetJsonRoot("../Configs/TalkTextConf.json");
+
+    ClearPlayerInfo();
 }
 
 NPChara NPCSys::FindChara(int id)
@@ -83,20 +86,22 @@ NPChara NPCSys::FindChara(int id)
 
 void NPCSys::SetTalk(int id)
 {
-    Json::Value talkText;
-    for (int i = 0; i < mTalkInfo["TalkTexts"].size(); ++i)
+
+    if (id != mLatestID)
     {
-        if (mTalkInfo["TalkTexts"][i]["ID"].asInt() == id)
+        for (int i = 0; i < mTalkInfo["TalkTexts"].size(); ++i)
         {
-            talkText = mTalkInfo["TalkTexts"][i]["TalkText"];
+            if (mTalkInfo["TalkTexts"][i]["ID"].asInt() == id)
+            {
+                mTalkText = mTalkInfo["TalkTexts"][i]["TalkText"];
+                mLatestID = id;
+            }
         }
     }
 
-    if (mTalkIndex == talkText.size())
+    if (mTalkIndex == mTalkText.size())
     {
-        mUIO->TurnOff();
-        mTalkIndex = -1;
-        mIsTalking = false;
+        InitTalkStatus();
     } else
     {
         TextZone *textZone;
@@ -105,13 +110,13 @@ void NPCSys::SetTalk(int id)
         if (textZone != nullptr)
         {
             // 设置人名
-            if (talkText[mTalkIndex]["SpeakerID"].asInt() == -1)
+            if (mTalkText[mTalkIndex]["SpeakerID"].asInt() == -1)
             {
                 textZone->setText("Player");
             } else
             {
                 textZone->setText(FindChara(
-                        talkText[mTalkIndex]["SpeakerID"].asInt()).getNPCInfo().Name);
+                        mTalkText[mTalkIndex]["SpeakerID"].asInt()).getNPCInfo().Name);
             }
         }
         textZone = mUIO->FindText(
@@ -119,8 +124,33 @@ void NPCSys::SetTalk(int id)
         if (textZone != nullptr)
         {
             // 设置对话
-            textZone->setText(talkText[mTalkIndex]["Text"].asString());
+            textZone->setText(mTalkText[mTalkIndex]["Text"].asString());
         }
         mTalkIndex++;
     }
+}
+
+void NPCSys::InitTalkStatus()
+{
+    mUIO->TurnOff();
+    mTalkIndex = -1;
+    mIsTalking = false;
+}
+
+void NPCSys::ClearPlayerInfo()
+{
+    mPlayerInfo.GotDocs.clear();
+    mPlayerInfo.GotItems.clear();
+    mPlayerInfo.TalkedNPCs.clear();
+    mPlayerInfo.UnlockedGears.clear();
+}
+
+void NPCSys::UpdatePlayerInfo()
+{
+    ClearPlayerInfo();
+
+    mPlayerInfo.GotDocs = mPlayer->getGotDocuments();
+    mPlayerInfo.GotItems = mPlayer->getGotItems();
+    mPlayerInfo.TalkedNPCs = mPlayer->getTalkedNpCs();
+    mPlayerInfo.UnlockedGears = mPlayer->getUnlockedGears();
 }

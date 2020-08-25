@@ -97,15 +97,21 @@ void Gear::GearEvent(int gearID)
     {
         case 0:
             mIsUnlock = true;
+            mPlayer->AddGearToRecord(gearID);
             for (auto bd : mBorderDeciders)
             {
                 bd->setState(Pause);
             }
+
+            break;
         case 1:
             mIsUnlock = true;
+            mPlayer->AddGearToRecord(gearID);
             for (auto bd : mBorderDeciders)
             {
                 bd->setState(Pause);
             }
+
+            break;
     }
 }

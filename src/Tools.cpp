@@ -64,3 +64,21 @@ int GetClickDocIndex(glm::vec2 clickPos)
 
     return click_x + (4 * click_y);
 }
+
+bool CheckMemberExistInt(int value, std::vector<int> vector)
+{
+    if (vector.empty())
+    {
+        return false;
+    } else
+    {
+        for (int i = 0; i < vector.size(); ++i)
+        {
+            if (vector[i] == value)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+}

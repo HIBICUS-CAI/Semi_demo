@@ -89,10 +89,12 @@ void NPChara::UpdateObject(float deltatime)
 
 void NPChara::TalkWithPlayer()
 {
-    getNPCSys()->getUIO()->TurnOn();
-    getNPCSys()->setTalkIndex(0);
-    getNPCSys()->setTalkId(0);
+    mNPCSys->UpdatePlayerInfo();
+
+    mNPCSys->getUIO()->TurnOn();
+    mNPCSys->setTalkIndex(0);
+    mNPCSys->setTalkId(0);
 
     //TODO 此处修改根据状态调整的数值
-    getNPCSys()->SetTalk(getNPCSys()->getTalkId());
+    mNPCSys->SetTalk(mNPCSys->getTalkId());
 }

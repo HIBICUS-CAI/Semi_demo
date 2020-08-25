@@ -47,6 +47,34 @@ public:
         return mInventory;
     }
 
+    void AddItemToRecord(int itemID);
+
+    void AddDocToRecord(int docID);
+
+    void AddGearToRecord(int gearID);
+
+    void AddNPCToRecord(int npcID);
+
+    const std::vector<int> &getGotItems() const
+    {
+        return mGotItems;
+    }
+
+    const std::vector<int> &getGotDocuments() const
+    {
+        return mGotDocuments;
+    }
+
+    const std::vector<int> &getUnlockedGears() const
+    {
+        return mUnlockedGears;
+    }
+
+    const std::vector<int> &getTalkedNpCs() const
+    {
+        return mTalkedNPCs;
+    }
+
 private:
     class Inventory *mInventory;
 
@@ -54,6 +82,12 @@ private:
 
     //↑1 →2 ↓3 ←4 ↗5 ↘6 ↙7 ↖8
     int mInputStatus;
+
+    // 已经得到的道具文档、解锁过的机关、对话过的NPC
+    std::vector<int> mGotItems;
+    std::vector<int> mGotDocuments;
+    std::vector<int> mUnlockedGears;
+    std::vector<int> mTalkedNPCs;
 };
 
 

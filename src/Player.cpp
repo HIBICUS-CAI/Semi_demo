@@ -13,8 +13,6 @@
 
 Player::Player(GameSys *gameSys) : Object(gameSys), mCC(nullptr), mInputStatus(0)
 {
-//    setScale(0.125f / 2.0f);
-//    setScale(20.f);
     //设置初始地图块
     int initX = getGameSys()->GetInitObjRoot()["Maps"]["StartMapPos"][0].asInt();
     int initY = getGameSys()->GetInitObjRoot()["Maps"]["StartMapPos"][1].asInt();
@@ -79,10 +77,44 @@ void Player::AddItemToInventory(class Item *item)
 {
     SDL_Log("add a item to inventory witch id is: %d", item->UseItem().ID);
     mInventory->AddItem(item);
+    AddItemToRecord(item->UseItem().ID);
 }
 
 void Player::AddDocToInventory(class Document *document)
 {
     SDL_Log("add a doc to inventory witch id is: %d", document->ReadDoc().ID);
     mInventory->AddDocument(document);
+    AddDocToRecord(document->ReadDoc().ID);
+}
+
+void Player::AddItemToRecord(int itemID)
+{
+    if (!CheckMemberExistInt(itemID, mGotItems))
+    {
+        mGotItems.emplace_back(itemID);
+    }
+}
+
+void Player::AddDocToRecord(int docID)
+{
+    if (!CheckMemberExistInt(docID, mGotDocuments))
+    {
+        mGotDocuments.emplace_back(docID);
+    }
+}
+
+void Player::AddGearToRecord(int gearID)
+{
+    if (!CheckMemberExistInt(gearID, mUnlockedGears))
+    {
+        mUnlockedGears.emplace_back(gearID);
+    }
+}
+
+void Player::AddNPCToRecord(int npcID)
+{
+    if (!CheckMemberExistInt(npcID, mTalkedNPCs))
+    {
+        mTalkedNPCs.emplace_back(npcID);
+    }
 }

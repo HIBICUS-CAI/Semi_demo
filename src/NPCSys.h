@@ -9,6 +9,14 @@
 #include "Player.h"
 #include "UIObject.h"
 
+struct PlayerInfo
+{
+    std::vector<int> GotItems;
+    std::vector<int> GotDocs;
+    std::vector<int> UnlockedGears;
+    std::vector<int> TalkedNPCs;
+};
+
 class NPCSys
 {
 public:
@@ -17,6 +25,12 @@ public:
     NPChara FindChara(int id);
 
     void SetTalk(int id);
+
+    void InitTalkStatus();
+
+    void ClearPlayerInfo();
+
+    void UpdatePlayerInfo();
 
     Player *getPlayer() const
     {
@@ -67,14 +81,19 @@ private:
     class Player *mPlayer;
 
     class UIObject *mUIO;
+
     bool mIsTalking;
     int mTalkIndex;
     int mTalkID;
+    int mLatestID;
     Json::Value mTalkInfo;
+    Json::Value mTalkText;
 
     std::vector<class NPChara *> mNPCharas;
     std::vector<class Item *> mNPCItems;
     std::vector<class Document *> mNPCDocuments;
+
+    PlayerInfo mPlayerInfo;
 };
 
 

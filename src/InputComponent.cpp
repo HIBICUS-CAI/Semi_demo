@@ -73,6 +73,8 @@ void InputComponent::ProcessInput(const uint8_t *keyState)
                 if (mOwner->getGameSys()->getNPCharas()[i]->isPlayerTrigged())
                 {
                     mOwner->getGameSys()->getNPCharas()[i]->TalkWithPlayer();
+                    mPlayer->AddNPCToRecord(
+                            mOwner->getGameSys()->getNPCharas()[i]->getNPCInfo().ID);
                     break;
                 }
             }
