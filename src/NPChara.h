@@ -5,6 +5,7 @@
 #ifndef SEMI_DEMO_NPCHARA_H
 #define SEMI_DEMO_NPCHARA_H
 
+#include <algorithm>
 #include "Object.h"
 #include "NPCSys.h"
 
@@ -12,6 +13,18 @@ struct NPCInfo
 {
     int ID;
     std::string Name;
+};
+
+struct NPCStatus
+{
+    int Priority;
+    std::vector<int> GotItems;
+    std::vector<int> GotDocs;
+    std::vector<int> TalkedNPCs;
+    std::vector<int> UnlockdedGears;
+    int TalkTextID;
+    int EventType;
+    int EventID;
 };
 
 class NPChara : public Object
@@ -48,8 +61,14 @@ public:
         return mNPCInfo;
     }
 
+    static bool GreaterSort(NPCStatus a, NPCStatus b)
+    {
+        return (a.Priority > b.Priority);
+    }
+
 private:
     NPCInfo mNPCInfo;
+    std::vector<NPCStatus> mNPCStatus;
 
     bool mPlayerTrigged;
 

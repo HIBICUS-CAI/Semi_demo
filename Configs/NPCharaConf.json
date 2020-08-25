@@ -87,22 +87,24 @@
       "NPC_ID": 0,
       "Status": [
         {
+          "Priority": 0,
           "Depends": {
-            "Priority": 0,
             "Items": [
               0
             ],
             "Docs": [
               0
-            ]
+            ],
+            "Gears": [],
+            "NPCs": []
           },
           "TalkTextID": 0,
           "EventType": 0,
           "EventID": 0
         },
         {
+          "Priority": 1,
           "Depends": {
-            "Priority": 1,
             "Items": [
               0,
               1
@@ -110,7 +112,9 @@
             "Docs": [
               0,
               2
-            ]
+            ],
+            "Gears": [],
+            "NPCs": []
           },
           "TalkTextID": 1,
           "EventType": 1,
@@ -122,14 +126,16 @@
       "NPC_ID": 1,
       "Status": [
         {
+          "Priority": 0,
           "Depends": {
-            "Priority": 0,
             "Items": [
               0
             ],
             "Docs": [
               0
-            ]
+            ],
+            "Gears": [],
+            "NPCs": []
           },
           "TalkTextID": 2,
           "EventType": 0,

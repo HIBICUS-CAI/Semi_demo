@@ -66,6 +66,62 @@ NPChara::NPChara(class GameSys *gameSys, class NPCSys *npcSys, Json::Value npcIn
         bd->SetCCRadius(npcInfo["BorderCCRadius"].asFloat());
         bd->setState(Pause);
     }
+
+    npcInfo.clear();
+    npcInfo = GetJsonRoot("../Configs/NPCharaConf.json")["NPCConfig"];
+    for (int i = 0; i < npcInfo.size(); ++i)
+    {
+        if (npcInfo[i]["NPC_ID"].asInt() == mNPCInfo.ID)
+        {
+            npcInfo = npcInfo[i]["Status"];
+            break;
+        }
+    }
+
+    NPCStatus status;
+    for (int i = 0; i < npcInfo.size(); ++i)
+    {
+        status.Priority = npcInfo[i]["Priority"].asInt();
+        if (!npcInfo[i]["Depends"]["Items"].empty())
+        {
+            status.GotItems.clear();
+            for (int j = 0; j < npcInfo[i]["Depends"]["Items"].size(); ++j)
+            {
+                status.GotItems.emplace_back(npcInfo[i]["Depends"]["Items"][j].asInt());
+            }
+        }
+        if (!npcInfo[i]["Depends"]["Docs"].empty())
+        {
+            status.GotDocs.clear();
+            for (int j = 0; j < npcInfo[i]["Depends"]["Docs"].size(); ++j)
+            {
+                status.GotDocs.emplace_back(npcInfo[i]["Depends"]["Docs"][j].asInt());
+            }
+        }
+        if (!npcInfo[i]["Depends"]["Gears"].empty())
+        {
+            status.UnlockdedGears.clear();
+            for (int j = 0; j < npcInfo[i]["Depends"]["Gears"].size(); ++j)
+            {
+                status.UnlockdedGears.emplace_back(npcInfo[i]["Depends"]["Gears"][j].asInt());
+            }
+        }
+        if (!npcInfo[i]["Depends"]["NPCs"].empty())
+        {
+            status.TalkedNPCs.clear();
+            for (int j = 0; j < npcInfo[i]["Depends"]["NPCs"].size(); ++j)
+            {
+                status.TalkedNPCs.emplace_back(npcInfo[i]["Depends"]["NPCs"][j].asInt());
+            }
+        }
+        status.TalkTextID = npcInfo[i]["TalkTextID"].asInt();
+        status.EventType = npcInfo[i]["EventType"].asInt();
+        status.EventID = npcInfo[i]["EventID"].asInt();
+
+        mNPCStatus.emplace_back(status);
+    }
+    // 按照优先级的从高到低进行排序
+    std::sort(mNPCStatus.begin(), mNPCStatus.end(), GreaterSort);
 }
 
 void NPChara::UpdateObject(float deltatime)
@@ -95,6 +151,6 @@ void NPChara::TalkWithPlayer()
     mNPCSys->setTalkIndex(0);
     mNPCSys->setTalkId(0);
 
-    //TODO 此处修改根据状态调整的数值
+    //TODO 此处根据mNPCStatus调整数值
     mNPCSys->SetTalk(mNPCSys->getTalkId());
 }
