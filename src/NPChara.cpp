@@ -149,8 +149,109 @@ void NPChara::TalkWithPlayer()
 
     mNPCSys->getUIO()->TurnOn();
     mNPCSys->setTalkIndex(0);
-    mNPCSys->setTalkId(0);
+    mNPCSys->setTalkId(GetTalkIDByStatus());
 
-    //TODO 此处根据mNPCStatus调整数值
+    //TODO 此处增加派发道具或者文档的方法
     mNPCSys->SetTalk(mNPCSys->getTalkId());
+}
+
+int NPChara::GetTalkIDByStatus()
+{
+    bool itemCompleted = false;
+    bool docCompleted = false;
+    bool gearCompleted = false;
+    bool npcCompleted = false;
+
+    for (int i = 0; i < mNPCStatus.size(); ++i)
+    {
+        if (!mNPCStatus[i].GotItems.empty())
+        {
+            for (int j = 0; j < mNPCStatus[i].GotItems.size(); ++j)
+            {
+                if (!CheckMemberExistInt(mNPCStatus[i].GotItems[j],
+                                         mNPCSys->getPlayerInfo().GotItems))
+                {
+                    itemCompleted = false;
+                    break;
+                } else
+                {
+                    itemCompleted = true;
+                }
+            }
+        } else
+        {
+            itemCompleted = true;
+        }
+
+        if (!mNPCStatus[i].GotDocs.empty())
+        {
+            for (int j = 0; j < mNPCStatus[i].GotDocs.size(); ++j)
+            {
+                if (!CheckMemberExistInt(mNPCStatus[i].GotDocs[j],
+                                         mNPCSys->getPlayerInfo().GotDocs))
+                {
+                    docCompleted = false;
+                    break;
+                } else
+                {
+                    docCompleted = true;
+                }
+            }
+        } else
+        {
+            docCompleted = true;
+        }
+
+        if (!mNPCStatus[i].UnlockdedGears.empty())
+        {
+            for (int j = 0; j < mNPCStatus[i].UnlockdedGears.size(); ++j)
+            {
+                if (!CheckMemberExistInt(mNPCStatus[i].UnlockdedGears[j],
+                                         mNPCSys->getPlayerInfo().UnlockedGears))
+                {
+                    gearCompleted = false;
+                    break;
+                } else
+                {
+                    gearCompleted = true;
+                }
+            }
+        } else
+        {
+            gearCompleted = true;
+        }
+
+        if (!mNPCStatus[i].TalkedNPCs.empty())
+        {
+            for (int j = 0; j < mNPCStatus[i].TalkedNPCs.size(); ++j)
+            {
+                if (!CheckMemberExistInt(mNPCStatus[i].TalkedNPCs[j],
+                                         mNPCSys->getPlayerInfo().TalkedNPCs))
+                {
+                    npcCompleted = false;
+                    break;
+                } else
+                {
+                    npcCompleted = true;
+                }
+            }
+        } else
+        {
+            npcCompleted = true;
+        }
+
+        if (itemCompleted && docCompleted && gearCompleted && npcCompleted)
+        {
+            return mNPCStatus[i].TalkTextID;
+        }
+    }
+
+    if (!itemCompleted || !docCompleted || !gearCompleted || !npcCompleted)
+    {
+        SDL_Log("cannot match text");
+        return -1;
+    } else
+    {
+        return -1;
+    }
 }

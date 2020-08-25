@@ -36,6 +36,8 @@ public:
 
     void TalkWithPlayer();
 
+    int GetTalkIDByStatus();
+
     const glm::ivec2 &getPlayerLatePosition() const
     {
         return mPlayerLatePosition;

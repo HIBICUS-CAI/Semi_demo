@@ -37,6 +37,11 @@ public:
         return mPlayer;
     }
 
+    const PlayerInfo &getPlayerInfo() const
+    {
+        return mPlayerInfo;
+    }
+
     const std::vector<class NPChara *> &getNPCharas() const
     {
         return mNPCharas;

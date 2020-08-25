@@ -89,12 +89,8 @@
         {
           "Priority": 0,
           "Depends": {
-            "Items": [
-              0
-            ],
-            "Docs": [
-              0
-            ],
+            "Items": [],
+            "Docs": [],
             "Gears": [],
             "NPCs": []
           },
@@ -104,6 +100,22 @@
         },
         {
           "Priority": 1,
+          "Depends": {
+            "Items": [
+              0
+            ],
+            "Docs": [
+              0
+            ],
+            "Gears": [],
+            "NPCs": []
+          },
+          "TalkTextID": 1,
+          "EventType": 0,
+          "EventID": 0
+        },
+        {
+          "Priority": 2,
           "Depends": {
             "Items": [
               0,
@@ -116,7 +128,7 @@
             "Gears": [],
             "NPCs": []
           },
-          "TalkTextID": 1,
+          "TalkTextID": 2,
           "EventType": 1,
           "EventID": 0
         }
