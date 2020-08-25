@@ -13,7 +13,7 @@ Item::Item(class GameSys *gameSys, class Player *player, Json::Value itemInfo) :
 {
     mItem.ID = itemInfo["ID"].asInt();
 
-    Json::Value itemConfInfo = GetJsonRoot("../Configs/ItemConf.json");
+    Json::Value itemConfInfo = Tools::GetJsonRoot("../Configs/ItemConf.json");
     for (int i = 0; i < itemConfInfo["ItemInner"].size(); ++i)
     {
         if (itemConfInfo["ItemInner"][i]["ID"] == mItem.ID)
@@ -29,7 +29,7 @@ Item::Item(class GameSys *gameSys, class Player *player, Json::Value itemInfo) :
     glm::ivec2 mapPos = {itemInfo["MapPos"][0].asInt(), itemInfo["MapPos"][1].asInt()};
     glm::vec2 position = {itemInfo["Position"][0].asFloat(),
                           itemInfo["Position"][1].asFloat()};
-    setPosition(CountPosition(initPos, mapPos, position));
+    setPosition(Tools::CountPosition(initPos, mapPos, position));
 
     mShinySC = new SpriteComponent(this, 115);
     mShinySC->SetTexture(gameSys->GetTexture(itemInfo["ShinnyTex"].asString()));

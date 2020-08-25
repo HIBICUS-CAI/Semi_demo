@@ -25,7 +25,7 @@ NPCSys::NPCSys(class Player *player, Json::Value npcInitInfo) : mPlayer(player),
     mNPCharas = player->getGameSys()->getNPCharas();
 
     npcInitInfo.clear();
-    npcInitInfo = GetJsonRoot("../Configs/NPCharaConf.json");
+    npcInitInfo = Tools::GetJsonRoot("../Configs/NPCharaConf.json");
     Json::Value value = npcInitInfo["NPCItems"];
     Item *item;
     Document *document;
@@ -66,7 +66,7 @@ NPCSys::NPCSys(class Player *player, Json::Value npcInitInfo) : mPlayer(player),
     }
     mUIO->TurnOff();
 
-    mTalkInfo = GetJsonRoot("../Configs/TalkTextConf.json");
+    mTalkInfo = Tools::GetJsonRoot("../Configs/TalkTextConf.json");
 
     ClearPlayerInfo();
 }

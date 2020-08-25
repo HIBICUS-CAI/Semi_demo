@@ -19,7 +19,7 @@ Gear::Gear(class GameSys *gameSys, class Player *player, Json::Value gearInfo) :
     glm::ivec2 mapPos = {gearInfo["MapPos"][0].asInt(), gearInfo["MapPos"][1].asInt()};
     glm::vec2 position = {gearInfo["Position"][0].asFloat(),
                           gearInfo["Position"][1].asFloat()};
-    setPosition(CountPosition(initPos, mapPos, position));
+    setPosition(Tools::CountPosition(initPos, mapPos, position));
 
     mTexSC = new SpriteComponent(this, 115);
     mTexSC->SetTexture(gameSys->GetTexture(gearInfo["Tex"].asString()));

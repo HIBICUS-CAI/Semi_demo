@@ -89,7 +89,7 @@ void Player::AddDocToInventory(class Document *document)
 
 void Player::AddItemToRecord(int itemID)
 {
-    if (!CheckMemberExistInt(itemID, mGotItems))
+    if (!Tools::CheckMemberExistInt(itemID, mGotItems))
     {
         mGotItems.emplace_back(itemID);
     }
@@ -97,7 +97,7 @@ void Player::AddItemToRecord(int itemID)
 
 void Player::AddDocToRecord(int docID)
 {
-    if (!CheckMemberExistInt(docID, mGotDocuments))
+    if (!Tools::CheckMemberExistInt(docID, mGotDocuments))
     {
         mGotDocuments.emplace_back(docID);
     }
@@ -105,7 +105,7 @@ void Player::AddDocToRecord(int docID)
 
 void Player::AddGearToRecord(int gearID)
 {
-    if (!CheckMemberExistInt(gearID, mUnlockedGears))
+    if (!Tools::CheckMemberExistInt(gearID, mUnlockedGears))
     {
         mUnlockedGears.emplace_back(gearID);
     }
@@ -113,7 +113,7 @@ void Player::AddGearToRecord(int gearID)
 
 void Player::AddNPCToRecord(int npcID)
 {
-    if (!CheckMemberExistInt(npcID, mTalkedNPCs))
+    if (!Tools::CheckMemberExistInt(npcID, mTalkedNPCs))
     {
         mTalkedNPCs.emplace_back(npcID);
     }

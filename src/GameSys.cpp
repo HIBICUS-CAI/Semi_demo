@@ -84,7 +84,7 @@ bool GameSys::InitGame()
     //创建纹理贴图并load actor
     CreateSpriteVerts();
 
-    mInitObjRoot = GetJsonRoot("../Configs/InitObj.json");
+    mInitObjRoot = Tools::GetJsonRoot("../Configs/InitObj.json");
 
     //LoadData();
     LoadStartUI();

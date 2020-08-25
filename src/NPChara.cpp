@@ -19,7 +19,7 @@ NPChara::NPChara(class GameSys *gameSys, class NPCSys *npcSys, Json::Value npcIn
     mPlayerLatePosition = initPos;
     glm::ivec2 mapPos = {npcInfo["MapPos"][0].asInt(), npcInfo["MapPos"][1].asInt()};
     glm::vec2 position = {npcInfo["Position"][0].asFloat(), npcInfo["Position"][1].asFloat()};
-    setPosition(CountPosition(initPos, mapPos, position));
+    setPosition(Tools::CountPosition(initPos, mapPos, position));
 
     mTexSC = new SpriteComponent(this, 115);
     mTexSC->SetTexture(gameSys->GetTexture(npcInfo["Tex"].asString()));
@@ -68,7 +68,7 @@ NPChara::NPChara(class GameSys *gameSys, class NPCSys *npcSys, Json::Value npcIn
     }
 
     npcInfo.clear();
-    npcInfo = GetJsonRoot("../Configs/NPCharaConf.json")["NPCConfig"];
+    npcInfo = Tools::GetJsonRoot("../Configs/NPCharaConf.json")["NPCConfig"];
     for (int i = 0; i < npcInfo.size(); ++i)
     {
         if (npcInfo[i]["NPC_ID"].asInt() == mNPCInfo.ID)
@@ -168,7 +168,7 @@ int NPChara::GetTalkIDByStatus()
         {
             for (int j = 0; j < mNPCStatus[i].GotItems.size(); ++j)
             {
-                if (!CheckMemberExistInt(mNPCStatus[i].GotItems[j],
+                if (!Tools::CheckMemberExistInt(mNPCStatus[i].GotItems[j],
                                          mNPCSys->getPlayerInfo().GotItems))
                 {
                     itemCompleted = false;
@@ -187,7 +187,7 @@ int NPChara::GetTalkIDByStatus()
         {
             for (int j = 0; j < mNPCStatus[i].GotDocs.size(); ++j)
             {
-                if (!CheckMemberExistInt(mNPCStatus[i].GotDocs[j],
+                if (!Tools::CheckMemberExistInt(mNPCStatus[i].GotDocs[j],
                                          mNPCSys->getPlayerInfo().GotDocs))
                 {
                     docCompleted = false;
@@ -206,7 +206,7 @@ int NPChara::GetTalkIDByStatus()
         {
             for (int j = 0; j < mNPCStatus[i].UnlockdedGears.size(); ++j)
             {
-                if (!CheckMemberExistInt(mNPCStatus[i].UnlockdedGears[j],
+                if (!Tools::CheckMemberExistInt(mNPCStatus[i].UnlockdedGears[j],
                                          mNPCSys->getPlayerInfo().UnlockedGears))
                 {
                     gearCompleted = false;
@@ -225,7 +225,7 @@ int NPChara::GetTalkIDByStatus()
         {
             for (int j = 0; j < mNPCStatus[i].TalkedNPCs.size(); ++j)
             {
-                if (!CheckMemberExistInt(mNPCStatus[i].TalkedNPCs[j],
+                if (!Tools::CheckMemberExistInt(mNPCStatus[i].TalkedNPCs[j],
                                          mNPCSys->getPlayerInfo().TalkedNPCs))
                 {
                     npcCompleted = false;

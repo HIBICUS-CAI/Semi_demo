@@ -5,7 +5,7 @@
 #include <fstream>
 #include "Tools.h"
 
-Json::Value GetJsonRoot(std::string fileName)
+Json::Value Tools::GetJsonRoot(std::string fileName)
 {
     std::ifstream ifs(fileName);
     bool result;
@@ -24,7 +24,7 @@ Json::Value GetJsonRoot(std::string fileName)
     }
 }
 
-glm::vec2 CountPosition(glm::ivec2 initPos, glm::ivec2 mapPos, glm::vec2 position)
+glm::vec2 Tools::CountPosition(glm::ivec2 initPos, glm::ivec2 mapPos, glm::vec2 position)
 {
     float posX = static_cast<float>(mapPos.x - initPos.x);
     float posY = static_cast<float>(mapPos.y - initPos.y);
@@ -35,7 +35,7 @@ glm::vec2 CountPosition(glm::ivec2 initPos, glm::ivec2 mapPos, glm::vec2 positio
     return {posX, posY};
 }
 
-int GetClickItemIndex(glm::vec2 clickPos)
+int Tools::GetClickItemIndex(glm::vec2 clickPos)
 {
     int click_x = static_cast<int>(clickPos.x);
     int click_y = static_cast<int>(clickPos.y);
@@ -50,7 +50,7 @@ int GetClickItemIndex(glm::vec2 clickPos)
     return click_x + (4 * click_y);
 }
 
-int GetClickDocIndex(glm::vec2 clickPos)
+int Tools::GetClickDocIndex(glm::vec2 clickPos)
 {
     int click_x = static_cast<int>(clickPos.x);
     int click_y = static_cast<int>(clickPos.y);
@@ -65,7 +65,7 @@ int GetClickDocIndex(glm::vec2 clickPos)
     return click_x + (4 * click_y);
 }
 
-bool CheckMemberExistInt(int value, std::vector<int> vector)
+bool Tools::CheckMemberExistInt(int value, std::vector<int> vector)
 {
     if (vector.empty())
     {

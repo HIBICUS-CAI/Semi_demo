@@ -206,7 +206,7 @@ void ButtonEventComponent::ClickBtn_OpenInventory()
 void ButtonEventComponent::ClickBtn_ShowItem()
 {
     glm::vec2 clickPos = mOwnerUIO->getUIIC()->getMouseClickPos();
-    int index = GetClickItemIndex(clickPos);
+    int index = Tools::GetClickItemIndex(clickPos);
     TextZone *textZone;
 
     SDL_Log("use item witch index is: %d", index);
@@ -296,7 +296,7 @@ void ButtonEventComponent::ClickBtn_ShowItem()
 void ButtonEventComponent::ClickBtn_ReadDoc()
 {
     glm::vec2 clickPos = mOwnerUIO->getUIIC()->getMouseClickPos();
-    int index = GetClickDocIndex(clickPos);
+    int index = Tools::GetClickDocIndex(clickPos);
     Json::Value docUI = mOwner->getGameSys()->GetInitObjRoot()["UIObjects"]["ReadDocUI"];
     TextZone *textZone;
 
