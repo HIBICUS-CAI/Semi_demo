@@ -151,7 +151,6 @@ void NPChara::TalkWithPlayer()
     mNPCSys->setTalkIndex(0);
     mNPCSys->setTalkId(GetTalkIDByStatus());
 
-    //TODO 此处增加派发道具或者文档的方法
     mNPCSys->SetTalk(mNPCSys->getTalkId());
 }
 
@@ -169,7 +168,7 @@ int NPChara::GetTalkIDByStatus()
             for (int j = 0; j < mNPCStatus[i].GotItems.size(); ++j)
             {
                 if (!Tools::CheckMemberExistInt(mNPCStatus[i].GotItems[j],
-                                         mNPCSys->getPlayerInfo().GotItems))
+                                                mNPCSys->getPlayerInfo().GotItems))
                 {
                     itemCompleted = false;
                     break;
@@ -188,7 +187,7 @@ int NPChara::GetTalkIDByStatus()
             for (int j = 0; j < mNPCStatus[i].GotDocs.size(); ++j)
             {
                 if (!Tools::CheckMemberExistInt(mNPCStatus[i].GotDocs[j],
-                                         mNPCSys->getPlayerInfo().GotDocs))
+                                                mNPCSys->getPlayerInfo().GotDocs))
                 {
                     docCompleted = false;
                     break;
@@ -207,7 +206,7 @@ int NPChara::GetTalkIDByStatus()
             for (int j = 0; j < mNPCStatus[i].UnlockdedGears.size(); ++j)
             {
                 if (!Tools::CheckMemberExistInt(mNPCStatus[i].UnlockdedGears[j],
-                                         mNPCSys->getPlayerInfo().UnlockedGears))
+                                                mNPCSys->getPlayerInfo().UnlockedGears))
                 {
                     gearCompleted = false;
                     break;
@@ -226,7 +225,7 @@ int NPChara::GetTalkIDByStatus()
             for (int j = 0; j < mNPCStatus[i].TalkedNPCs.size(); ++j)
             {
                 if (!Tools::CheckMemberExistInt(mNPCStatus[i].TalkedNPCs[j],
-                                         mNPCSys->getPlayerInfo().TalkedNPCs))
+                                                mNPCSys->getPlayerInfo().TalkedNPCs))
                 {
                     npcCompleted = false;
                     break;
@@ -242,6 +241,9 @@ int NPChara::GetTalkIDByStatus()
 
         if (itemCompleted && docCompleted && gearCompleted && npcCompleted)
         {
+            mNPCSys->setEventType(mNPCStatus[i].EventType);
+            mNPCSys->setEventId(mNPCStatus[i].EventID);
+
             return mNPCStatus[i].TalkTextID;
         }
     }

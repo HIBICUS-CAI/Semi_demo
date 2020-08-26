@@ -14,7 +14,9 @@
 NPCSys::NPCSys(class Player *player, Json::Value npcInitInfo) : mPlayer(player),
                                                                 mIsTalking(false),
                                                                 mTalkIndex(-1),
-                                                                mLatestID(-1)
+                                                                mLatestID(-1),
+                                                                mEventID(-1),
+                                                                mEventType(-1)
 {
     NPChara *npc;
     for (int i = 0; i < npcInitInfo.size(); ++i)
@@ -33,6 +35,7 @@ NPCSys::NPCSys(class Player *player, Json::Value npcInitInfo) : mPlayer(player),
     for (int i = 0; i < value.size(); ++i)
     {
         item = new Item(player->getGameSys(), player, value[i]);
+        //item->setState(Object::Pause);
         mNPCItems.emplace_back(item);
     }
 
@@ -40,6 +43,7 @@ NPCSys::NPCSys(class Player *player, Json::Value npcInitInfo) : mPlayer(player),
     for (int i = 0; i < value.size(); ++i)
     {
         document = new Document(player->getGameSys(), player, value[i]);
+        //document->setState(Object::Pause);
         mNPCDocuments.emplace_back(document);
     }
 
@@ -101,6 +105,42 @@ void NPCSys::SetTalk(int id)
 
     if (mTalkIndex == mTalkText.size())
     {
+        // 进行道具(0)或文档(1)发放
+        std::vector<int> idList;
+        switch (mEventType)
+        {
+            case 0:
+                idList.clear();
+                for (auto item : mNPCItems)
+                {
+                    idList.emplace_back(item->UseItem().ID);
+                }
+                if (Tools::CheckMemberExistInt(mEventID, idList))
+                {
+                    //TODO 这里是有问题的，直接使用GetItem会导致贴图无法显示，此处牺牲性能绕远路实现
+                    //GetItemInSys(mEventID)->GetItem();
+                    GetItemInSys(mEventID)->setPosition(mPlayer->getPosition());
+                }
+
+                break;
+            case 1:
+                idList.clear();
+                for (auto doc : mNPCDocuments)
+                {
+                    idList.emplace_back(doc->ReadDoc().ID);
+                }
+                if (Tools::CheckMemberExistInt(mEventID, idList))
+                {
+                    //GetDocInSys(mEventID)->GetDoc();
+                    GetDocInSys(mEventID)->setPosition(mPlayer->getPosition());
+                }
+
+                break;
+            default:
+                break;
+        }
+
+        // 初始化所有相关参数
         InitTalkStatus();
     } else
     {
@@ -112,9 +152,13 @@ void NPCSys::SetTalk(int id)
             // 设置人名
             if (mTalkText[mTalkIndex]["SpeakerID"].asInt() == -1)
             {
+                mUIO->DeltaMove(mPlayer->getPosition() - mUIO->getPosition());
                 textZone->setText("Player");
             } else
             {
+                mUIO->DeltaMove(
+                        FindChara(mTalkText[mTalkIndex]["SpeakerID"].asInt()).getPosition() -
+                        mUIO->getPosition());
                 textZone->setText(FindChara(
                         mTalkText[mTalkIndex]["SpeakerID"].asInt()).getNPCInfo().Name);
             }
@@ -135,6 +179,8 @@ void NPCSys::InitTalkStatus()
     mUIO->TurnOff();
     mTalkIndex = -1;
     mIsTalking = false;
+    mEventType = -1;
+    mEventID = -1;
 }
 
 void NPCSys::ClearPlayerInfo()
@@ -153,4 +199,36 @@ void NPCSys::UpdatePlayerInfo()
     mPlayerInfo.GotItems = mPlayer->getGotItems();
     mPlayerInfo.TalkedNPCs = mPlayer->getTalkedNpCs();
     mPlayerInfo.UnlockedGears = mPlayer->getUnlockedGears();
+}
+
+Item *NPCSys::GetItemInSys(int itemID)
+{
+    int index = 0;
+    for (auto item : mNPCItems)
+    {
+        if (item->UseItem().ID == itemID)
+        {
+            mNPCItems.erase(mNPCItems.begin() + index);
+            return item;
+        }
+        index++;
+    }
+
+    return nullptr;
+}
+
+Document *NPCSys::GetDocInSys(int docID)
+{
+    int index = 0;
+    for (auto doc : mNPCDocuments)
+    {
+        if (doc->ReadDoc().ID == docID)
+        {
+            mNPCDocuments.erase(mNPCDocuments.begin() + index);
+            return doc;
+        }
+        index++;
+    }
+
+    return nullptr;
 }

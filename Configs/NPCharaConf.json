@@ -96,7 +96,7 @@
           },
           "TalkTextID": 0,
           "EventType": 0,
-          "EventID": 0
+          "EventID": 7
         },
         {
           "Priority": 1,
@@ -111,8 +111,8 @@
             "NPCs": []
           },
           "TalkTextID": 1,
-          "EventType": 0,
-          "EventID": 0
+          "EventType": 1,
+          "EventID": 8
         },
         {
           "Priority": 2,
@@ -150,8 +150,8 @@
             "NPCs": []
           },
           "TalkTextID": 2,
-          "EventType": 0,
-          "EventID": 0
+          "EventType": 1,
+          "EventID": 9
         }
       ]
     }

@@ -6,6 +6,7 @@
 #define SEMI_DEMO_NPCSYS_H
 
 #include <json.h>
+#include <algorithm>
 #include "Player.h"
 #include "UIObject.h"
 
@@ -31,6 +32,10 @@ public:
     void ClearPlayerInfo();
 
     void UpdatePlayerInfo();
+
+    Item *GetItemInSys(int itemID);
+
+    Document *GetDocInSys(int docID);
 
     Player *getPlayer() const
     {
@@ -82,6 +87,16 @@ public:
         return mUIO;
     }
 
+    void setEventType(int mEventType)
+    {
+        NPCSys::mEventType = mEventType;
+    }
+
+    void setEventId(int mEventId)
+    {
+        mEventID = mEventId;
+    }
+
 private:
     class Player *mPlayer;
 
@@ -93,6 +108,8 @@ private:
     int mLatestID;
     Json::Value mTalkInfo;
     Json::Value mTalkText;
+    int mEventType;
+    int mEventID;
 
     std::vector<class NPChara *> mNPCharas;
     std::vector<class Item *> mNPCItems;

@@ -13,12 +13,12 @@
           "Text": "你还欠我100块钱呢"
         },
         {
-          "SpeakerID": 1,
-          "Text": "他没欠你钱"
+          "SpeakerID": 0,
+          "Text": "我没欠你钱"
         },
         {
-          "SpeakerID": -1,
-          "Text": "你也还欠我100块钱呢"
+          "SpeakerID": 1,
+          "Text": "你看看背后"
         },
         {
           "SpeakerID": 0,
@@ -30,7 +30,7 @@
       "ID": 1,
       "TalkText": [
         {
-          "SpeakerID": 1,
+          "SpeakerID": 0,
           "Text": "今天天气真差"
         },
         {
@@ -43,7 +43,7 @@
       "ID": 2,
       "TalkText": [
         {
-          "SpeakerID": 1,
+          "SpeakerID": 0,
           "Text": "今天天气真差"
         },
         {
