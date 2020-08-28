@@ -62,20 +62,23 @@ void InputComponent::ProcessInput(const uint8_t *keyState)
 
     // 调试用部分结束
 
-    if (keyState[mTalkKey])
+    if (mPlayer->isCanMove())
     {
-        if (!mOwner->getGameSys()->getNPCSys()->isTalking())
+        if (keyState[mTalkKey])
         {
-            SDL_Log("rdy to talk");
-            mOwner->getGameSys()->getNPCSys()->setIsTalking(true);
-            for (int i = 0; i < mOwner->getGameSys()->getNPCharas().size(); ++i)
+            if (!mOwner->getGameSys()->getNPCSys()->isTalking())
             {
-                if (mOwner->getGameSys()->getNPCharas()[i]->isPlayerTrigged())
+                SDL_Log("rdy to talk");
+                mOwner->getGameSys()->getNPCSys()->setIsTalking(true);
+                for (int i = 0; i < mOwner->getGameSys()->getNPCharas().size(); ++i)
                 {
-                    mOwner->getGameSys()->getNPCharas()[i]->TalkWithPlayer();
-                    mPlayer->AddNPCToRecord(
-                            mOwner->getGameSys()->getNPCharas()[i]->getNPCInfo().ID);
-                    break;
+                    if (mOwner->getGameSys()->getNPCharas()[i]->isPlayerTrigged())
+                    {
+                        mOwner->getGameSys()->getNPCharas()[i]->TalkWithPlayer();
+                        mPlayer->AddNPCToRecord(
+                                mOwner->getGameSys()->getNPCharas()[i]->getNPCInfo().ID);
+                        break;
+                    }
                 }
             }
         }
