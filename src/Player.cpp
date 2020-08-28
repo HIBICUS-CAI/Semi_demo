@@ -11,7 +11,8 @@
 #include "InputComponent.h"
 #include "CollisionComponent.h"
 
-Player::Player(GameSys *gameSys) : Object(gameSys), mCC(nullptr), mInputStatus(0)
+Player::Player(GameSys *gameSys) : Object(gameSys), mCC(nullptr), mInputStatus(0), mCanMove(
+        true)
 {
     //设置初始地图块
     int initX = getGameSys()->GetInitObjRoot()["Maps"]["StartMapPos"][0].asInt();

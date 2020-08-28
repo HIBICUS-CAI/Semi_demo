@@ -47,6 +47,22 @@ NPCSys::NPCSys(class Player *player, Json::Value npcInitInfo) : mPlayer(player),
         mNPCDocuments.emplace_back(document);
     }
 
+    value = npcInitInfo["NPCMoveEvent"];
+    for (int i = 0; i < value.size(); ++i)
+    {
+        NPCMoveEvent npcMoveEvent;
+        npcMoveEvent.EventID = value[i]["EventID"].asInt();
+        npcMoveEvent.NpcID = value[i]["NPC_ID"].asInt();
+        for (int j = 0; j < value[i]["MoveInfo"].size(); ++j)
+        {
+            MoveInfo moveInfo;
+            moveInfo.Direction = value[i]["MoveInfo"][j]["Direction"].asInt();
+            moveInfo.Distance = value[i]["MoveInfo"][j]["Distance"].asFloat();
+            npcMoveEvent.NpcMoveInfo.emplace_back(moveInfo);
+        }
+        mNPCMoveEvents.emplace_back(npcMoveEvent);
+    }
+
     value.clear();
     value = player->getGameSys()->GetInitObjRoot()["UIObjects"]["DialogUI"];
     mUIO = new UIObject(player->getGameSys(), value["UITexPath"].asString());
@@ -75,17 +91,17 @@ NPCSys::NPCSys(class Player *player, Json::Value npcInitInfo) : mPlayer(player),
     ClearPlayerInfo();
 }
 
-NPChara NPCSys::FindChara(int id)
+NPChara *NPCSys::FindChara(int id)
 {
     for (int i = 0; i < mNPCharas.size(); ++i)
     {
         if (mNPCharas[i]->getNPCInfo().ID == id)
         {
-            return *mNPCharas[i];
+            return mNPCharas[i];
         }
     }
     NPChara *npChara = nullptr;
-    return *npChara;
+    return npChara;
 }
 
 void NPCSys::SetTalk(int id)
@@ -105,11 +121,12 @@ void NPCSys::SetTalk(int id)
 
     if (mTalkIndex == mTalkText.size())
     {
-        // 进行道具(0)或文档(1)发放
+        // 进行道具(0)或文档(1)发放或移动(2)
         std::vector<int> idList;
         switch (mEventType)
         {
             case 0:
+            {
                 idList.clear();
                 for (auto item : mNPCItems)
                 {
@@ -123,7 +140,9 @@ void NPCSys::SetTalk(int id)
                 }
 
                 break;
+            }
             case 1:
+            {
                 idList.clear();
                 for (auto doc : mNPCDocuments)
                 {
@@ -136,6 +155,33 @@ void NPCSys::SetTalk(int id)
                 }
 
                 break;
+            }
+            case 2:
+            {
+                idList.clear();
+                NPCMoveEvent npcMoveEvent;
+                for (auto event : mNPCMoveEvents)
+                {
+                    idList.emplace_back(event.EventID);
+                    if (event.EventID == mEventID)
+                    {
+                        npcMoveEvent = event;
+                    }
+                }
+                if (Tools::CheckMemberExistInt(mEventID, idList))
+                {
+                    NPChara *npChara = FindChara(npcMoveEvent.NpcID);
+                    for (int i = 0; i < npcMoveEvent.NpcMoveInfo.size(); ++i)
+                    {
+                        npChara->AddMoveInfo(npcMoveEvent.NpcMoveInfo[i]);
+                    }
+                    mPlayer->setCanMove(false);
+                    npChara->setRdyToMove(true);
+                    npChara->setRdyForNextMove(true);
+                }
+
+                break;
+            }
             default:
                 break;
         }
@@ -157,10 +203,10 @@ void NPCSys::SetTalk(int id)
             } else
             {
                 mUIO->DeltaMove(
-                        FindChara(mTalkText[mTalkIndex]["SpeakerID"].asInt()).getPosition() -
+                        FindChara(mTalkText[mTalkIndex]["SpeakerID"].asInt())->getPosition() -
                         mUIO->getPosition());
                 textZone->setText(FindChara(
-                        mTalkText[mTalkIndex]["SpeakerID"].asInt()).getNPCInfo().Name);
+                        mTalkText[mTalkIndex]["SpeakerID"].asInt())->getNPCInfo().Name);
             }
         }
         textZone = mUIO->FindText(

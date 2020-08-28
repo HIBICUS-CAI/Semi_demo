@@ -18,12 +18,25 @@ struct PlayerInfo
     std::vector<int> TalkedNPCs;
 };
 
+struct NPCMoveEvent
+{
+    int EventID;
+    int NpcID;
+    std::vector<struct MoveInfo> NpcMoveInfo;
+};
+
+struct MoveInfo
+{
+    int Direction;
+    float Distance;
+};
+
 class NPCSys
 {
 public:
     NPCSys(class Player *player, Json::Value npcInitInfo);
 
-    NPChara FindChara(int id);
+    NPChara *FindChara(int id);
 
     void SetTalk(int id);
 
@@ -114,6 +127,8 @@ private:
     std::vector<class NPChara *> mNPCharas;
     std::vector<class Item *> mNPCItems;
     std::vector<class Document *> mNPCDocuments;
+
+    std::vector<struct NPCMoveEvent> mNPCMoveEvents;
 
     PlayerInfo mPlayerInfo;
 };

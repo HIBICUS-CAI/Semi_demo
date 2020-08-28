@@ -8,9 +8,13 @@
 #include "SpriteComponent.h"
 #include "ZoneSwitchObjComponent.h"
 #include "CollisionComponent.h"
+#include "MoveComponent.h"
 
 NPChara::NPChara(class GameSys *gameSys, class NPCSys *npcSys, Json::Value npcInfo) : Object(
-        gameSys), mNPCSys(npcSys), mPlayerTrigged(false)
+        gameSys), mNPCSys(npcSys), mPlayerTrigged(false), mCurrentDistance(0.f), mPosBackUp(
+        {0.f, 0.f}), mRdyToMove(false), mPurposeDistance(0.f), mRdyForNextMove(false),
+                                                                                      mMoveEventIndex(
+                                                                                              0)
 {
     mNPCInfo.ID = npcInfo["ID"].asInt();
     mNPCInfo.Name = npcInfo["Name"].asString();
@@ -66,6 +70,12 @@ NPChara::NPChara(class GameSys *gameSys, class NPCSys *npcSys, Json::Value npcIn
         bd->SetCCRadius(npcInfo["BorderCCRadius"].asFloat());
         bd->setState(Pause);
     }
+
+    mHorMoveSpeed = npcInfo["MoveSpeed"].asFloat();
+    mVerMoveSpeed = mHorMoveSpeed;
+    mMC = new MoveComponent(this);
+    mMC->setHorizontalSpeed(0.f);
+    mMC->setVerticalSpeed(0.f);
 
     npcInfo.clear();
     npcInfo = Tools::GetJsonRoot("../Configs/NPCharaConf.json")["NPCConfig"];
@@ -139,6 +149,64 @@ void NPChara::UpdateObject(float deltatime)
         for (auto bd : mBorderDeciders)
         {
             bd->setState(Pause);
+        }
+    }
+
+    if (mRdyToMove)
+    {
+        MoveInfo moveInfo = mMoveInfo[mMoveEventIndex];
+        if (mRdyForNextMove)
+        {
+            mPosBackUp = getPosition();
+            mPurposeDistance = moveInfo.Distance;
+
+            mRdyForNextMove = false;
+        }
+
+        switch (moveInfo.Direction)
+        {
+            case 1:
+                mMC->setVerticalSpeed(mVerMoveSpeed);
+                break;
+            case 2:
+                mMC->setHorizontalSpeed(mHorMoveSpeed);
+                break;
+            case 3:
+                mMC->setVerticalSpeed(-mVerMoveSpeed);
+                break;
+            case 4:
+                mMC->setHorizontalSpeed(-mHorMoveSpeed);
+                break;
+            default:
+                mMC->setHorizontalSpeed(0.f);
+                mMC->setVerticalSpeed(0.f);
+                break;
+        }
+
+        mCurrentDistance =
+                ((getPosition().x - mPosBackUp.x) * (getPosition().x - mPosBackUp.x)) +
+                ((getPosition().y - mPosBackUp.y) * (getPosition().y - mPosBackUp.y));
+
+        if (mCurrentDistance >= mPurposeDistance * mPurposeDistance)
+        {
+            for (auto bd : mBorderDeciders)
+            {
+                bd->DeltaMove(
+                        {getPosition().x - mPosBackUp.x, getPosition().y - mPosBackUp.y});
+            }
+            mMC->setHorizontalSpeed(0.f);
+            mMC->setVerticalSpeed(0.f);
+            mPosBackUp = {0.f, 0.f};
+            mCurrentDistance = 0.f;
+            mPurposeDistance = 0.f;
+            mRdyForNextMove = true;
+            mMoveEventIndex++;
+        }
+
+        if (mMoveEventIndex == mMoveInfo.size())
+        {
+            mNPCSys->getPlayer()->setCanMove(true);
+            mRdyToMove = false;
         }
     }
 }

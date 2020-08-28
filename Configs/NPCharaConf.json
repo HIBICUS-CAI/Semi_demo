@@ -111,8 +111,8 @@
             "NPCs": []
           },
           "TalkTextID": 1,
-          "EventType": 1,
-          "EventID": 8
+          "EventType": 2,
+          "EventID": 0
         },
         {
           "Priority": 2,
@@ -128,8 +128,8 @@
             "Gears": [],
             "NPCs": []
           },
-          "TalkTextID": 2,
-          "EventType": 1,
+          "TalkTextID": 1,
+          "EventType": 2,
           "EventID": 0
         }
       ]
@@ -156,24 +156,37 @@
       ]
     }
   ],
-  "ItemEvent": [
+  "NPCMoveEvent":
+  [
     {
       "EventID": 0,
-      "ItemID": 7
+      "NPC_ID": 0,
+      "MoveInfo":
+      [
+        {
+          "Direction": 1,
+          "Distance": 500
+        },
+        {
+          "Direction": 4,
+          "Distance": 300
+        }
+      ]
     },
     {
       "EventID": 1,
-      "ItemID": 8
-    }
-  ],
-  "DocEvent": [
-    {
-      "EventID": 0,
-      "DocID": 7
-    },
-    {
-      "EventID": 1,
-      "DocID": 8
+      "NPC_ID": 1,
+      "MoveInfo":
+      [
+        {
+          "Direction": 2,
+          "Distance": 100
+        },
+        {
+          "Direction": 3,
+          "Distance": 100
+        }
+      ]
     }
   ]
 }

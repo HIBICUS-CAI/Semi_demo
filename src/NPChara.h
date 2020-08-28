@@ -63,6 +63,21 @@ public:
         return mNPCInfo;
     }
 
+    void setRdyToMove(bool mRdyToMove)
+    {
+        NPChara::mRdyToMove = mRdyToMove;
+    }
+
+    void setRdyForNextMove(bool mRdyForNextMove)
+    {
+        NPChara::mRdyForNextMove = mRdyForNextMove;
+    }
+
+    void AddMoveInfo(MoveInfo moveInfo)
+    {
+        mMoveInfo.emplace_back(moveInfo);
+    }
+
     static bool GreaterSort(NPCStatus a, NPCStatus b)
     {
         return (a.Priority > b.Priority);
@@ -80,9 +95,21 @@ private:
 
     class CollisionComponent *mCC;
 
+    class MoveComponent *mMC;
+
     glm::ivec2 mPlayerLatePosition;
 
     std::vector<class BorderDecider *> mBorderDeciders;
+
+    bool mRdyToMove;
+    bool mRdyForNextMove;
+    float mHorMoveSpeed;
+    float mVerMoveSpeed;
+    glm::vec2 mPosBackUp;
+    float mCurrentDistance;
+    float mPurposeDistance;
+    int mMoveEventIndex;
+    std::vector<struct MoveInfo> mMoveInfo;
 };
 
 

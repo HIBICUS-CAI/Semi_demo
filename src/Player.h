@@ -75,6 +75,16 @@ public:
         return mTalkedNPCs;
     }
 
+    bool isCanMove() const
+    {
+        return mCanMove;
+    }
+
+    void setCanMove(bool mCanMove)
+    {
+        Player::mCanMove = mCanMove;
+    }
+
 private:
     class Inventory *mInventory;
 
@@ -82,6 +92,7 @@ private:
 
     //↑1 →2 ↓3 ←4 ↗5 ↘6 ↙7 ↖8
     int mInputStatus;
+    bool mCanMove;
 
     // 已经得到的道具文档、解锁过的机关、对话过的NPC
     std::vector<int> mGotItems;

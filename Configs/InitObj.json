@@ -269,7 +269,8 @@
       "Tex": "../Assets/NPC_test.png",
       "Width": 100,
       "Height": 100,
-      "BorderCCRadius": 15
+      "BorderCCRadius": 15,
+      "MoveSpeed": 200
     },
     {
       "ID": 1,
@@ -285,7 +286,8 @@
       "Tex": "../Assets/NPC_test.png",
       "Width": 100,
       "Height": 100,
-      "BorderCCRadius": 15
+      "BorderCCRadius": 15,
+      "MoveSpeed": 200
     }
   ],
   "UIConfig": {

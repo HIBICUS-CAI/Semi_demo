@@ -18,6 +18,8 @@ public:
         return mPlayer;
     }
 
+    void DeltaMove(glm::vec2 ownerDeltaMove);
+
     void UpdateObject(float deltatime) override;
 
     const glm::ivec2 &getPlayerLatePosition() const

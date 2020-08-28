@@ -81,84 +81,87 @@ void InputComponent::ProcessInput(const uint8_t *keyState)
         }
     }
 
-    float horSpeed = 0.0f;
-    if (keyState[mRightKey])
+    if (mPlayer->isCanMove())
     {
-        horSpeed = mHorMoveSpeed;
-    }
-    if (keyState[mLeftKey])
-    {
-        horSpeed = -mHorMoveSpeed;
-    }
+        float horSpeed = 0.0f;
+        if (keyState[mRightKey])
+        {
+            horSpeed = mHorMoveSpeed;
+        }
+        if (keyState[mLeftKey])
+        {
+            horSpeed = -mHorMoveSpeed;
+        }
 
-    float verSpeed = 0.0f;
-    if (keyState[mForwardKey])
-    {
-        verSpeed = mVerMoveSpeed;
-    }
-    if (keyState[mBackKey])
-    {
-        verSpeed = -mVerMoveSpeed;
-    }
+        float verSpeed = 0.0f;
+        if (keyState[mForwardKey])
+        {
+            verSpeed = mVerMoveSpeed;
+        }
+        if (keyState[mBackKey])
+        {
+            verSpeed = -mVerMoveSpeed;
+        }
 
-    if ((keyState[mForwardKey] && keyState[mRightKey]) ||
-        (keyState[mForwardKey] && keyState[mLeftKey]) ||
-        (keyState[mBackKey] && keyState[mRightKey]) ||
-        (keyState[mBackKey] && keyState[mLeftKey]))
-    {
-        verSpeed /= 1.414f;
-        horSpeed /= 1.414f;
-    }
+        if ((keyState[mForwardKey] && keyState[mRightKey]) ||
+            (keyState[mForwardKey] && keyState[mLeftKey]) ||
+            (keyState[mBackKey] && keyState[mRightKey]) ||
+            (keyState[mBackKey] && keyState[mLeftKey]))
+        {
+            verSpeed /= 1.414f;
+            horSpeed /= 1.414f;
+        }
 
-    if (keyState[mForwardKey] && keyState[mBackKey])
-    {
-        verSpeed = 0.f;
-        horSpeed = 0.f;
-    }
-    if (keyState[mLeftKey] && keyState[mRightKey])
-    {
-        verSpeed = 0.f;
-        horSpeed = 0.f;
-    }
+        if (keyState[mForwardKey] && keyState[mBackKey])
+        {
+            verSpeed = 0.f;
+            horSpeed = 0.f;
+        }
+        if (keyState[mLeftKey] && keyState[mRightKey])
+        {
+            verSpeed = 0.f;
+            horSpeed = 0.f;
+        }
 
-    if (keyState[mForwardKey] && !keyState[mRightKey] &&
-        !keyState[mBackKey] && !keyState[mLeftKey])
-    {
-        mPlayer->setInputStatus(1);
-    } else if (!keyState[mForwardKey] && keyState[mRightKey] &&
-               !keyState[mBackKey] && !keyState[mLeftKey])
-    {
-        mPlayer->setInputStatus(2);
-    } else if (!keyState[mForwardKey] && !keyState[mRightKey] &&
-               keyState[mBackKey] && !keyState[mLeftKey])
-    {
-        mPlayer->setInputStatus(3);
-    } else if (!keyState[mForwardKey] && !keyState[mRightKey] &&
-               !keyState[mBackKey] && keyState[mLeftKey])
-    {
-        mPlayer->setInputStatus(4);
-    } else if (keyState[mForwardKey] && keyState[mRightKey] &&
-               !keyState[mBackKey] && !keyState[mLeftKey])
-    {
-        mPlayer->setInputStatus(5);
-    } else if (!keyState[mForwardKey] && keyState[mRightKey] &&
-               keyState[mBackKey] && !keyState[mLeftKey])
-    {
-        mPlayer->setInputStatus(6);
-    } else if (!keyState[mForwardKey] && !keyState[mRightKey] &&
-               keyState[mBackKey] && keyState[mLeftKey])
-    {
-        mPlayer->setInputStatus(7);
-    } else if (keyState[mForwardKey] && !keyState[mRightKey] &&
-               !keyState[mBackKey] && keyState[mLeftKey])
-    {
-        mPlayer->setInputStatus(8);
-    } else
-    {
-        mPlayer->setInputStatus(0);
-    }
+        if (keyState[mForwardKey] && !keyState[mRightKey] &&
+            !keyState[mBackKey] && !keyState[mLeftKey])
+        {
+            mPlayer->setInputStatus(1);
+        } else if (!keyState[mForwardKey] && keyState[mRightKey] &&
+                   !keyState[mBackKey] && !keyState[mLeftKey])
+        {
+            mPlayer->setInputStatus(2);
+        } else if (!keyState[mForwardKey] && !keyState[mRightKey] &&
+                   keyState[mBackKey] && !keyState[mLeftKey])
+        {
+            mPlayer->setInputStatus(3);
+        } else if (!keyState[mForwardKey] && !keyState[mRightKey] &&
+                   !keyState[mBackKey] && keyState[mLeftKey])
+        {
+            mPlayer->setInputStatus(4);
+        } else if (keyState[mForwardKey] && keyState[mRightKey] &&
+                   !keyState[mBackKey] && !keyState[mLeftKey])
+        {
+            mPlayer->setInputStatus(5);
+        } else if (!keyState[mForwardKey] && keyState[mRightKey] &&
+                   keyState[mBackKey] && !keyState[mLeftKey])
+        {
+            mPlayer->setInputStatus(6);
+        } else if (!keyState[mForwardKey] && !keyState[mRightKey] &&
+                   keyState[mBackKey] && keyState[mLeftKey])
+        {
+            mPlayer->setInputStatus(7);
+        } else if (keyState[mForwardKey] && !keyState[mRightKey] &&
+                   !keyState[mBackKey] && keyState[mLeftKey])
+        {
+            mPlayer->setInputStatus(8);
+        } else
+        {
+            mPlayer->setInputStatus(0);
+        }
 
-    setHorizontalSpeed(horSpeed);
-    setVerticalSpeed(verSpeed);
+        setHorizontalSpeed(horSpeed);
+        setVerticalSpeed(verSpeed);
+    }
 
 }
