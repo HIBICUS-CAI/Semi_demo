@@ -19,7 +19,7 @@ Gear::Gear(class GameSys *gameSys, class Player *player, Json::Value gearInfo) :
     glm::ivec2 mapPos = {gearInfo["MapPos"][0].asInt(), gearInfo["MapPos"][1].asInt()};
     glm::vec2 position = {gearInfo["Position"][0].asFloat(),
                           gearInfo["Position"][1].asFloat()};
-    setPosition(CountPosition(initPos, mapPos, position));
+    setPosition(Tools::CountPosition(initPos, mapPos, position));
 
     mTexSC = new SpriteComponent(this, 115);
     mTexSC->SetTexture(gameSys->GetTexture(gearInfo["Tex"].asString()));
@@ -97,15 +97,21 @@ void Gear::GearEvent(int gearID)
     {
         case 0:
             mIsUnlock = true;
+            mPlayer->AddGearToRecord(gearID);
             for (auto bd : mBorderDeciders)
             {
                 bd->setState(Pause);
             }
+
+            break;
         case 1:
             mIsUnlock = true;
+            mPlayer->AddGearToRecord(gearID);
             for (auto bd : mBorderDeciders)
             {
                 bd->setState(Pause);
             }
+
+            break;
     }
 }

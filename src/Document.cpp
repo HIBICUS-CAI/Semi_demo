@@ -13,7 +13,7 @@ Document::Document(class GameSys *gameSys, class Player *player, Json::Value doc
 {
     mDoc.ID = docInfo["ID"].asInt();
 
-    Json::Value docConfInfo = GetJsonRoot("../Configs/DocumentConf.json");
+    Json::Value docConfInfo = Tools::GetJsonRoot("../Configs/DocumentConf.json");
     for (int i = 0; i < docConfInfo["DocInner"].size(); ++i)
     {
         if (docConfInfo["DocInner"][i]["ID"] == mDoc.ID)
@@ -29,7 +29,7 @@ Document::Document(class GameSys *gameSys, class Player *player, Json::Value doc
     glm::ivec2 mapPos = {docInfo["MapPos"][0].asInt(), docInfo["MapPos"][1].asInt()};
     glm::vec2 position = {docInfo["Position"][0].asFloat(),
                           docInfo["Position"][1].asFloat()};
-    setPosition(CountPosition(initPos, mapPos, position));
+    setPosition(Tools::CountPosition(initPos, mapPos, position));
 
     mShinySC = new SpriteComponent(this, 115);
     mShinySC->SetTexture(gameSys->GetTexture(docInfo["ShinnyTex"].asString()));

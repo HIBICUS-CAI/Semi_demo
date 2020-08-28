@@ -32,6 +32,8 @@ public:
 
     void TurnOn();
 
+    void DeltaMove(glm::vec2 delta);
+
     const std::vector<struct Button *> &getButtons() const
     {
         return mButtons;

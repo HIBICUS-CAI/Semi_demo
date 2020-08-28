@@ -115,7 +115,7 @@ DocInner Inventory::ReadDocument(class Document *document)
     return document->ReadDoc();
 }
 
-void Inventory::RefreshItems()
-{
-    //TODO 完成道具事件系统后完善
-}
+//void Inventory::RefreshItems()
+//{
+//
+//}

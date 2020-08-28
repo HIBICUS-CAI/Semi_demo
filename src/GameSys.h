@@ -60,17 +60,31 @@ public:
         return mGears;
     }
 
+    const std::vector<struct NPChara *> &getNPCharas() const
+    {
+        return mNPCharas;
+    }
+
     void AddItemToSys(class Item *item);
 
     void AddDocToSys(class Document *document);
 
     void AddGearToSys(class Gear *gear);
 
+    void AddNPCToSys(class NPChara *npChara);
+
     void UseItemInUI(int itemID);
 
     const std::vector<class Item *> &getItemsInInventory();
 
     const std::vector<class Document *> &getDocsInInventory();
+
+    class NPCSys getNPCsysDONOTUSETHIS();
+
+    NPCSys *getNPCSys() const
+    {
+        return mNPCSys;
+    }
 
 private:
     void ProcessInput();
@@ -132,11 +146,13 @@ private:
     glm::ivec2 mMousePos;
 
 
+    class NPCSys *mNPCSys;
     class ItemSys *mItemSys;
 
     std::vector<class Item *> mItems;
     std::vector<class Document *> mDocuments;
     std::vector<class Gear *> mGears;
+    std::vector<class NPChara *> mNPCharas;
 
 };
 

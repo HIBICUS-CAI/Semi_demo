@@ -9,12 +9,14 @@
 #include "Item.h"
 #include "Document.h"
 #include "Gear.h"
+#include "NPChara.h"
 
 // House
 ZoneSwitchObjComponent::ZoneSwitchObjComponent(class Object *owner, class Player *player,
                                                class House *house, int updateOrder)
         : Component(owner, updateOrder), mPlayer(player), mHouse(house),
-          mBorderDecider(nullptr), mItem(nullptr), mDocument(nullptr), mGear(nullptr)
+          mBorderDecider(nullptr), mItem(nullptr), mDocument(nullptr), mGear(nullptr),
+          mNPChara(nullptr)
 {}
 
 // BorderDecider
@@ -22,7 +24,8 @@ ZoneSwitchObjComponent::ZoneSwitchObjComponent(class Object *owner, class Player
                                                class BorderDecider *borderDecider,
                                                int updateOrder)
         : Component(owner, updateOrder), mPlayer(player), mBorderDecider(borderDecider),
-          mHouse(nullptr), mItem(nullptr), mDocument(nullptr), mGear(nullptr)
+          mHouse(nullptr), mItem(nullptr), mDocument(nullptr), mGear(nullptr),
+          mNPChara(nullptr)
 {}
 
 // Item
@@ -30,7 +33,8 @@ ZoneSwitchObjComponent::ZoneSwitchObjComponent(class Object *owner, class Player
                                                class Item *item,
                                                int updateOrder)
         : Component(owner, updateOrder), mPlayer(player), mItem(item),
-          mHouse(nullptr), mBorderDecider(nullptr), mDocument(nullptr), mGear(nullptr)
+          mHouse(nullptr), mBorderDecider(nullptr), mDocument(nullptr), mGear(nullptr),
+          mNPChara(nullptr)
 {}
 
 // Document
@@ -38,7 +42,8 @@ ZoneSwitchObjComponent::ZoneSwitchObjComponent(class Object *owner, class Player
                                                class Document *document,
                                                int updateOrder)
         : Component(owner, updateOrder), mPlayer(player), mDocument(document),
-          mHouse(nullptr), mBorderDecider(nullptr), mItem(nullptr), mGear(nullptr)
+          mHouse(nullptr), mBorderDecider(nullptr), mItem(nullptr), mGear(nullptr),
+          mNPChara(nullptr)
 {}
 
 // Gear
@@ -46,7 +51,17 @@ ZoneSwitchObjComponent::ZoneSwitchObjComponent(class Object *owner, class Player
                                                class Gear *gear,
                                                int updateOrder)
         : Component(owner, updateOrder), mPlayer(player), mGear(gear),
-          mHouse(nullptr), mBorderDecider(nullptr), mItem(nullptr), mDocument(nullptr)
+          mHouse(nullptr), mBorderDecider(nullptr), mItem(nullptr), mDocument(nullptr),
+          mNPChara(nullptr)
+{}
+
+//NPChara
+ZoneSwitchObjComponent::ZoneSwitchObjComponent(class Object *owner, class Player *player,
+                                               class NPChara *npChara,
+                                               int updateOrder)
+        : Component(owner, updateOrder), mPlayer(player), mNPChara(npChara),
+          mHouse(nullptr), mBorderDecider(nullptr), mItem(nullptr), mDocument(nullptr),
+          mGear(nullptr)
 {}
 
 void ZoneSwitchObjComponent::Update(float deltatime)
@@ -154,5 +169,26 @@ void ZoneSwitchObjComponent::Update(float deltatime)
 
         mOwner->setPosition({posRow, posCol});
         mGear->setPlayerLatePosition(mapPosition);
+    }
+
+    if (mNPChara != nullptr)
+    {
+        glm::ivec2 mapPosition = mPlayer->getMapPositon();
+        int deltaRow = mapPosition.x - mNPChara->getPlayerLatePosition().x;
+        int deltaCol = mapPosition.y - mNPChara->getPlayerLatePosition().y;
+        float posRow = mOwner->getPosition().x;
+        float posCol = mOwner->getPosition().y;
+
+        if (deltaRow != 0)
+        {
+            posRow += static_cast<float>(deltaRow) * -1024.f;
+        }
+        if (deltaCol != 0)
+        {
+            posCol += static_cast<float>(deltaCol) * -768.f;
+        }
+
+        mOwner->setPosition({posRow, posCol});
+        mNPChara->setPlayerLatePosition(mapPosition);
     }
 }

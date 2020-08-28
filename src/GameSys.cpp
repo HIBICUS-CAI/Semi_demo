@@ -22,6 +22,8 @@
 #include "Document.h"
 #include "Gear.h"
 #include "ItemSys.h"
+#include "NPCSys.h"
+#include "NPChara.h"
 
 GameSys::GameSys() : mWindow(nullptr), mContext(nullptr), mIsRunning(true), mIsUpdatingObjects(
         false), mMousePos(0, 0)
@@ -82,7 +84,7 @@ bool GameSys::InitGame()
     //创建纹理贴图并load actor
     CreateSpriteVerts();
 
-    mInitObjRoot = GetJsonRoot("../Configs/InitObj.json");
+    mInitObjRoot = Tools::GetJsonRoot("../Configs/InitObj.json");
 
     //LoadData();
     LoadStartUI();
@@ -226,6 +228,10 @@ void GameSys::LoadData()
     mMaps = new Maps(this, mPlayer);
 
     new House(this, mPlayer);
+
+    Json::Value NPCInitInfo = mInitObjRoot["NPCharas"];
+
+    mNPCSys = new NPCSys(mPlayer, NPCInitInfo);
 
     Json::Value itemsInfo = mInitObjRoot["Items"];
 
@@ -452,6 +458,11 @@ void GameSys::AddGearToSys(class Gear *gear)
     mGears.emplace_back(gear);
 }
 
+void GameSys::AddNPCToSys(class NPChara *npChara)
+{
+    mNPCharas.emplace_back(npChara);
+}
+
 void GameSys::UseItemInUI(int itemID)
 {
     mItemSys->ItemEvent(itemID);
@@ -465,4 +476,9 @@ const std::vector<class Item *> &GameSys::getItemsInInventory()
 const std::vector<class Document *> &GameSys::getDocsInInventory()
 {
     return mPlayer->getInventory()->getDocuments();
+}
+
+class NPCSys GameSys::getNPCsysDONOTUSETHIS()
+{
+    return *mNPCSys;
 }

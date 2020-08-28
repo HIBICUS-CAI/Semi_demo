@@ -85,7 +85,10 @@ void MoveComponent::Update(float deltatime)
         mOwner->setPosition(pos);
     }
 
-    mOwner->setMapPositon(posMapRow, posMapCol);
+    if (mOwner->IsPlayer())
+    {
+        mOwner->setMapPositon(posMapRow, posMapCol);
+    }
 
 //    SDL_Log("player's position is ( %f , %f )", mOwner->getPosition().x,
 //            mOwner->getPosition().y);

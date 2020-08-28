@@ -25,3 +25,15 @@ void BorderDecider::UpdateObject(float deltatime)
         mPlayer->RevertMove();
     }
 }
+
+void BorderDecider::SetCCRadius(int radius)
+{
+    mCC->setRadius(radius);
+}
+
+void BorderDecider::DeltaMove(glm::vec2 ownerDeltaMove)
+{
+    ownerDeltaMove.x = ownerDeltaMove.x + getPosition().x;
+    ownerDeltaMove.y = ownerDeltaMove.y + getPosition().y;
+    setPosition(ownerDeltaMove);
+}

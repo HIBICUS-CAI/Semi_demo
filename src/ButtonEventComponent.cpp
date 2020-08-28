@@ -7,6 +7,8 @@
 #include "TextZone.h"
 #include "Item.h"
 #include "Document.h"
+#include "NPCSys.h"
+#include "NPChara.h"
 
 ButtonEventComponent::ButtonEventComponent(class Object *owner, class UIObject *uiObject,
                                            int updateOrder) : Component(owner, updateOrder),
@@ -28,6 +30,7 @@ void ButtonEventComponent::ButtonEvent(int func_id)
      * 5: 展示道具
      * 6: 阅读文档
      * 7: 使用道具
+     * 8: 点击对话框按钮
      */
     switch (func_id)
     {
@@ -51,6 +54,9 @@ void ButtonEventComponent::ButtonEvent(int func_id)
             break;
         case 7:
             ClickBtn_UseItem();
+            break;
+        case 8:
+            ClickBtn_NextTalk();
             break;
         default:
             break;
@@ -200,7 +206,7 @@ void ButtonEventComponent::ClickBtn_OpenInventory()
 void ButtonEventComponent::ClickBtn_ShowItem()
 {
     glm::vec2 clickPos = mOwnerUIO->getUIIC()->getMouseClickPos();
-    int index = GetClickItemIndex(clickPos);
+    int index = Tools::GetClickItemIndex(clickPos);
     TextZone *textZone;
 
     SDL_Log("use item witch index is: %d", index);
@@ -290,7 +296,7 @@ void ButtonEventComponent::ClickBtn_ShowItem()
 void ButtonEventComponent::ClickBtn_ReadDoc()
 {
     glm::vec2 clickPos = mOwnerUIO->getUIIC()->getMouseClickPos();
-    int index = GetClickDocIndex(clickPos);
+    int index = Tools::GetClickDocIndex(clickPos);
     Json::Value docUI = mOwner->getGameSys()->GetInitObjRoot()["UIObjects"]["ReadDocUI"];
     TextZone *textZone;
 
@@ -383,4 +389,10 @@ void ButtonEventComponent::ClickBtn_UseItem()
 {
     mOwner->getGameSys()->UseItemInUI(
             mOwner->getGameSys()->getItemsInInventory()[mOwnerUIO->getIndex()]->UseItem().ID);
+}
+
+// 8: 点击对话框按钮
+void ButtonEventComponent::ClickBtn_NextTalk()
+{
+    mOwner->getGameSys()->getNPCSys()->SetTalk(mOwner->getGameSys()->getNPCSys()->getTalkId());
 }

@@ -32,7 +32,7 @@ public:
 
     DocInner ReadDocument(class Document *document);
 
-    void RefreshItems();
+//    void RefreshItems();
 
 private:
     std::vector<class Item *> mItems;

@@ -1,0 +1,56 @@
+{
+  "encoding": "UTF-8",
+  "TalkTexts": [
+    {
+      "ID": 0,
+      "TalkText": [
+        {
+          "SpeakerID": 0,
+          "Text": "今天天气真好"
+        },
+        {
+          "SpeakerID": -1,
+          "Text": "你还欠我100块钱呢"
+        },
+        {
+          "SpeakerID": 0,
+          "Text": "我没欠你钱"
+        },
+        {
+          "SpeakerID": 1,
+          "Text": "你看看背后"
+        },
+        {
+          "SpeakerID": 0,
+          "Text": "溜了"
+        }
+      ]
+    },
+    {
+      "ID": 1,
+      "TalkText": [
+        {
+          "SpeakerID": 0,
+          "Text": "今天天气真差"
+        },
+        {
+          "SpeakerID": -1,
+          "Text": "你还欠我200块钱呢"
+        }
+      ]
+    },
+    {
+      "ID": 2,
+      "TalkText": [
+        {
+          "SpeakerID": 0,
+          "Text": "今天天气真差"
+        },
+        {
+          "SpeakerID": -1,
+          "Text": "你还欠我300块钱呢"
+        }
+      ]
+    }
+  ]
+}

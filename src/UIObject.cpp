@@ -112,3 +112,33 @@ void UIObject::TurnOn()
     mSC->setIsVisible(true);
     setState(Active);
 }
+
+void UIObject::DeltaMove(glm::vec2 delta)
+{
+    glm::vec2 dialogSelf = {100.f, 50.f};
+    setPosition(getPosition() + delta + dialogSelf);
+
+    for (auto button : mButtons)
+    {
+        button->setPosition(button->getPosition() + delta + dialogSelf);
+    }
+    for (auto textZone : mTexts)
+    {
+        textZone->setPosition(textZone->getPosition() + delta + dialogSelf);
+    }
+
+    if (getPosition().x < (-512.f + 100.f))
+    {
+        DeltaMove({50.f - dialogSelf.x, 0.f - dialogSelf.y});
+    } else if (getPosition().x > (512.f - 100.f))
+    {
+        DeltaMove({-50.f - dialogSelf.x, 0.f - dialogSelf.y});
+    }
+    if (getPosition().y < (-384.f + 50.f))
+    {
+        DeltaMove({0.f - dialogSelf.x, 50.f - dialogSelf.y});
+    } else if (getPosition().y > (384.f - 50.f))
+    {
+        DeltaMove({0.f - dialogSelf.x, -50.f - dialogSelf.y});
+    }
+}

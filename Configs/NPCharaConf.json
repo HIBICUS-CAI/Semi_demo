@@ -1,0 +1,192 @@
+{
+  "encoding": "UTF-8",
+  "NPCItems": [
+    {
+      "ID": 7,
+      "MapPos": [
+        -1,
+        -1
+      ],
+      "Position": [
+        1000,
+        1000
+      ],
+      "ShinnyTex": "../Assets/nothing.png",
+      "ItemTex": "../Assets/watch.png"
+    },
+    {
+      "ID": 8,
+      "MapPos": [
+        -1,
+        -1
+      ],
+      "Position": [
+        1000,
+        1000
+      ],
+      "ShinnyTex": "../Assets/nothing.png",
+      "ItemTex": "../Assets/watch.png"
+    },
+    {
+      "ID": 9,
+      "MapPos": [
+        -1,
+        -1
+      ],
+      "Position": [
+        1000,
+        1000
+      ],
+      "ShinnyTex": "../Assets/nothing.png",
+      "ItemTex": "../Assets/watch.png"
+    }
+  ],
+  "NPCDocs": [
+    {
+      "ID": 7,
+      "MapPos": [
+        -1,
+        -1
+      ],
+      "Position": [
+        1000,
+        1000
+      ],
+      "ShinnyTex": "../Assets/nothing.png",
+      "DocTex": "../Assets/doc_tex.png"
+    },
+    {
+      "ID": 8,
+      "MapPos": [
+        -1,
+        -1
+      ],
+      "Position": [
+        1000,
+        1000
+      ],
+      "ShinnyTex": "../Assets/nothing.png",
+      "DocTex": "../Assets/doc_tex.png"
+    },
+    {
+      "ID": 9,
+      "MapPos": [
+        -1,
+        -1
+      ],
+      "Position": [
+        1000,
+        1000
+      ],
+      "ShinnyTex": "../Assets/nothing.png",
+      "DocTex": "../Assets/doc_tex.png"
+    }
+  ],
+  "NPCConfig": [
+    {
+      "NPC_ID": 0,
+      "Status": [
+        {
+          "Priority": 0,
+          "Depends": {
+            "Items": [],
+            "Docs": [],
+            "Gears": [],
+            "NPCs": []
+          },
+          "TalkTextID": 0,
+          "EventType": 0,
+          "EventID": 7
+        },
+        {
+          "Priority": 1,
+          "Depends": {
+            "Items": [
+              0
+            ],
+            "Docs": [
+              0
+            ],
+            "Gears": [],
+            "NPCs": []
+          },
+          "TalkTextID": 1,
+          "EventType": 2,
+          "EventID": 0
+        },
+        {
+          "Priority": 2,
+          "Depends": {
+            "Items": [
+              0,
+              1
+            ],
+            "Docs": [
+              0,
+              2
+            ],
+            "Gears": [],
+            "NPCs": []
+          },
+          "TalkTextID": 1,
+          "EventType": 2,
+          "EventID": 0
+        }
+      ]
+    },
+    {
+      "NPC_ID": 1,
+      "Status": [
+        {
+          "Priority": 0,
+          "Depends": {
+            "Items": [
+              0
+            ],
+            "Docs": [
+              0
+            ],
+            "Gears": [],
+            "NPCs": []
+          },
+          "TalkTextID": 2,
+          "EventType": 1,
+          "EventID": 9
+        }
+      ]
+    }
+  ],
+  "NPCMoveEvent":
+  [
+    {
+      "EventID": 0,
+      "NPC_ID": 0,
+      "MoveInfo":
+      [
+        {
+          "Direction": 1,
+          "Distance": 500
+        },
+        {
+          "Direction": 4,
+          "Distance": 300
+        }
+      ]
+    },
+    {
+      "EventID": 1,
+      "NPC_ID": 1,
+      "MoveInfo":
+      [
+        {
+          "Direction": 2,
+          "Distance": 100
+        },
+        {
+          "Direction": 3,
+          "Distance": 100
+        }
+      ]
+    }
+  ]
+}

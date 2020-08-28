@@ -10,7 +10,7 @@
 ItemSys::ItemSys(class GameSys *gameSys)
 {
     mGears = gameSys->getGears();
-    mItemEventInfo = GetJsonRoot("../Configs/ItemEvenConf.json");
+    mItemEventInfo = Tools::GetJsonRoot("../Configs/ItemEvenConf.json");
 }
 
 void ItemSys::ItemEvent(int itemID)
