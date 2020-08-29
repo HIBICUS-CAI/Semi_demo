@@ -40,7 +40,7 @@ public:
 
     void SetTalk(int id);
 
-    void InitTalkStatus();
+    void InitTalkStatus(int eventType);
 
     void ClearPlayerInfo();
 

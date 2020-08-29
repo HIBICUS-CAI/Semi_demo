@@ -171,13 +171,7 @@ void NPCSys::SetTalk(int id)
                 if (Tools::CheckMemberExistInt(mEventID, idList))
                 {
                     NPChara *npChara = FindChara(npcMoveEvent.NpcID);
-                    for (int i = 0; i < npcMoveEvent.NpcMoveInfo.size(); ++i)
-                    {
-                        npChara->AddMoveInfo(npcMoveEvent.NpcMoveInfo[i]);
-                    }
-                    mPlayer->setCanMove(false);
-                    npChara->setRdyToMove(true);
-                    npChara->setRdyForNextMove(true);
+                    npChara->ReadyToMove(npcMoveEvent.NpcMoveInfo);
                 }
 
                 break;
@@ -187,7 +181,7 @@ void NPCSys::SetTalk(int id)
         }
 
         // 初始化所有相关参数
-        InitTalkStatus();
+        InitTalkStatus(mEventType);
     } else
     {
         TextZone *textZone;
@@ -220,13 +214,17 @@ void NPCSys::SetTalk(int id)
     }
 }
 
-void NPCSys::InitTalkStatus()
+void NPCSys::InitTalkStatus(int eventType)
 {
     mUIO->TurnOff();
     mTalkIndex = -1;
     mIsTalking = false;
     mEventType = -1;
     mEventID = -1;
+    if (eventType != 2)
+    {
+        mPlayer->setCanMove(true);
+    }
 }
 
 void NPCSys::ClearPlayerInfo()
