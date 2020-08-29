@@ -205,16 +205,28 @@ void NPChara::UpdateObject(float deltatime)
 
         if (mMoveEventIndex == mMoveInfo.size())
         {
+            mMoveInfo.clear();
+            mMoveEventIndex = 0;
             mNPCSys->getPlayer()->setCanMove(true);
             mRdyToMove = false;
         }
     }
 }
 
+void NPChara::ReadyToMove(std::vector<struct MoveInfo> moveInfo)
+{
+    mMoveInfo.clear();
+    mMoveInfo = moveInfo;
+    mNPCSys->getPlayer()->setCanMove(false);
+    mRdyToMove = true;
+    mRdyForNextMove = true;
+}
+
 void NPChara::TalkWithPlayer()
 {
     mNPCSys->UpdatePlayerInfo();
 
+    mNPCSys->getPlayer()->setCanMove(false);
     mNPCSys->getUIO()->TurnOn();
     mNPCSys->setTalkIndex(0);
     mNPCSys->setTalkId(GetTalkIDByStatus());

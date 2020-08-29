@@ -5,8 +5,6 @@
 #include "InputComponent.h"
 #include "Object.h"
 #include "Player.h"
-#include "Item.h"
-#include "Document.h"
 #include "NPCSys.h"
 #include "NPChara.h"
 
@@ -26,32 +24,6 @@ void InputComponent::ProcessInput(const uint8_t *keyState)
     if (keyState[mDebugKey] && !mIsPrinting)
     {
         mIsPrinting = true;
-
-        std::vector<class Item *> items = mPlayer->getInventory()->getItems();
-        std::vector<class Document *> documents = mPlayer->getInventory()->getDocuments();
-
-//        SDL_Log("in this player's inventory, there are some items and docs those id: ");
-
-        if (!items.empty())
-        {
-            for (auto item : items)
-            {
-                SDL_Log("item's ID: %d  ", item->UseItem().ID);
-            }
-        } else
-        {
-//            SDL_Log("none item here stupid");
-        }
-        if (!documents.empty())
-        {
-            for (auto document : documents)
-            {
-//                SDL_Log("doc's ID: %d  ", document->ReadDoc().ID);
-            }
-        } else
-        {
-//            SDL_Log("none doc here stupid");
-        }
     }
 
     if (keyState[mCancelDebugKey] && mIsPrinting)

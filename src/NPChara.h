@@ -34,6 +34,8 @@ public:
 
     void UpdateObject(float deltatime) override;
 
+    void ReadyToMove(std::vector<struct MoveInfo> moveInfo);
+
     void TalkWithPlayer();
 
     int GetTalkIDByStatus();
@@ -61,21 +63,6 @@ public:
     const NPCInfo &getNPCInfo() const
     {
         return mNPCInfo;
-    }
-
-    void setRdyToMove(bool mRdyToMove)
-    {
-        NPChara::mRdyToMove = mRdyToMove;
-    }
-
-    void setRdyForNextMove(bool mRdyForNextMove)
-    {
-        NPChara::mRdyForNextMove = mRdyForNextMove;
-    }
-
-    void AddMoveInfo(MoveInfo moveInfo)
-    {
-        mMoveInfo.emplace_back(moveInfo);
     }
 
     static bool GreaterSort(NPCStatus a, NPCStatus b)
